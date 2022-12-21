@@ -1,8 +1,9 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
+
+import '../Models/tasks.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -14,31 +15,6 @@ class CalendarScreen extends StatefulWidget {
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
 final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
-
-final kEvents = LinkedHashMap<DateTime, List<Task>>(
-  equals: isSameDay,
-  hashCode: getHashCode,
-)..addAll(_kEventSource);
-
-final _kEventSource = {
-  for (var item in List.generate(100, (index) => index))
-    DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5): List.generate(
-        item % 4 + 1, (index) => Task('Event $item | ${index + 1}'))
-}..addAll({
-    kToday: [
-      const Task('Today\'s Event 1'),
-      const Task('Today\'s Event 2'),
-      // const Task('Today\'s Event 3'),
-      // const Task('Today\'s Event 2'),
-      // const Task('Today\'s Event 2'),
-      // const Task('Today\'s Event 2'),
-      // const Task('Today\'s Event 2'),
-    ],
-  });
-
-int getHashCode(DateTime key) {
-  return key.day * 1000000 + key.month * 10000 + key.year;
-}
 
 class _CalendarScreenState extends State<CalendarScreen> {
   late final ValueNotifier<List<Task>> _selectedEvents;
@@ -52,7 +28,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   List<Task> _getEventsForDay(DateTime day) {
     // Implementation example
-    return kEvents[day] ?? [];
+
+    return Provider.of<Tasks>(context, listen: false)
+        .items
+        .where((task) => task.date.day == day.day)
+        .toList();
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -85,6 +65,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final taskProvider = Provider.of<Tasks>(context);
     return Scaffold(
         body: Column(children: [
       TableCalendar<Task>(

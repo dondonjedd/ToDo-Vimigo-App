@@ -3,8 +3,8 @@ import 'package:todo_vimigo_app/Models/task.dart';
 
 class Tasks extends ChangeNotifier {
   final List<Task> _items = [
-    const Task('Today\'s Event 1'),
-    const Task('Today\'s Event 2'),
+    Task(title: 'Today\'s Event 1', date: DateTime.now()),
+    Task(title: 'Today\'s Event 2', date: DateTime.now()),
   ];
 
   List<Task> get items {
