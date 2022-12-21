@@ -7,7 +7,6 @@ import '../utils.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
-
   @override
   State<CalendarScreen> createState() => _CalendarScreenState();
 }
@@ -70,6 +69,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         rangeSelectionMode: _rangeSelectionMode,
         eventLoader: _getEventsForDay,
         startingDayOfWeek: StartingDayOfWeek.monday,
+        weekNumbersVisible: true,
         calendarStyle: const CalendarStyle(
           // Use `CalendarStyle` to customize the UI
           outsideDaysVisible: false,
