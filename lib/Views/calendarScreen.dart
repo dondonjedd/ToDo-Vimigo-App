@@ -3,16 +3,14 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
 
+import '../utils.dart';
+
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
 
   @override
   State<CalendarScreen> createState() => _CalendarScreenState();
 }
-
-final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 
 class _CalendarScreenState extends State<CalendarScreen> {
   late final ValueNotifier<List<Task>> _selectedEvents;
