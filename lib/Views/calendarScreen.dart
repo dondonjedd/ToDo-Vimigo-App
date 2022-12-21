@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
-
-import '../Models/tasks.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -28,14 +26,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   List<Task> _getEventsForDay(DateTime date) {
     // Implementation example
-
-    return Provider.of<Tasks>(context, listen: false)
-        .items
-        .where((task) =>
-            task.date.day == date.day &&
-            task.date.month == date.month &&
-            task.date.year == date.year)
-        .toList();
+    return TasksController().getTasksForDay(context, date);
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -68,7 +59,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final taskProvider = Provider.of<Tasks>(context);
     return Scaffold(
         body: Column(children: [
       TableCalendar<Task>(
