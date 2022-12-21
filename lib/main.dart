@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_vimigo_app/Views/mainScreen.dart';
+import 'package:todo_vimigo_app/Views/tabsScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +18,13 @@ class MyApp extends StatelessWidget {
                 secondary: Colors.lightBlue[50],
               ),
         ),
-        home: const MainScreen());
+        routes: {
+          "/": (ctx) => const TabsScreen(),
+        }
+
+        // onUnknownRoute: (settings) {
+        //   return MaterialPageRoute(builder: (ctx) => const Dashboard());
+        // },
+        );
   }
 }
