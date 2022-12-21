@@ -26,12 +26,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
-  List<Task> _getEventsForDay(DateTime day) {
+  List<Task> _getEventsForDay(DateTime date) {
     // Implementation example
 
     return Provider.of<Tasks>(context, listen: false)
         .items
-        .where((task) => task.date.day == day.day)
+        .where((task) =>
+            task.date.day == date.day &&
+            task.date.month == date.month &&
+            task.date.year == date.year)
         .toList();
   }
 
