@@ -21,13 +21,18 @@ final kEvents = LinkedHashMap<DateTime, List<Task>>(
 )..addAll(_kEventSource);
 
 final _kEventSource = {
-  for (var item in List.generate(50, (index) => index))
+  for (var item in List.generate(100, (index) => index))
     DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5): List.generate(
         item % 4 + 1, (index) => Task('Event $item | ${index + 1}'))
 }..addAll({
     kToday: [
       const Task('Today\'s Event 1'),
       const Task('Today\'s Event 2'),
+      // const Task('Today\'s Event 3'),
+      // const Task('Today\'s Event 2'),
+      // const Task('Today\'s Event 2'),
+      // const Task('Today\'s Event 2'),
+      // const Task('Today\'s Event 2'),
     ],
   });
 
@@ -72,7 +77,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
-   @override
+  @override
   void dispose() {
     _selectedEvents.dispose();
     super.dispose();
@@ -83,13 +88,32 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Scaffold(
         body: Column(children: [
       TableCalendar<Task>(
-        firstDay: DateTime.utc(2010, 10, 16),
-        lastDay: DateTime.utc(2030, 3, 14),
-        focusedDay: DateTime.now(),
+        firstDay: kFirstDay,
+        lastDay: kLastDay,
+        focusedDay: _focusedDay,
+        selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+        rangeStartDay: _rangeStart,
+        rangeEndDay: _rangeEnd,
+        calendarFormat: _calendarFormat,
+        rangeSelectionMode: _rangeSelectionMode,
+        eventLoader: _getEventsForDay,
+        startingDayOfWeek: StartingDayOfWeek.monday,
         calendarStyle: const CalendarStyle(
           // Use `CalendarStyle` to customize the UI
           outsideDaysVisible: false,
         ),
+        onDaySelected: _onDaySelected,
+        // onRangeSelected: _onRangeSelected,
+        onFormatChanged: (format) {
+          if (_calendarFormat != format) {
+            setState(() {
+              // _calendarFormat = format;
+            });
+          }
+        },
+        onPageChanged: (focusedDay) {
+          _focusedDay = focusedDay;
+        },
       ),
       const SizedBox(height: 8.0),
       Expanded(
