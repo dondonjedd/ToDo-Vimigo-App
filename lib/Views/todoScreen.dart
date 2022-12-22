@@ -37,8 +37,6 @@ class _TodoScreenState extends State<TodoScreen> {
 
   void onReorder(int oldIndex, int newIndex) {
     setState(() {
-      print("old: $oldIndex");
-      print("new: $newIndex");
       if (oldIndex < newIndex) {
         newIndex -= 1;
       }
