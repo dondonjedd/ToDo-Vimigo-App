@@ -59,6 +59,8 @@ class _TodoScreenState extends State<TodoScreen> {
 
   Widget incompleteReorderableTaskList() {
     return ReorderableListView.builder(
+      shrinkWrap: true,
+      physics: const ScrollPhysics(),
       buildDefaultDragHandles: true,
       itemBuilder: (ctx, index) {
         return ListTile(
@@ -91,6 +93,8 @@ class _TodoScreenState extends State<TodoScreen> {
 
   Widget completeTaskList() {
     return ListView.builder(
+      shrinkWrap: true,
+      physics: const ScrollPhysics(),
       itemBuilder: (ctx, index) {
         return ListTile(
           key: ValueKey(_completedTasks[index].id),
@@ -109,17 +113,13 @@ class _TodoScreenState extends State<TodoScreen> {
           kToolbarHeight - // top AppBar height
           MediaQuery.of(context).padding.top - // top padding
           kBottomNavigationBarHeight,
-      child: Column(children: [
-        Flexible(
-          flex: 4,
-          child: incompleteReorderableTaskList(),
-        ),
-        const Flexible(flex: 1, child: Text("Completed Tasks")),
-        Flexible(
-          flex: 4,
-          child: completeTaskList(),
-        )
-      ]),
+      child: ListView(
+        children: [
+          incompleteReorderableTaskList(),
+          const Text("Completed Tasks"),
+          completeTaskList()
+        ],
+      ),
     );
   }
 }
