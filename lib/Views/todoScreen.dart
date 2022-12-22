@@ -12,9 +12,13 @@ class TodoScreen extends StatefulWidget {
 
 class _TodoScreenState extends State<TodoScreen> {
   final List<Task> _tasks = [];
+  List<Task> _completedTasks = [];
+  List<Task> _incompleteTasks = [];
   @override
   void initState() {
     _tasks.addAll(TasksController().getTasks(context));
+    _completedTasks = _tasks.where((t) => t.isCompleted == true).toList();
+    _incompleteTasks = _tasks.where((t) => t.isCompleted == false).toList();
     super.initState();
   }
 
@@ -26,29 +30,37 @@ class _TodoScreenState extends State<TodoScreen> {
           MediaQuery.of(context).padding.top - // top padding
           kBottomNavigationBarHeight,
       child: Column(children: [
-        Expanded(
+        Flexible(
+          flex: 4,
           child: ReorderableListView.builder(
             buildDefaultDragHandles: true,
             itemBuilder: (ctx, index) {
               return ListTile(
-                key: Key(index.toString()),
-                title: Text(_tasks[index].title),
+                key: Key(_incompleteTasks[index].id),
+                title: Text(_incompleteTasks[index].title),
                 leading: Checkbox(
                   checkColor: Colors.white,
                   fillColor: MaterialStatePropertyAll(
                       Theme.of(context).colorScheme.primary),
-                  value: _tasks[index].isCompleted,
+                  value: false,
                   onChanged: (bool? value) {
                     setState(() {
                       TasksController()
                           .toggleCompletedForTask(context, index, value!);
-                      _tasks[index].isCompleted = value;
+                      _incompleteTasks[index].isCompleted = value;
+
+                      Task tempTask = Task(
+                          id: _incompleteTasks[index].id,
+                          title: _incompleteTasks[index].title,
+                          date: _incompleteTasks[index].date);
+                      _incompleteTasks.removeAt(index);
+                      _completedTasks.add(tempTask);
                     });
                   },
                 ),
               );
             },
-            itemCount: _tasks.length,
+            itemCount: _incompleteTasks.length,
             onReorder: (int oldIndex, int newIndex) {
               setState(() {
                 if (oldIndex < newIndex) {
@@ -59,12 +71,47 @@ class _TodoScreenState extends State<TodoScreen> {
                 TasksController()
                     .insertTask(context, newIndex, taskToSwitchProvider);
 
-                final taskToSwitch = _tasks.removeAt(oldIndex);
-                _tasks.insert(newIndex, taskToSwitch);
+                final taskToSwitch = _incompleteTasks.removeAt(oldIndex);
+                _incompleteTasks.insert(newIndex, taskToSwitch);
               });
             },
           ),
         ),
+        const Flexible(flex: 1, child: Text("Completed Tasks")),
+        Flexible(
+          flex: 4,
+          child: ListView.builder(
+            itemBuilder: (ctx, index) {
+              return ListTile(
+                key: ValueKey(_completedTasks[index].id),
+                title: Text(_completedTasks[index].title),
+                leading: Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.primary),
+                  value: true,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      TasksController()
+                          .toggleCompletedForTask(context, index, value!);
+                      _completedTasks[index].isCompleted = value;
+
+                      Task tempTask = Task(
+                          id: _completedTasks[index].id,
+                          title: _completedTasks[index].title,
+                          date: _completedTasks[index].date);
+
+                      _completedTasks.removeAt(index);
+
+                      _incompleteTasks.add(tempTask);
+                    });
+                  },
+                ),
+              );
+            },
+            itemCount: _completedTasks.length,
+          ),
+        )
       ]),
     );
   }
