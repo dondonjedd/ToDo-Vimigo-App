@@ -24,26 +24,13 @@ class _TodoScreenState extends State<TodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height - // total height
-          kToolbarHeight - // top AppBar height
-          MediaQuery.of(context).padding.top - // top padding
-          kBottomNavigationBarHeight,
-      child: Column(children: [
-        Flexible(
-          flex: 4,
-          child: ReorderableListView.builder(
+    
+    var reorderableListView = ReorderableListView.builder(
             buildDefaultDragHandles: true,
             itemBuilder: (ctx, index) {
               return ListTile(
                 key: Key(_incompleteTasks[index].id),
-                title: Text(
-                  _incompleteTasks[index].title,
-                  style: TextStyle(
-                      color: _incompleteTasks[index].id == "t1"
-                          ? Colors.red
-                          : Colors.black),
-                ),
+                title: Text(_incompleteTasks[index].title),
                 leading: Checkbox(
                   checkColor: Colors.white,
                   fillColor: MaterialStatePropertyAll(
@@ -73,28 +60,22 @@ class _TodoScreenState extends State<TodoScreen> {
                   newIndex -= 1;
                 }
                 final taskToSwitchProvider =
-                    TasksController().swapTask(context, oldIndex, newIndex);
+                    TasksController().removeTask(context, oldIndex);
+                TasksController()
+                    .insertTask(context, newIndex, taskToSwitchProvider);
 
                 final taskToSwitch = _incompleteTasks.removeAt(oldIndex);
                 _incompleteTasks.insert(newIndex, taskToSwitch);
               });
             },
-          ),
-        ),
-        const Flexible(flex: 1, child: Text("Completed Tasks")),
-        Flexible(
-          flex: 4,
-          child: ListView.builder(
+          );
+
+
+    var listView = ListView.builder(
             itemBuilder: (ctx, index) {
               return ListTile(
                 key: ValueKey(_completedTasks[index].id),
-                title: Text(
-                  _completedTasks[index].title,
-                  style: TextStyle(
-                      color: _completedTasks[index].id == "t1"
-                          ? Colors.red
-                          : Colors.black),
-                ),
+                title: Text(_completedTasks[index].title),
                 leading: Checkbox(
                   checkColor: Colors.white,
                   fillColor: MaterialStatePropertyAll(
@@ -120,7 +101,23 @@ class _TodoScreenState extends State<TodoScreen> {
               );
             },
             itemCount: _completedTasks.length,
-          ),
+          );
+
+
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - // total height
+          kToolbarHeight - // top AppBar height
+          MediaQuery.of(context).padding.top - // top padding
+          kBottomNavigationBarHeight,
+      child: Column(children: [
+        Flexible(
+          flex: 4,
+          child: reorderableListView,
+        ),
+        const Flexible(flex: 1, child: Text("Completed Tasks")),
+        Flexible(
+          flex: 4,
+          child: listView,
         )
       ]),
     );
