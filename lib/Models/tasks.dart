@@ -5,6 +5,15 @@ class Tasks extends ChangeNotifier {
   final List<Task> _items = [
     Task(id: "t1", title: 'Today\'s Event 1', date: DateTime.now()),
     Task(id: "t2", title: 'Today\'s Event 2', date: DateTime.utc(2022, 12, 20)),
+    Task(id: "t1", title: 'Today\'s Event 3', date: DateTime.now()),
+    Task(id: "t2", title: 'Today\'s Event 4', date: DateTime.utc(2022, 12, 20)),
+    Task(id: "t1", title: 'Today\'s Event 5', date: DateTime.now()),
+    Task(id: "t2", title: 'Today\'s Event 6', date: DateTime.utc(2022, 12, 20)),
+    Task(id: "t1", title: 'Today\'s Event 7', date: DateTime.now()),
+    Task(id: "t2", title: 'Today\'s Event 8', date: DateTime.utc(2022, 12, 20)),
+    Task(id: "t1", title: 'Today\'s Event 9', date: DateTime.now()),
+    Task(
+        id: "t2", title: 'Today\'s Event 10', date: DateTime.utc(2022, 12, 20)),
   ];
 
   List<Task> get items {
@@ -29,5 +38,9 @@ class Tasks extends ChangeNotifier {
 
   Task getItemAtIndex(int index) {
     return _items.elementAt(index);
+  }
+
+  void toggleCompletedForTask(int index, bool bol) {
+    _items.elementAt(index).isCompleted = bol;
   }
 }

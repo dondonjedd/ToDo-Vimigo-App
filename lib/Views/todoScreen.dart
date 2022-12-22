@@ -23,6 +23,7 @@ class _TodoScreenState extends State<TodoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ReorderableListView.builder(
+        buildDefaultDragHandles: true,
         itemBuilder: (ctx, index) {
           return ListTile(
             key: Key(index.toString()),
@@ -31,11 +32,13 @@ class _TodoScreenState extends State<TodoScreen> {
               checkColor: Colors.white,
               fillColor: MaterialStatePropertyAll(
                   Theme.of(context).colorScheme.primary),
-              value: false,
+              value: _tasks[index].isCompleted,
               onChanged: (bool? value) {
-                // setState(() {
-                //   isChecked = value!;
-                // });
+                setState(() {
+                  TasksController()
+                      .toggleCompletedForTask(context, index, value!);
+                  _tasks[index].isCompleted = value;
+                });
               },
             ),
           );
