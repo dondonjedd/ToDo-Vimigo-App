@@ -70,9 +70,6 @@ class _TodoScreenState extends State<TodoScreen> {
       itemCount: _incompleteTasks.length,
       onReorder: (int oldIndex, int newIndex) {
         setState(() {
-          if (oldIndex < newIndex) {
-            newIndex -= 1;
-          }
           final oldIndexOfAllTasks = TasksController()
               .getIndexWithId(context, _incompleteTasks[oldIndex].id);
           final newIndexOfAllTasks = TasksController()
@@ -80,6 +77,10 @@ class _TodoScreenState extends State<TodoScreen> {
 
           TasksController().shiftingElements(
               context, oldIndexOfAllTasks, newIndexOfAllTasks);
+
+          if (oldIndex < newIndex) {
+            newIndex -= 1;
+          }
 
           final taskToSwitch = _incompleteTasks.removeAt(oldIndex);
           _incompleteTasks.insert(newIndex, taskToSwitch);
