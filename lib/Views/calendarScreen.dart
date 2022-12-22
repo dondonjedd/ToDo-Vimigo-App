@@ -13,7 +13,7 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   late final ValueNotifier<List<Task>> _selectedEvents;
-  final CalendarFormat _calendarFormat = CalendarFormat.month;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
@@ -88,14 +88,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
         onFormatChanged: (format) {
           if (_calendarFormat != format) {
             setState(() {
-              // _calendarFormat = format;
+              _calendarFormat = format;
             });
           }
         },
         onPageChanged: (focusedDay) {
           _focusedDay = focusedDay;
         },
-        availableCalendarFormats: const {CalendarFormat.month: "Month"},
+        availableCalendarFormats: const {
+          CalendarFormat.month: "Month",
+          CalendarFormat.week: 'Week',
+        },
       ),
       const SizedBox(height: 8.0),
       Expanded(
