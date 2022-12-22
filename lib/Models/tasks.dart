@@ -44,7 +44,7 @@ class Tasks extends ChangeNotifier {
   }
 
   Task getItemAtIndex(int index) {
-    return _items.elementAt(index);
+    return _items[index];
   }
 
   int getTaskWithId(String id) {
@@ -52,8 +52,7 @@ class Tasks extends ChangeNotifier {
   }
 
   void toggleCompletedForTask(int index, bool bol) {
-    _items.elementAt(index).isCompleted = bol;
-    notifyListeners();
+    _items[index].setIsCompleted(bol);
   }
 
   void swapTask(int oldIndex, int newIndex) {

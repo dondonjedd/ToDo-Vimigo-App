@@ -1,4 +1,6 @@
-class Task {
+import 'package:flutter/widgets.dart';
+
+class Task extends ChangeNotifier {
   final String id;
   final String title;
   final DateTime date;
@@ -12,4 +14,9 @@ class Task {
 
   @override
   String toString() => title;
+
+  void setIsCompleted(bool bol) {
+    isCompleted = bol;
+    notifyListeners();
+  }
 }

@@ -39,15 +39,15 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).removeTask(index);
   }
 
-  void toggleCompletedForTask(BuildContext context, int index, bool bol) {
+  void setIsCompletedForTask(BuildContext context, int index, bool bol) {
     Provider.of<Tasks>(context, listen: false)
         .toggleCompletedForTask(index, bol);
   }
 
   void shiftingElements(BuildContext context, int oldIndex, int newIndex) {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
+    // if (oldIndex < newIndex) {
+    //   newIndex -= 1;
+    // }
     final taskToSwitchProvider =
         TasksController().removeTask(context, oldIndex);
     TasksController().insertTask(context, newIndex, taskToSwitchProvider);

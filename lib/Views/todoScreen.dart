@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
+import 'package:todo_vimigo_app/Models/tasks.dart';
 import 'package:todo_vimigo_app/Views/Widgets/completed_tasklist.dart';
 import 'package:todo_vimigo_app/Views/Widgets/reorderable_list.dart';
 
@@ -13,19 +15,14 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
-  List<Task> _completedTasks = [];
-  List<Task> _incompleteTasks = [];
-  
+  List<Task> _tasks = [];
+  // final List<Task> _tasks = [];
+  // final List<Task> _tasks = [];
+
   @override
   void initState() {
-    _completedTasks = TasksController()
-        .getTasks(context)
-        .where((t) => t.isCompleted == true)
-        .toList();
-    _incompleteTasks = TasksController()
-        .getTasks(context)
-        .where((t) => t.isCompleted == false)
-        .toList();
+    _tasks = TasksController().getTasks(context);
+
     super.initState();
   }
 
@@ -34,38 +31,10 @@ class _TodoScreenState extends State<TodoScreen> {
       checkColor: Colors.white,
       fillColor:
           MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
-      value: isCompleted,
+      value: _tasks[index].isCompleted,
       onChanged: (bool? value) {
         setState(() {
-          int indexFromAllTask = isCompleted
-              ? TasksController()
-                  .getIndexWithId(context, _completedTasks[index].id)
-              : TasksController()
-                  .getIndexWithId(context, _incompleteTasks[index].id);
-
-          TasksController()
-              .toggleCompletedForTask(context, indexFromAllTask, value!);
-          if (isCompleted) {
-            _completedTasks[index].isCompleted = value;
-
-            Task tempTask = Task(
-                id: _completedTasks[index].id,
-                title: _completedTasks[index].title,
-                date: _completedTasks[index].date);
-
-            _completedTasks.removeAt(index);
-
-            _incompleteTasks.add(tempTask);
-          } else {
-            _incompleteTasks[index].isCompleted = value;
-
-            Task tempTask = Task(
-                id: _incompleteTasks[index].id,
-                title: _incompleteTasks[index].title,
-                date: _incompleteTasks[index].date);
-            _incompleteTasks.removeAt(index);
-            _completedTasks.add(tempTask);
-          }
+          TasksController().setIsCompletedForTask(context, index, value!);
         });
       },
     );
@@ -73,25 +42,19 @@ class _TodoScreenState extends State<TodoScreen> {
 
   void onReorder(int oldIndex, int newIndex) {
     setState(() {
-      final oldIndexOfAllTasks = TasksController()
-          .getIndexWithId(context, _incompleteTasks[oldIndex].id);
-      final newIndexOfAllTasks = TasksController()
-          .getIndexWithId(context, _incompleteTasks[newIndex].id);
-
-      TasksController()
-          .shiftingElements(context, oldIndexOfAllTasks, newIndexOfAllTasks);
-
       if (oldIndex < newIndex) {
         newIndex -= 1;
       }
+      TasksController().shiftingElements(context, oldIndex, newIndex);
 
-      final taskToSwitch = _incompleteTasks.removeAt(oldIndex);
-      _incompleteTasks.insert(newIndex, taskToSwitch);
+      final taskToSwitch = _tasks.removeAt(oldIndex);
+      _tasks.insert(newIndex, taskToSwitch);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final taskProvider = Provider.of<Tasks>(context);
     return SizedBox(
       height: MediaQuery.of(context).size.height - // total height
           kToolbarHeight - // top AppBar height
@@ -100,7 +63,9 @@ class _TodoScreenState extends State<TodoScreen> {
       child: ListView(
         children: [
           ReorderableTaskList(
-              incompleteTasks: _incompleteTasks,
+              incompleteTasks: taskProvider.items
+                  .where((t) => t.isCompleted == false)
+                  .toList(),
               checkbox: _checkbox,
               onReorder: onReorder),
           // const Text("Completed Tasks"),
@@ -109,7 +74,10 @@ class _TodoScreenState extends State<TodoScreen> {
               title: const Text("Completed Tasks"),
               children: [
                 CompletedTaskList(
-                    completedTasks: _completedTasks, checkBox: _checkbox)
+                    completedTasks: taskProvider.items
+                        .where((t) => t.isCompleted == true)
+                        .toList(),
+                    checkBox: _checkbox)
               ])
         ],
       ),
