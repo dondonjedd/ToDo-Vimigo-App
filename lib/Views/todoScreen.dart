@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
+import 'package:todo_vimigo_app/Views/Widgets/completed_tasklist.dart';
 import 'package:todo_vimigo_app/Views/Widgets/reorderable_list.dart';
 
 import '../Models/task.dart';
@@ -84,23 +85,6 @@ class _TodoScreenState extends State<TodoScreen> {
     });
   }
 
-
-
-  Widget _completeTaskList() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const ScrollPhysics(),
-      itemBuilder: (ctx, index) {
-        return ListTile(
-          key: ValueKey(_completedTasks[index].id),
-          title: Text(_completedTasks[index].title),
-          leading: _checkbox(index, true),
-        );
-      },
-      itemCount: _completedTasks.length,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -118,7 +102,10 @@ class _TodoScreenState extends State<TodoScreen> {
           ExpansionTile(
               initiallyExpanded: true,
               title: const Text("Completed Tasks"),
-              children: [_completeTaskList()])
+              children: [
+                CompletedTaskList(
+                    completedTasks: _completedTasks, checkBox: _checkbox)
+              ])
         ],
       ),
     );
