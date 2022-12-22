@@ -68,8 +68,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
               color: Theme.of(context).colorScheme.primary.withOpacity(0.5)),
     );
 
-
-    
     return Scaffold(
         body: Column(children: [
       TableCalendar<Task>(
@@ -97,6 +95,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         onPageChanged: (focusedDay) {
           _focusedDay = focusedDay;
         },
+        availableCalendarFormats: const {CalendarFormat.month: "Month"},
       ),
       const SizedBox(height: 8.0),
       Expanded(
