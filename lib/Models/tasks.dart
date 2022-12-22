@@ -58,4 +58,10 @@ class Tasks extends ChangeNotifier {
   void swapTask(int oldIndex, int newIndex) {
     _items.swap(oldIndex, newIndex);
   }
+
+  void shiftingElements(int oldIndex, int newIndex) {
+    final taskToSwitchProvider = items.removeAt(oldIndex);
+    items.insert(newIndex, taskToSwitchProvider);
+    notifyListeners();
+  }
 }

@@ -5,8 +5,6 @@ import 'package:todo_vimigo_app/Models/tasks.dart';
 import 'package:todo_vimigo_app/Views/Widgets/completed_tasklist.dart';
 import 'package:todo_vimigo_app/Views/Widgets/reorderable_list.dart';
 
-import '../Models/task.dart';
-
 class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key});
 
@@ -15,14 +13,11 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
-  List<Task> _tasks = [];
   // final List<Task> _tasks = [];
   // final List<Task> _tasks = [];
 
   @override
   void initState() {
-    _tasks = TasksController().getTasks(context);
-
     super.initState();
   }
 
@@ -31,7 +26,7 @@ class _TodoScreenState extends State<TodoScreen> {
       checkColor: Colors.white,
       fillColor:
           MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
-      value: _tasks[index].isCompleted,
+      value: TasksController().getTasks(context)[index].isCompleted,
       onChanged: (bool? value) {
         setState(() {
           TasksController().setIsCompletedForTask(context, index, value!);
@@ -42,13 +37,23 @@ class _TodoScreenState extends State<TodoScreen> {
 
   void onReorder(int oldIndex, int newIndex) {
     setState(() {
+      print("old: $oldIndex");
+      print("new: $newIndex");
       if (oldIndex < newIndex) {
         newIndex -= 1;
       }
-      TasksController().shiftingElements(context, oldIndex, newIndex);
 
-      final taskToSwitch = _tasks.removeAt(oldIndex);
-      _tasks.insert(newIndex, taskToSwitch);
+      final incompleteTasks = TasksController()
+          .getTasks(context)
+          .where((t) => t.isCompleted == false)
+          .toList();
+
+      TasksController().shiftingElements(
+          context,
+          TasksController()
+              .getIndexWithId(context, incompleteTasks[oldIndex].id),
+          TasksController()
+              .getIndexWithId(context, incompleteTasks[newIndex].id));
     });
   }
 
@@ -67,7 +72,7 @@ class _TodoScreenState extends State<TodoScreen> {
                   .where((t) => t.isCompleted == false)
                   .toList(),
               checkbox: _checkbox,
-              onReorder: onReorder),
+              reorderFunc: onReorder),
           // const Text("Completed Tasks"),
           ExpansionTile(
               initiallyExpanded: true,

@@ -4,11 +4,11 @@ import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 class ReorderableTaskList extends StatelessWidget {
   final incompleteTasks;
   final checkbox;
-  final Function(int, int) onReorder;
+  final Function(int, int) reorderFunc;
   const ReorderableTaskList(
       {required this.incompleteTasks,
       required this.checkbox,
-      required this.onReorder,
+      required this.reorderFunc,
       super.key});
 
   @override
@@ -28,7 +28,7 @@ class ReorderableTaskList extends StatelessWidget {
         );
       },
       itemCount: incompleteTasks.length,
-      onReorder: onReorder,
+      onReorder: reorderFunc,
     );
   }
 }
