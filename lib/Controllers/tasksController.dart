@@ -18,4 +18,12 @@ class TasksController {
             task.date.year == date.year)
         .toList();
   }
+
+  int getTaskslength(BuildContext context) {
+    return Provider.of<Tasks>(context, listen: true).items.length;
+  }
+
+  Task getTaskAtIndex(BuildContext context,int index) {
+    return Provider.of<Tasks>(context, listen: true).items[index];
+  }
 }
