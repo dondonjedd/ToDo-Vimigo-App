@@ -14,51 +14,58 @@ class _TodoScreenState extends State<TodoScreen> {
   final List<Task> _tasks = [];
   @override
   void initState() {
-    // TODO: implement initState
     _tasks.addAll(TasksController().getTasks(context));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ReorderableListView.builder(
-        buildDefaultDragHandles: true,
-        itemBuilder: (ctx, index) {
-          return ListTile(
-            key: Key(index.toString()),
-            title: Text(_tasks[index].title),
-            leading: Checkbox(
-              checkColor: Colors.white,
-              fillColor: MaterialStatePropertyAll(
-                  Theme.of(context).colorScheme.primary),
-              value: _tasks[index].isCompleted,
-              onChanged: (bool? value) {
-                setState(() {
-                  TasksController()
-                      .toggleCompletedForTask(context, index, value!);
-                  _tasks[index].isCompleted = value;
-                });
-              },
-            ),
-          );
-        },
-        itemCount: _tasks.length,
-        onReorder: (int oldIndex, int newIndex) {
-          setState(() {
-            if (oldIndex < newIndex) {
-              newIndex -= 1;
-            }
-            final taskToSwitchProvider =
-                TasksController().removeTask(context, oldIndex);
-            TasksController()
-                .insertTask(context, newIndex, taskToSwitchProvider);
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - // total height
+          kToolbarHeight - // top AppBar height
+          MediaQuery.of(context).padding.top - // top padding
+          kBottomNavigationBarHeight,
+      child: Column(children: [
+        Expanded(
+          child: ReorderableListView.builder(
+            buildDefaultDragHandles: true,
+            itemBuilder: (ctx, index) {
+              return ListTile(
+                key: Key(index.toString()),
+                title: Text(_tasks[index].title),
+                leading: Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.primary),
+                  value: _tasks[index].isCompleted,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      TasksController()
+                          .toggleCompletedForTask(context, index, value!);
+                      _tasks[index].isCompleted = value;
+                    });
+                  },
+                ),
+              );
+            },
+            itemCount: _tasks.length,
+            onReorder: (int oldIndex, int newIndex) {
+              setState(() {
+                if (oldIndex < newIndex) {
+                  newIndex -= 1;
+                }
+                final taskToSwitchProvider =
+                    TasksController().removeTask(context, oldIndex);
+                TasksController()
+                    .insertTask(context, newIndex, taskToSwitchProvider);
 
-            final taskToSwitch = _tasks.removeAt(oldIndex);
-            _tasks.insert(newIndex, taskToSwitch);
-          });
-        },
-      ),
+                final taskToSwitch = _tasks.removeAt(oldIndex);
+                _tasks.insert(newIndex, taskToSwitch);
+              });
+            },
+          ),
+        ),
+      ]),
     );
   }
 }
