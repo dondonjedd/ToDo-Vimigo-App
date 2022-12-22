@@ -13,14 +13,19 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
-  final List<Task> _tasks = [];
   List<Task> _completedTasks = [];
   List<Task> _incompleteTasks = [];
+  
   @override
   void initState() {
-    _tasks.addAll(TasksController().getTasks(context));
-    _completedTasks = _tasks.where((t) => t.isCompleted == true).toList();
-    _incompleteTasks = _tasks.where((t) => t.isCompleted == false).toList();
+    _completedTasks = TasksController()
+        .getTasks(context)
+        .where((t) => t.isCompleted == true)
+        .toList();
+    _incompleteTasks = TasksController()
+        .getTasks(context)
+        .where((t) => t.isCompleted == false)
+        .toList();
     super.initState();
   }
 
