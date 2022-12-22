@@ -116,8 +116,10 @@ class _TodoScreenState extends State<TodoScreen> {
       child: ListView(
         children: [
           incompleteReorderableTaskList(),
-          const Text("Completed Tasks"),
-          completeTaskList()
+          // const Text("Completed Tasks"),
+          ExpansionTile(
+              title: const Text("Completed Tasks"),
+              children: [completeTaskList()])
         ],
       ),
     );
