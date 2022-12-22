@@ -20,10 +20,18 @@ class TasksController {
   }
 
   int getTaskslength(BuildContext context) {
-    return Provider.of<Tasks>(context, listen: true).items.length;
+    return Provider.of<Tasks>(context, listen: false).items.length;
   }
 
-  Task getTaskAtIndex(BuildContext context,int index) {
-    return Provider.of<Tasks>(context, listen: true).items[index];
+  Task getTaskAtIndex(BuildContext context, int index) {
+    return Provider.of<Tasks>(context, listen: false).getItemAtIndex(index);
+  }
+
+  void insertTask(BuildContext context, int index, Task taskToAdd) {
+    Provider.of<Tasks>(context, listen: false).insertTask(index, taskToAdd);
+  }
+
+  Task removeTask(BuildContext context, int index) {
+    return Provider.of<Tasks>(context, listen: false).removeTask(index);
   }
 }
