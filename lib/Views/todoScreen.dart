@@ -37,7 +37,13 @@ class _TodoScreenState extends State<TodoScreen> {
             itemBuilder: (ctx, index) {
               return ListTile(
                 key: Key(_incompleteTasks[index].id),
-                title: Text(_incompleteTasks[index].title),
+                title: Text(
+                  _incompleteTasks[index].title,
+                  style: TextStyle(
+                      color: _incompleteTasks[index].id == "t1"
+                          ? Colors.red
+                          : Colors.black),
+                ),
                 leading: Checkbox(
                   checkColor: Colors.white,
                   fillColor: MaterialStatePropertyAll(
@@ -67,9 +73,7 @@ class _TodoScreenState extends State<TodoScreen> {
                   newIndex -= 1;
                 }
                 final taskToSwitchProvider =
-                    TasksController().removeTask(context, oldIndex);
-                TasksController()
-                    .insertTask(context, newIndex, taskToSwitchProvider);
+                    TasksController().swapTask(context, oldIndex, newIndex);
 
                 final taskToSwitch = _incompleteTasks.removeAt(oldIndex);
                 _incompleteTasks.insert(newIndex, taskToSwitch);
@@ -84,7 +88,13 @@ class _TodoScreenState extends State<TodoScreen> {
             itemBuilder: (ctx, index) {
               return ListTile(
                 key: ValueKey(_completedTasks[index].id),
-                title: Text(_completedTasks[index].title),
+                title: Text(
+                  _completedTasks[index].title,
+                  style: TextStyle(
+                      color: _completedTasks[index].id == "t1"
+                          ? Colors.red
+                          : Colors.black),
+                ),
                 leading: Checkbox(
                   checkColor: Colors.white,
                   fillColor: MaterialStatePropertyAll(

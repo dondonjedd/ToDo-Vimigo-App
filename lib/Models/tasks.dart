@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
+import 'package:collection/collection.dart';
 
 class Tasks extends ChangeNotifier {
   final List<Task> _items = [
@@ -49,5 +50,9 @@ class Tasks extends ChangeNotifier {
   void toggleCompletedForTask(int index, bool bol) {
     _items.elementAt(index).isCompleted = bol;
     notifyListeners();
+  }
+
+  void swapTask(int oldIndex, int newIndex) {
+    _items.swap(oldIndex, newIndex);
   }
 }
