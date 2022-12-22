@@ -70,10 +70,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
         eventLoader: _getEventsForDay,
         startingDayOfWeek: StartingDayOfWeek.monday,
         weekNumbersVisible: true,
-        calendarStyle: const CalendarStyle(
+        calendarStyle: CalendarStyle(
           // Use `CalendarStyle` to customize the UI
           outsideDaysVisible: false,
+          selectedDecoration:
+              (const CalendarStyle().selectedDecoration as BoxDecoration)
+                  .copyWith(color: Theme.of(context).colorScheme.primary),
+
+          todayDecoration:
+              (const CalendarStyle().todayDecoration as BoxDecoration).copyWith(
+                  color:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.5)),
         ),
+
         onDaySelected: _onDaySelected,
         // onRangeSelected: _onRangeSelected,
         onFormatChanged: (format) {
