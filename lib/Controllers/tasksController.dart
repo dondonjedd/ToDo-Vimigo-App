@@ -35,7 +35,8 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).removeTask(index);
   }
 
-  void toggleCompletedForTask(BuildContext context, int index,bool bol) {
-    Provider.of<Tasks>(context, listen: false).toggleCompletedForTask(index,bol);
+  void toggleCompletedForTask(BuildContext context, int index, bool bol) {
+    Provider.of<Tasks>(context, listen: false)
+        .toggleCompletedForTask(index, bol);
   }
 }

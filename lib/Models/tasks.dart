@@ -42,5 +42,6 @@ class Tasks extends ChangeNotifier {
 
   void toggleCompletedForTask(int index, bool bol) {
     _items.elementAt(index).isCompleted = bol;
+    notifyListeners();
   }
 }
