@@ -30,7 +30,14 @@ class _TodoScreenState extends State<TodoScreen> {
       value: isCompleted,
       onChanged: (bool? value) {
         setState(() {
-          TasksController().toggleCompletedForTask(context, index, value!);
+          int indexFromAllTask = isCompleted
+              ? TasksController()
+                  .getIndexWithId(context, _completedTasks[index].id)
+              : TasksController()
+                  .getIndexWithId(context, _incompleteTasks[index].id);
+
+          TasksController()
+              .toggleCompletedForTask(context, indexFromAllTask, value!);
           if (isCompleted) {
             _completedTasks[index].isCompleted = value;
 
@@ -118,6 +125,7 @@ class _TodoScreenState extends State<TodoScreen> {
           incompleteReorderableTaskList(),
           // const Text("Completed Tasks"),
           ExpansionTile(
+              initiallyExpanded: true,
               title: const Text("Completed Tasks"),
               children: [completeTaskList()])
         ],
