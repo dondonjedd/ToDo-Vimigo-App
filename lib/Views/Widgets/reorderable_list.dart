@@ -16,7 +16,7 @@ class ReorderableTaskList extends StatelessWidget {
     return ReorderableListView.builder(
       shrinkWrap: true,
       physics: const ScrollPhysics(),
-      buildDefaultDragHandles: true,
+      buildDefaultDragHandles: false,
       itemBuilder: (ctx, index) {
         return ListTile(
           key: Key(incompleteTasks[index].id),
@@ -25,6 +25,8 @@ class ReorderableTaskList extends StatelessWidget {
               TasksController()
                   .getIndexWithId(context, incompleteTasks[index].id),
               false),
+          trailing: ReorderableDragStartListener(
+              index: index, child: const Icon(Icons.drag_indicator_outlined)),
         );
       },
       itemCount: incompleteTasks.length,
