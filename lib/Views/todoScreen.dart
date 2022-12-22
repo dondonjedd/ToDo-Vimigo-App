@@ -13,7 +13,18 @@ class TodoScreen extends StatelessWidget {
                 TasksController().getTaskAtIndex(context, index);
             return ListTile(
               key: ValueKey(taskAtIndex.id),
-              leading: Text(taskAtIndex.title),
+              title: Text(taskAtIndex.title),
+              leading: Checkbox(
+                checkColor: Colors.white,
+                fillColor: MaterialStatePropertyAll(
+                    Theme.of(context).colorScheme.primary),
+                value: false,
+                onChanged: (bool? value) {
+                  // setState(() {
+                  //   isChecked = value!;
+                  // });
+                },
+              ),
             );
           },
           itemCount: TasksController().getTaskslength(context),
