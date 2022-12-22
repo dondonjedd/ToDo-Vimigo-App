@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
+import 'package:todo_vimigo_app/Views/Widgets/reorderable_list.dart';
 
 import '../Models/task.dart';
 
@@ -22,7 +23,7 @@ class _TodoScreenState extends State<TodoScreen> {
     super.initState();
   }
 
-  Widget checkbox(int index, bool isCompleted) {
+  Widget _checkbox(int index, bool isCompleted) {
     return Checkbox(
       checkColor: Colors.white,
       fillColor:
@@ -64,41 +65,28 @@ class _TodoScreenState extends State<TodoScreen> {
     );
   }
 
-  Widget incompleteReorderableTaskList() {
-    return ReorderableListView.builder(
-      shrinkWrap: true,
-      physics: const ScrollPhysics(),
-      buildDefaultDragHandles: true,
-      itemBuilder: (ctx, index) {
-        return ListTile(
-          key: Key(_incompleteTasks[index].id),
-          title: Text(_incompleteTasks[index].title),
-          leading: checkbox(index, false),
-        );
-      },
-      itemCount: _incompleteTasks.length,
-      onReorder: (int oldIndex, int newIndex) {
-        setState(() {
-          final oldIndexOfAllTasks = TasksController()
-              .getIndexWithId(context, _incompleteTasks[oldIndex].id);
-          final newIndexOfAllTasks = TasksController()
-              .getIndexWithId(context, _incompleteTasks[newIndex].id);
+  void onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      final oldIndexOfAllTasks = TasksController()
+          .getIndexWithId(context, _incompleteTasks[oldIndex].id);
+      final newIndexOfAllTasks = TasksController()
+          .getIndexWithId(context, _incompleteTasks[newIndex].id);
 
-          TasksController().shiftingElements(
-              context, oldIndexOfAllTasks, newIndexOfAllTasks);
+      TasksController()
+          .shiftingElements(context, oldIndexOfAllTasks, newIndexOfAllTasks);
 
-          if (oldIndex < newIndex) {
-            newIndex -= 1;
-          }
+      if (oldIndex < newIndex) {
+        newIndex -= 1;
+      }
 
-          final taskToSwitch = _incompleteTasks.removeAt(oldIndex);
-          _incompleteTasks.insert(newIndex, taskToSwitch);
-        });
-      },
-    );
+      final taskToSwitch = _incompleteTasks.removeAt(oldIndex);
+      _incompleteTasks.insert(newIndex, taskToSwitch);
+    });
   }
 
-  Widget completeTaskList() {
+
+
+  Widget _completeTaskList() {
     return ListView.builder(
       shrinkWrap: true,
       physics: const ScrollPhysics(),
@@ -106,7 +94,7 @@ class _TodoScreenState extends State<TodoScreen> {
         return ListTile(
           key: ValueKey(_completedTasks[index].id),
           title: Text(_completedTasks[index].title),
-          leading: checkbox(index, true),
+          leading: _checkbox(index, true),
         );
       },
       itemCount: _completedTasks.length,
@@ -122,12 +110,15 @@ class _TodoScreenState extends State<TodoScreen> {
           kBottomNavigationBarHeight,
       child: ListView(
         children: [
-          incompleteReorderableTaskList(),
+          ReorderableTaskList(
+              incompleteTasks: _incompleteTasks,
+              checkbox: _checkbox,
+              onReorder: onReorder),
           // const Text("Completed Tasks"),
           ExpansionTile(
               initiallyExpanded: true,
               title: const Text("Completed Tasks"),
-              children: [completeTaskList()])
+              children: [_completeTaskList()])
         ],
       ),
     );
