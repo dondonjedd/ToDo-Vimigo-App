@@ -27,6 +27,10 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).getItemAtIndex(index);
   }
 
+  int getIndexWithId(BuildContext context, String id) {
+    return Provider.of<Tasks>(context, listen: false).getTaskWithId(id);
+  }
+
   void insertTask(BuildContext context, int index, Task taskToAdd) {
     Provider.of<Tasks>(context, listen: false).insertTask(index, taskToAdd);
   }
@@ -35,13 +39,14 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).removeTask(index);
   }
 
-  void swapTask(BuildContext context, int firstIndex, int secondIndex) {
-    Provider.of<Tasks>(context, listen: false)
-        .swapTask(firstIndex, secondIndex);
-  }
-
   void toggleCompletedForTask(BuildContext context, int index, bool bol) {
     Provider.of<Tasks>(context, listen: false)
         .toggleCompletedForTask(index, bol);
+  }
+
+  void shiftingElements(BuildContext context, int oldIndex, int newIndex) {
+    final taskToSwitchProvider =
+        TasksController().removeTask(context, oldIndex);
+    TasksController().insertTask(context, newIndex, taskToSwitchProvider);
   }
 }

@@ -57,10 +57,8 @@ class _TodoScreenState extends State<TodoScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    //Incomplete tasks
-    var reorderableListView = ReorderableListView.builder(
+  Widget incompleteReorderableTaskList() {
+    return ReorderableListView.builder(
       buildDefaultDragHandles: true,
       itemBuilder: (ctx, index) {
         return ListTile(
@@ -75,18 +73,23 @@ class _TodoScreenState extends State<TodoScreen> {
           if (oldIndex < newIndex) {
             newIndex -= 1;
           }
-          final taskToSwitchProvider =
-              TasksController().removeTask(context, oldIndex);
-          TasksController().insertTask(context, newIndex, taskToSwitchProvider);
+          final oldIndexOfAllTasks = TasksController()
+              .getIndexWithId(context, _incompleteTasks[oldIndex].id);
+          final newIndexOfAllTasks = TasksController()
+              .getIndexWithId(context, _incompleteTasks[newIndex].id);
+
+          TasksController().shiftingElements(
+              context, oldIndexOfAllTasks, newIndexOfAllTasks);
 
           final taskToSwitch = _incompleteTasks.removeAt(oldIndex);
           _incompleteTasks.insert(newIndex, taskToSwitch);
         });
       },
     );
+  }
 
-    //Completed Tasks
-    var listView = ListView.builder(
+  Widget completeTaskList() {
+    return ListView.builder(
       itemBuilder: (ctx, index) {
         return ListTile(
           key: ValueKey(_completedTasks[index].id),
@@ -96,7 +99,10 @@ class _TodoScreenState extends State<TodoScreen> {
       },
       itemCount: _completedTasks.length,
     );
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height - // total height
           kToolbarHeight - // top AppBar height
@@ -105,12 +111,12 @@ class _TodoScreenState extends State<TodoScreen> {
       child: Column(children: [
         Flexible(
           flex: 4,
-          child: reorderableListView,
+          child: incompleteReorderableTaskList(),
         ),
         const Flexible(flex: 1, child: Text("Completed Tasks")),
         Flexible(
           flex: 4,
-          child: listView,
+          child: completeTaskList(),
         )
       ]),
     );

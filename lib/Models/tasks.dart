@@ -47,6 +47,10 @@ class Tasks extends ChangeNotifier {
     return _items.elementAt(index);
   }
 
+  int getTaskWithId(String id) {
+    return _items.indexWhere((task) => task.id == id);
+  }
+
   void toggleCompletedForTask(int index, bool bol) {
     _items.elementAt(index).isCompleted = bol;
     notifyListeners();
