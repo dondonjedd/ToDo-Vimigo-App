@@ -13,10 +13,11 @@ class AddNewTask extends StatefulWidget {
 class _AddNewTaskState extends State<AddNewTask> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  final _dateController = TextEditingController();
   DateTime? _chosenDate;
   final _form = GlobalKey<FormState>();
   var _newTaskToAdd = Task(id: "", title: "");
+  final _descriptionFocusNode = FocusNode();
+  final _titleFocusNode = FocusNode();
 
   submitData(BuildContext ctx) {
     final enteredTitle = _titleController.text;
@@ -108,6 +109,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                   autofocus: true,
                   controller: _titleController,
                   onFieldSubmitted: (_) => _saveForm(),
+                  focusNode: _titleFocusNode,
                   onSaved: (newValue) =>
                       {_newTaskToAdd = _newTaskToAdd.copyWith(title: newValue)},
                 ),
@@ -132,8 +134,14 @@ class _AddNewTaskState extends State<AddNewTask> {
                     "Add Description",
                     style: TextStyle(fontSize: 14),
                   ),
+                  onExpansionChanged: (val) {
+                    if (val) {
+                      _descriptionFocusNode.requestFocus();
+                    }
+                  },
                   children: [
                     TextFormField(
+                      focusNode: _descriptionFocusNode,
                       controller: _descriptionController,
                       decoration: const InputDecoration(
                           hintText: "Description",
