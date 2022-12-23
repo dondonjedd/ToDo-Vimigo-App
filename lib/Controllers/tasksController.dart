@@ -39,6 +39,10 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).removeTask(index);
   }
 
+  Task removeTaskWithId(BuildContext context, String id) {
+    return removeTask(context, getIndexWithId(context, id));
+  }
+
   void setIsCompletedForTask(BuildContext context, int index, bool bol) {
     Provider.of<Tasks>(context, listen: false)
         .toggleCompletedForTask(index, bol);

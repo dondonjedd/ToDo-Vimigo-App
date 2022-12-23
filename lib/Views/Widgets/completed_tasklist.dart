@@ -18,10 +18,8 @@ class CompletedTaskList extends StatelessWidget {
           key: ValueKey(completedTasks[index].id),
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
-            TasksController().removeTask(
-                context,
-                TasksController()
-                    .getIndexWithId(context, completedTasks[index].id));
+            TasksController()
+                .removeTaskWithId(context, completedTasks[index].id);
           },
           background: Container(
             color: Theme.of(context).colorScheme.error,

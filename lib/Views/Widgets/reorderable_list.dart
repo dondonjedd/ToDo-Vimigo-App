@@ -22,10 +22,8 @@ class ReorderableTaskList extends StatelessWidget {
           key: ValueKey(incompleteTasks[index].id),
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
-            TasksController().removeTask(
-                context,
-                TasksController()
-                    .getIndexWithId(context, incompleteTasks[index].id));
+            TasksController()
+                .removeTaskWithId(context, incompleteTasks[index].id);
           },
           background: Container(
             color: Theme.of(context).colorScheme.error,
