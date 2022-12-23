@@ -36,7 +36,10 @@ class CompletedTaskList extends StatelessWidget {
           ),
           child: ListTile(
             key: ValueKey(completedTasks[index].id),
-            title: Text(completedTasks[index].title),
+            title: Text(
+              completedTasks[index].title,
+              style: const TextStyle(decoration: TextDecoration.lineThrough),
+            ),
             leading: checkBox(
                 TasksController()
                     .getIndexWithId(context, completedTasks[index].id),
