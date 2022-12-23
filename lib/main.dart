@@ -24,11 +24,11 @@ class MyApp extends StatelessWidget {
           ),
           routes: {
             "/": (ctx) => const TabsScreen(),
-          }
+          },
 
-          // onUnknownRoute: (settings) {
-          //   return MaterialPageRoute(builder: (ctx) => const Dashboard());
-          // },
+          onUnknownRoute: (settings) {
+            return MaterialPageRoute(builder: (ctx) => const TabsScreen());
+          },
           ),
     );
   }
