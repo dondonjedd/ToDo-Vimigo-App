@@ -25,6 +25,14 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
+  startAddTaskBottomSheet(ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return const Text("Bottom Sheet");
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -52,7 +60,7 @@ class _TabsScreenState extends State<TabsScreen> {
           floatingActionButton: _selectedPageIndex == 0
               ? FloatingActionButton(
                   backgroundColor: Theme.of(context).colorScheme.primary,
-                  onPressed: (() {}),
+                  onPressed: () => startAddTaskBottomSheet(context),
                   child: const Icon(
                     Icons.add,
                   ),
