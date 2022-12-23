@@ -12,6 +12,7 @@ class AddNewTask extends StatefulWidget {
 
 class _AddNewTaskState extends State<AddNewTask> {
   final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
   DateTime? _chosenDate;
 
   submitData(BuildContext ctx) {
@@ -23,6 +24,7 @@ class _AddNewTaskState extends State<AddNewTask> {
     Task newTask = Task(
         id: DateTime.now().toString(),
         title: _titleController.text,
+        description: _descriptionController.text,
         date: _chosenDate);
     TasksController().insertTask(context, 0, newTask);
     Navigator.of(context).pop();
@@ -80,16 +82,18 @@ class _AddNewTaskState extends State<AddNewTask> {
                 ],
               ),
             ),
-            const ExpansionTile(
-              title: Text(
+            ExpansionTile(
+              title: const Text(
                 "Add Description",
                 style: TextStyle(fontSize: 14),
               ),
               children: [
                 TextField(
-                  decoration: InputDecoration(
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
                       hintText: "Description",
                       hintStyle: TextStyle(fontSize: 13)),
+                  onSubmitted: (_) => submitData(context),
                 )
               ],
             ),
