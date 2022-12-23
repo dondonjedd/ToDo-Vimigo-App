@@ -23,7 +23,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   List<Task> _getEventsForDay(DateTime date) {
     // Implementation example
-    return TasksController().getTasksForDay(context, date);
+    return TasksController().getIncompleteTasksForDay(context, date);
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {

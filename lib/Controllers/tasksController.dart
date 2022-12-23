@@ -9,13 +9,14 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).items.toList();
   }
 
-  List<Task> getTasksForDay(BuildContext context, DateTime date) {
+  List<Task> getIncompleteTasksForDay(BuildContext context, DateTime date) {
     return Provider.of<Tasks>(context, listen: false)
         .items
         .where((task) =>
             task.date?.day == date.day &&
             task.date?.month == date.month &&
-            task.date?.year == date.year)
+            task.date?.year == date.year &&
+            task.isCompleted == false)
         .toList();
   }
 
