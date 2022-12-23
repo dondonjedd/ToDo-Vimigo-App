@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_vimigo_app/utils.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({super.key});
@@ -19,35 +20,12 @@ class _AddNewTaskState extends State<AddNewTask> {
   final _descriptionFocusNode = FocusNode();
   final _titleFocusNode = FocusNode();
 
-  submitData(BuildContext ctx) {
-    final enteredTitle = _titleController.text;
-
-    if (enteredTitle.isEmpty) {
-      return;
-    }
-    Task newTask = Task(
-        id: DateTime.now().toString(),
-        title: _titleController.text,
-        description: _descriptionController.text,
-        date: _chosenDate);
-    TasksController().insertTask(context, 0, newTask);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
-      content: Text(
-        "Task Added",
-        textAlign: TextAlign.center,
-      ),
-      duration: Duration(seconds: 2),
-    ));
-    Navigator.of(context).pop();
-  }
-
   _presentDatePicker() {
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime(DateTime.now().year),
-            lastDate: DateTime.now())
+            firstDate: kFirstDay,
+            lastDate: kLastDay)
         .then((value) {
       if (value == null) {
         return;
