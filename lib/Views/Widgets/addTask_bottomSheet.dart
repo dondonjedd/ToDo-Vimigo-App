@@ -44,16 +44,13 @@ class _AddNewTaskState extends State<AddNewTask> {
     _newTaskToAdd = _newTaskToAdd.copyWith(
         id: DateTime.now().toString(), date: _chosenDate);
     TasksController().insertTask(context, 0, _newTaskToAdd);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
-      content: Text(
-        "Task Added",
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
-      ),
-      duration: const Duration(seconds: 2),
-    ));
+
+    showScaffold(context,
+        text: "Task Added",
+        bgColor: Theme.of(context).colorScheme.tertiary,
+        textColor: Theme.of(context).colorScheme.onSecondary,
+        duration: const Duration(seconds: 1));
+
     Navigator.of(context).pop();
   }
 

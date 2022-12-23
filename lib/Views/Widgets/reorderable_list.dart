@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
+import 'package:todo_vimigo_app/utils.dart';
 
 class ReorderableTaskList extends StatelessWidget {
   final incompleteTasks;
@@ -24,6 +25,12 @@ class ReorderableTaskList extends StatelessWidget {
           onDismissed: (direction) {
             TasksController()
                 .removeTaskWithId(context, incompleteTasks[index].id);
+
+            showScaffold(context,
+                text: "Task Removed",
+                bgColor: Theme.of(context).colorScheme.error,
+                textColor: Theme.of(context).colorScheme.onSecondary,
+                duration: const Duration(milliseconds: 500));
           },
           background: Container(
             color: Theme.of(context).colorScheme.error,
