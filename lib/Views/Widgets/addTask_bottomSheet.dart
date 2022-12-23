@@ -27,6 +27,14 @@ class _AddNewTaskState extends State<AddNewTask> {
         description: _descriptionController.text,
         date: _chosenDate);
     TasksController().insertTask(context, 0, newTask);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+      content: Text(
+        "Task Added",
+        textAlign: TextAlign.center,
+      ),
+      duration: Duration(seconds: 2),
+    ));
     Navigator.of(context).pop();
   }
 
