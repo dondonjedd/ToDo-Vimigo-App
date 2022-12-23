@@ -64,23 +64,35 @@ class _AddNewTaskState extends State<AddNewTask> {
               controller: _titleController,
               onSubmitted: (_) => submitData(context),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _chosenDate == null
+                      ? const Text("No Date Chosen")
+                      : Text(DateFormat("dd/MM/yyyy").format(_chosenDate!)),
+                  ElevatedButton(
+                      onPressed: _presentDatePicker,
+                      child: const Text(
+                        "Choose a date",
+                      )),
+                ],
+              ),
+            ),
+            const ExpansionTile(
+              title: Text(
+                "Add Description",
+                style: TextStyle(fontSize: 14),
+              ),
               children: [
-                _chosenDate == null
-                    ? const Text("No date chosen")
-                    : Text(DateFormat("dd/MM/yyyy").format(_chosenDate!)),
-                TextButton(
-                    onPressed: _presentDatePicker,
-                    child: Text(
-                      "Choose a date",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary),
-                    )),
-                TextButton(
-                    onPressed: () {}, child: const Text("Add Description"))
+                TextField(
+                  decoration: InputDecoration(
+                      hintText: "Description",
+                      hintStyle: TextStyle(fontSize: 13)),
+                )
               ],
-            )
+            ),
           ]),
         ),
       ),
