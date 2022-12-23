@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
+import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
 import 'package:todo_vimigo_app/Views/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/todoScreen.dart';
 
@@ -27,9 +28,10 @@ class _TabsScreenState extends State<TabsScreen> {
 
   startAddTaskBottomSheet(ctx) {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: ctx,
         builder: (_) {
-          return const Text("Bottom Sheet");
+          return AddNewTask();
         });
   }
 
