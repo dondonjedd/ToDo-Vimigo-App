@@ -46,7 +46,7 @@ class ReorderableTaskList extends StatelessWidget {
           ),
           child: ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed(EditTask.routeName);
+              Navigator.of(context).pushNamed(EditTask.routeName,arguments: TasksController().getIndexWithId(context, incompleteTasks[index].id));
             },
             key: Key(incompleteTasks[index].id),
             title: Text(incompleteTasks[index].title),
