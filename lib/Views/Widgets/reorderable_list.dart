@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
+import 'package:todo_vimigo_app/Views/editTask_screen.dart';
 import 'package:todo_vimigo_app/utils.dart';
 
 class ReorderableTaskList extends StatelessWidget {
@@ -44,6 +45,9 @@ class ReorderableTaskList extends StatelessWidget {
             ),
           ),
           child: ListTile(
+            onTap: () {
+              Navigator.of(context).pushNamed(EditTask.routeName);
+            },
             key: Key(incompleteTasks[index].id),
             title: Text(incompleteTasks[index].title),
             leading: checkbox(

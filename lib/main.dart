@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
+import 'package:todo_vimigo_app/Views/editTask_screen.dart';
 import 'package:todo_vimigo_app/Views/tabsScreen.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           "/": (ctx) => const TabsScreen(),
+          EditTask.routeName: (ctx) => const EditTask(),
         },
         onUnknownRoute: (settings) {
           return MaterialPageRoute(builder: (ctx) => const TabsScreen());
