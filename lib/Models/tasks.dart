@@ -24,7 +24,7 @@ class Tasks extends ChangeNotifier {
   ];
 
   List<Task> get items {
-    return _items;
+    return [..._items];
   }
 
   void addTask(Task taskToAdd) {
@@ -44,11 +44,11 @@ class Tasks extends ChangeNotifier {
   }
 
   Task getItemAtIndex(int index) {
-    return _items[index];
+    return [..._items][index];
   }
 
   int getTaskWithId(String id) {
-    return _items.indexWhere((task) => task.id == id);
+    return [..._items].indexWhere((task) => task.id == id);
   }
 
   void toggleCompletedForTask(int index, bool bol) {
@@ -60,8 +60,8 @@ class Tasks extends ChangeNotifier {
   }
 
   void shiftingElements(int oldIndex, int newIndex) {
-    final taskToSwitchProvider = items.removeAt(oldIndex);
-    items.insert(newIndex, taskToSwitchProvider);
+    final taskToSwitchProvider = _items.removeAt(oldIndex);
+    _items.insert(newIndex, taskToSwitchProvider);
     notifyListeners();
   }
 }

@@ -13,9 +13,9 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false)
         .items
         .where((task) =>
-            task.date.day == date.day &&
-            task.date.month == date.month &&
-            task.date.year == date.year)
+            task.date?.day == date.day &&
+            task.date?.month == date.month &&
+            task.date?.year == date.year)
         .toList();
   }
 
@@ -47,5 +47,12 @@ class TasksController {
   void shiftingElements(BuildContext context, int oldIndex, int newIndex) {
     Provider.of<Tasks>(context, listen: false)
         .shiftingElements(oldIndex, newIndex);
+  }
+
+  void addNewTask(
+    BuildContext context,
+    Task newTask,
+  ) {
+    Provider.of<Tasks>(context, listen: false).addTask(newTask);
   }
 }

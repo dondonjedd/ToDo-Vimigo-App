@@ -3,13 +3,13 @@ import 'package:flutter/widgets.dart';
 class Task extends ChangeNotifier {
   final String id;
   final String title;
-  final DateTime date;
+  DateTime? date;
   bool isCompleted;
 
   Task(
       {required this.id,
       required this.title,
-      required this.date,
+      this.date,
       this.isCompleted = false});
 
   @override

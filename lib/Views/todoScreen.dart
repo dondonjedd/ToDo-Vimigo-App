@@ -57,7 +57,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final taskProvider = Provider.of<Tasks>(context);
+    final taskProvider = Provider.of<Tasks>(context, listen: true);
     return SizedBox(
       height: MediaQuery.of(context).size.height - // total height
           kToolbarHeight - // top AppBar height
@@ -65,12 +65,15 @@ class _TodoScreenState extends State<TodoScreen> {
           kBottomNavigationBarHeight,
       child: ListView(
         children: [
-          ReorderableTaskList(
-              incompleteTasks: taskProvider.items
-                  .where((t) => t.isCompleted == false)
-                  .toList(),
-              checkbox: _checkbox,
-              reorderFunc: onReorder),
+          Consumer<Tasks>(
+            builder: (context, value, child) => ReorderableTaskList(
+                incompleteTasks: taskProvider.items
+                    .where((t) => t.isCompleted == false)
+                    .toList(),
+                checkbox: _checkbox,
+                reorderFunc: onReorder),
+          ),
+
           // const Text("Completed Tasks"),
           ExpansionTile(
               initiallyExpanded: true,

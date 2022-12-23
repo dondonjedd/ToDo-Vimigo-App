@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_vimigo_app/Controllers/tasksController.dart';
+import 'package:todo_vimigo_app/Models/task.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({super.key});
@@ -12,12 +14,18 @@ class _AddNewTaskState extends State<AddNewTask> {
   final _titleController = TextEditingController();
   DateTime? _chosenDate;
 
-  submitData() {
+  submitData(BuildContext ctx) {
     final enteredTitle = _titleController.text;
 
     if (enteredTitle.isEmpty) {
       return;
     }
+    Task newTask = Task(
+        id: DateTime.now().toString(),
+        title: _titleController.text,
+        date: _chosenDate);
+    TasksController().insertTask(context, 0, newTask);
+    Navigator.of(context).pop();
   }
 
   _presentDatePicker() {
@@ -54,7 +62,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                   )),
               autofocus: true,
               controller: _titleController,
-              onSubmitted: (_) => submitData(),
+              onSubmitted: (_) => submitData(context),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
