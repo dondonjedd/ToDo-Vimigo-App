@@ -18,15 +18,36 @@ class ReorderableTaskList extends StatelessWidget {
       physics: const ScrollPhysics(),
       buildDefaultDragHandles: false,
       itemBuilder: (ctx, index) {
-        return ListTile(
-          key: Key(incompleteTasks[index].id),
-          title: Text(incompleteTasks[index].title),
-          leading: checkbox(
-              TasksController()
-                  .getIndexWithId(context, incompleteTasks[index].id),
-              false),
-          trailing: ReorderableDragStartListener(
-              index: index, child: const Icon(Icons.drag_indicator_outlined)),
+        return Dismissible(
+          key: ValueKey(incompleteTasks[index].id),
+          direction: DismissDirection.endToStart,
+          onDismissed: (direction) {
+            TasksController().removeTask(
+                context,
+                TasksController()
+                    .getIndexWithId(context, incompleteTasks[index].id));
+          },
+          background: Container(
+            color: Theme.of(context).colorScheme.error,
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.only(right: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+            child: Icon(
+              Icons.delete,
+              color: Theme.of(context).colorScheme.inversePrimary,
+              size: 40,
+            ),
+          ),
+          child: ListTile(
+            key: Key(incompleteTasks[index].id),
+            title: Text(incompleteTasks[index].title),
+            leading: checkbox(
+                TasksController()
+                    .getIndexWithId(context, incompleteTasks[index].id),
+                false),
+            trailing: ReorderableDragStartListener(
+                index: index, child: const Icon(Icons.drag_indicator_outlined)),
+          ),
         );
       },
       itemCount: incompleteTasks.length,
