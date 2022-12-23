@@ -46,7 +46,12 @@ class _AddNewTaskState extends State<AddNewTask> {
           padding: const EdgeInsets.all(10),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             TextField(
-              decoration: const InputDecoration(labelText: "Title"),
+              decoration: InputDecoration(
+                  labelText: "Title",
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {},
+                  )),
               autofocus: true,
               controller: _titleController,
               onSubmitted: (_) => submitData(),
