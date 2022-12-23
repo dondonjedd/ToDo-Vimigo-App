@@ -21,4 +21,19 @@ class Task extends ChangeNotifier {
     isCompleted = bol;
     notifyListeners();
   }
+
+  Task copyWith({
+    String? id,
+    String? title,
+    String? description,
+    DateTime? date,
+    bool? isCompleted,
+  }) {
+    return Task(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        date: date ?? this.date,
+        isCompleted: isCompleted ?? this.isCompleted);
+  }
 }

@@ -15,21 +15,20 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (ctx) => Tasks(),
       child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: Colors.blue,
-                  secondary: Colors.lightBlue[50],
-                ),
-          ),
-          routes: {
-            "/": (ctx) => const TabsScreen(),
-          },
-
-          onUnknownRoute: (settings) {
-            return MaterialPageRoute(builder: (ctx) => const TabsScreen());
-          },
-          ),
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Colors.blue,
+              secondary: Colors.lightBlue[50],
+              tertiary: Colors.green),
+        ),
+        routes: {
+          "/": (ctx) => const TabsScreen(),
+        },
+        onUnknownRoute: (settings) {
+          return MaterialPageRoute(builder: (ctx) => const TabsScreen());
+        },
+      ),
     );
   }
 }
