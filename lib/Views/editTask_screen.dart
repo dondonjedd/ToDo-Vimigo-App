@@ -59,14 +59,27 @@ class _EditTaskState extends State<EditTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_taskToEdit.title)),
+      floatingActionButton: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(
+                Theme.of(context).colorScheme.primary)),
+        onPressed: () {
+          _saveForm();
+        },
+        child: const Icon(Icons.edit),
+      ),
+      appBar: AppBar(title: const Text("View/Edit Task")),
       body: Container(
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         child: Form(
             key: _form,
-            child: Column(children: [
+            child: ListView(children: [
               TextFormField(
+                textAlign: TextAlign.center,
                 initialValue: _taskToEdit.title,
+                decoration: const InputDecoration(
+                    labelText: "Title",
+                    floatingLabelAlignment: FloatingLabelAlignment.center),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Please enter a valid title";
@@ -84,7 +97,9 @@ class _EditTaskState extends State<EditTask> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _chosenDate == null
-                      ? const Text("No Date Chosen")
+                      ? const Text(
+                          "No Date Chosen",
+                        )
                       : Text(
                           "Chosen Date: ${DateFormat("dd/MM/yyyy").format(_chosenDate!)}"),
                   ElevatedButton(
@@ -100,22 +115,21 @@ class _EditTaskState extends State<EditTask> {
               TextFormField(
                 initialValue: _taskToEdit.description,
                 decoration: const InputDecoration(
-                    labelText: "Description",
-                    hintStyle: TextStyle(fontSize: 13)),
+                  labelText: "Description",
+                  border: InputBorder.none,
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+                minLines: 1,
+                maxLines: 15,
                 onFieldSubmitted: (_) => _saveForm(),
                 onSaved: (newValue) =>
                     {_taskToEdit = _taskToEdit.copyWith(description: newValue)},
               ),
-              const Spacer(),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        Theme.of(context).colorScheme.primary)),
-                onPressed: () {
-                  _saveForm();
-                },
-                child: const Icon(Icons.edit),
-              )
             ])),
       ),
     );
