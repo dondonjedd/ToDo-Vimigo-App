@@ -20,6 +20,13 @@ class _AddNewTaskState extends State<AddNewTask> {
   final _descriptionFocusNode = FocusNode();
   final _titleFocusNode = FocusNode();
 
+  @override
+  void dispose() {
+    _titleFocusNode.dispose();
+    _descriptionFocusNode.dispose();
+    super.dispose();
+  }
+
   _presentDatePicker() {
     showDatePicker(
             context: context,
@@ -74,7 +81,10 @@ class _AddNewTaskState extends State<AddNewTask> {
                     return null;
                   },
                   decoration: InputDecoration(
-                      labelText: "Title",
+                      label: RichText(
+                          text: const TextSpan(text: "Title", children: [
+                        TextSpan(text: '*', style: TextStyle(color: Colors.red))
+                      ])),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {

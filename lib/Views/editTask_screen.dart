@@ -24,6 +24,7 @@ class _EditTaskState extends State<EditTask> {
 
   @override
   void dispose() {
+    _datePickerNode.dispose();
     super.dispose();
   }
 
