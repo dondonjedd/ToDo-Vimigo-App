@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:intl/intl.dart';
 import '../Models/task.dart';
@@ -75,6 +76,8 @@ class _EditTaskState extends State<EditTask> {
             key: _form,
             child: ListView(children: [
               TextFormField(
+                maxLength: 60,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 textAlign: TextAlign.center,
                 initialValue: _taskToEdit.title,
                 decoration: const InputDecoration(
@@ -113,6 +116,8 @@ class _EditTaskState extends State<EditTask> {
                 height: 20,
               ),
               TextFormField(
+                maxLength: 250,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 initialValue: _taskToEdit.description,
                 decoration: const InputDecoration(
                   labelText: "Description",
