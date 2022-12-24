@@ -84,7 +84,10 @@ class _TodoScreenState extends State<TodoScreen> {
                         .where((t) => t.isCompleted == true)
                         .toList(),
                     checkBox: _checkbox)
-              ])
+              ]),
+          const SizedBox(
+            height: 100,
+          )
         ],
       ),
     );
