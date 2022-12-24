@@ -112,7 +112,7 @@ class _EditTaskState extends State<EditTask> {
                     textAlign: TextAlign.center,
                     initialValue: _taskToEdit.title,
                     decoration: InputDecoration(
-                      prefix: TaskCheckBox(
+                      prefixIcon: TaskCheckBox(
                         index: TasksController().getIndexWithId(context,
                             TasksController().getTasks(context)[_taskIndex].id),
                       ),
