@@ -111,7 +111,6 @@ class _EditTaskState extends State<EditTask> {
                     textAlign: TextAlign.center,
                     initialValue: _taskToEdit.title,
                     decoration: InputDecoration(
-                      // labelText: "Title",
                       label: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -122,12 +121,7 @@ class _EditTaskState extends State<EditTask> {
                                   color: Theme.of(context).colorScheme.error),
                             )
                           ]),
-                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                      // suffix: Text(
-                      //   "*",
-                      //   style: TextStyle(
-                      //       color: Theme.of(context).colorScheme.error),
-                      // )
+                      floatingLabelAlignment: FloatingLabelAlignment.center,
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {

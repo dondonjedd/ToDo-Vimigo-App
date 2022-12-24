@@ -81,10 +81,17 @@ class _AddNewTaskState extends State<AddNewTask> {
                     return null;
                   },
                   decoration: InputDecoration(
-                      label: RichText(
-                          text: const TextSpan(text: "Title", children: [
-                        TextSpan(text: '*', style: TextStyle(color: Colors.red))
-                      ])),
+                      label: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Title"),
+                            Text(
+                              "*",
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error),
+                            )
+                          ]),
+                      floatingLabelAlignment: FloatingLabelAlignment.center,
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {
