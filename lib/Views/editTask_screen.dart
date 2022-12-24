@@ -20,6 +20,7 @@ class _EditTaskState extends State<EditTask> {
   final _dateController = TextEditingController();
   final _datePickerNode = FocusNode();
   late int _taskIndex;
+  var _initValue = Task(id: "", title: "");
 
   @override
   void dispose() {
@@ -30,6 +31,7 @@ class _EditTaskState extends State<EditTask> {
   void didChangeDependencies() {
     if (!_isInit) {
       _taskIndex = ModalRoute.of(context)?.settings.arguments as int;
+      _initValue = TasksController().getTaskAtIndex(context, _taskIndex);
       _taskToEdit = TasksController().getTaskAtIndex(context, _taskIndex);
       _chosenDate = _taskToEdit.date;
       if (_chosenDate == null) {
@@ -79,7 +81,7 @@ class _EditTaskState extends State<EditTask> {
           IconButton(
               onPressed: () {
                 TasksController().removeTask(context, _taskIndex);
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(argumentsEditToTodo.deleted);
               },
               icon: const Icon(Icons.delete_forever_outlined)),
         ],
@@ -87,6 +89,12 @@ class _EditTaskState extends State<EditTask> {
       body: WillPopScope(
         onWillPop: () async {
           _saveForm();
+
+          Navigator.of(context).pop(_initValue.title == _taskToEdit.title &&
+                  _initValue.date == _taskToEdit.date &&
+                  _initValue.description == _taskToEdit.description
+              ? argumentsEditToTodo.none
+              : argumentsEditToTodo.edited);
           return true;
         },
         child: Container(

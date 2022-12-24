@@ -46,7 +46,29 @@ class ReorderableTaskList extends StatelessWidget {
           ),
           child: ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed(EditTask.routeName,arguments: TasksController().getIndexWithId(context, incompleteTasks[index].id));
+              Navigator.of(context)
+                  .pushNamed(EditTask.routeName,
+                      arguments: TasksController()
+                          .getIndexWithId(context, incompleteTasks[index].id))
+                  .then((value) {
+                switch (value) {
+                  case argumentsEditToTodo.deleted:
+                    showScaffold(context,
+                        text: "Task Deleted",
+                        bgColor: Theme.of(context).colorScheme.error,
+                        textColor: Theme.of(context).colorScheme.onError,
+                        duration: const Duration(milliseconds: 1000));
+                    break;
+                  case argumentsEditToTodo.edited:
+                    showScaffold(context,
+                        text: "Task Edited",
+                        bgColor: Theme.of(context).colorScheme.tertiary,
+                        textColor: Theme.of(context).colorScheme.onTertiary,
+                        duration: const Duration(milliseconds: 1000));
+                    break;
+                  default:
+                }
+              });
             },
             key: Key(incompleteTasks[index].id),
             title: Text(incompleteTasks[index].title),

@@ -21,3 +21,5 @@ void showScaffold(BuildContext context,
     duration: duration,
   ));
 }
+
+enum argumentsEditToTodo { deleted, edited, none }
