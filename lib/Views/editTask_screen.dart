@@ -47,13 +47,19 @@ class _EditTaskState extends State<EditTask> {
   }
 
   void _saveForm() {
-    // if (!(_form.currentState?.validate())!) {
-    //   return;
-    // }
+    if (!(_form.currentState?.validate())!) {
+      return;
+    }
     _form.currentState?.save();
 
     _taskToEdit = _taskToEdit.copyWith(id: _taskToEdit.id, date: _chosenDate);
     TasksController().updateTask(context, _taskToEdit.id, _taskToEdit);
+
+    Navigator.of(context).pop(_initValue.title == _taskToEdit.title &&
+            _initValue.date == _taskToEdit.date &&
+            _initValue.description == _taskToEdit.description
+        ? argumentsEditToTodo.none
+        : argumentsEditToTodo.edited);
   }
 
   _presentDatePicker() {
@@ -91,12 +97,7 @@ class _EditTaskState extends State<EditTask> {
         onWillPop: () async {
           _saveForm();
 
-          Navigator.of(context).pop(_initValue.title == _taskToEdit.title &&
-                  _initValue.date == _taskToEdit.date &&
-                  _initValue.description == _taskToEdit.description
-              ? argumentsEditToTodo.none
-              : argumentsEditToTodo.edited);
-          return true;
+          return false;
         },
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -110,15 +111,23 @@ class _EditTaskState extends State<EditTask> {
                     textAlign: TextAlign.center,
                     initialValue: _taskToEdit.title,
                     decoration: InputDecoration(
-                      label: RichText(
-                          text: const TextSpan(
-                              style: TextStyle(color: Colors.black),
-                              text: "Title",
-                              children: [
-                            TextSpan(
-                                text: '*', style: TextStyle(color: Colors.red))
-                          ])),
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
+                      // labelText: "Title",
+                      label: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Title"),
+                            Text(
+                              "*",
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error),
+                            )
+                          ]),
+                      floatingLabelAlignment: FloatingLabelAlignment.start,
+                      // suffix: Text(
+                      //   "*",
+                      //   style: TextStyle(
+                      //       color: Theme.of(context).colorScheme.error),
+                      // )
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -126,7 +135,6 @@ class _EditTaskState extends State<EditTask> {
                       }
                       return null;
                     },
-                    onFieldSubmitted: (_) => _saveForm(),
                     onSaved: (newValue) =>
                         {_taskToEdit = _taskToEdit.copyWith(title: newValue)},
                   ),
@@ -163,7 +171,6 @@ class _EditTaskState extends State<EditTask> {
                     ),
                     minLines: 1,
                     maxLines: 15,
-                    onFieldSubmitted: (_) => _saveForm(),
                     onSaved: (newValue) => {
                       _taskToEdit = _taskToEdit.copyWith(description: newValue)
                     },
