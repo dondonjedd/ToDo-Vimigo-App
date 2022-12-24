@@ -102,9 +102,17 @@ class _EditTaskState extends State<EditTask> {
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     textAlign: TextAlign.center,
                     initialValue: _taskToEdit.title,
-                    decoration: const InputDecoration(
-                        labelText: "Title",
-                        floatingLabelAlignment: FloatingLabelAlignment.center),
+                    decoration: InputDecoration(
+                      label: RichText(
+                          text: const TextSpan(
+                              style: TextStyle(color: Colors.black),
+                              text: "Title",
+                              children: [
+                            TextSpan(
+                                text: '*', style: TextStyle(color: Colors.red))
+                          ])),
+                      floatingLabelAlignment: FloatingLabelAlignment.center,
+                    ),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter a valid title";
