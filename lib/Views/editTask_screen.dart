@@ -65,9 +65,10 @@ class _EditTaskState extends State<EditTask> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(_taskToEdit.title)),
-      body: Form(
-          child: SingleChildScrollView(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
+      body: Container(
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+        child: Form(
+            child: Column(children: [
           TextFormField(
             initialValue: _taskToEdit.title,
             validator: (value) {
@@ -76,61 +77,52 @@ class _EditTaskState extends State<EditTask> {
               }
               return null;
             },
-            decoration: InputDecoration(
-                suffixIcon: IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                _saveForm();
-              },
-            )),
             autofocus: true,
             onFieldSubmitted: (_) => _saveForm(),
             focusNode: _titleFocusNode,
             onSaved: (newValue) =>
                 {_newTaskToAdd = _newTaskToAdd.copyWith(title: newValue)},
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _chosenDate == null
-                    ? const Text("No Date Chosen")
-                    : Text(DateFormat("dd/MM/yyyy").format(_chosenDate!)),
-                ElevatedButton(
-                    onPressed: _presentDatePicker,
-                    child: const Text(
-                      "Choose a date",
-                    )),
-              ],
-            ),
+          const SizedBox(
+            height: 20,
           ),
-          ExpansionTile(
-            title: const Text(
-              "Add Description",
-              style: TextStyle(fontSize: 14),
-            ),
-            onExpansionChanged: (val) {
-              if (val) {
-                _descriptionFocusNode.requestFocus();
-              }
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextFormField(
-                initialValue: _taskToEdit.description,
-                focusNode: _descriptionFocusNode,
-                decoration: const InputDecoration(
-                    hintText: "Description",
-                    hintStyle: TextStyle(fontSize: 13)),
-                onFieldSubmitted: (_) => _saveForm(),
-                onSaved: (newValue) => {
-                  _newTaskToAdd = _newTaskToAdd.copyWith(description: newValue)
-                },
-              )
+              _chosenDate == null
+                  ? const Text("No Date Chosen")
+                  : Text(DateFormat("dd/MM/yyyy").format(_chosenDate!)),
+              ElevatedButton(
+                  onPressed: _presentDatePicker,
+                  child: const Text(
+                    "Choose a date",
+                  )),
             ],
           ),
-        ]),
-      )),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            initialValue: _taskToEdit.description,
+            focusNode: _descriptionFocusNode,
+            decoration: const InputDecoration(
+                hintText: "Description", hintStyle: TextStyle(fontSize: 13)),
+            onFieldSubmitted: (_) => _saveForm(),
+            onSaved: (newValue) =>
+                {_newTaskToAdd = _newTaskToAdd.copyWith(description: newValue)},
+          ),
+          const Spacer(),
+          ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(
+                    Theme.of(context).colorScheme.primary)),
+            onPressed: () {
+              _saveForm();
+            },
+            child: const Icon(Icons.edit),
+          )
+        ])),
+      ),
     );
   }
 }
