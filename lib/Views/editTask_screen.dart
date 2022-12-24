@@ -94,8 +94,6 @@ class _EditTaskState extends State<EditTask> {
           child: Form(
               key: _form,
               child: ListView(
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
                 children: [
                   TextFormField(
                     maxLength: 60,
