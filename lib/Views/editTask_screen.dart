@@ -85,7 +85,8 @@ class _EditTaskState extends State<EditTask> {
                 children: [
                   _chosenDate == null
                       ? const Text("No Date Chosen")
-                      : Text(DateFormat("dd/MM/yyyy").format(_chosenDate!)),
+                      : Text(
+                          "Chosen Date: ${DateFormat("dd/MM/yyyy").format(_chosenDate!)}"),
                   ElevatedButton(
                       onPressed: _presentDatePicker,
                       child: const Text(
@@ -99,7 +100,7 @@ class _EditTaskState extends State<EditTask> {
               TextFormField(
                 initialValue: _taskToEdit.description,
                 decoration: const InputDecoration(
-                    hintText: "Description",
+                    labelText: "Description",
                     hintStyle: TextStyle(fontSize: 13)),
                 onFieldSubmitted: (_) => _saveForm(),
                 onSaved: (newValue) =>

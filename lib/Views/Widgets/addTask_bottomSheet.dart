@@ -95,7 +95,8 @@ class _AddNewTaskState extends State<AddNewTask> {
                     children: [
                       _chosenDate == null
                           ? const Text("No Date Chosen")
-                          : Text(DateFormat("dd/MM/yyyy").format(_chosenDate!)),
+                          : Text(
+                              "Chosen Date: ${DateFormat("dd/MM/yyyy").format(_chosenDate!)}"),
                       ElevatedButton(
                           onPressed: _presentDatePicker,
                           child: const Text(
