@@ -21,19 +21,7 @@ class _TodoScreenState extends State<TodoScreen> {
     super.initState();
   }
 
-  Widget _checkbox(int index, bool isCompleted) {
-    return Checkbox(
-      checkColor: Colors.white,
-      fillColor:
-          MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
-      value: TasksController().getTasks(context)[index].isCompleted,
-      onChanged: (bool? value) {
-        setState(() {
-          TasksController().setIsCompletedForTask(context, index, value!);
-        });
-      },
-    );
-  }
+
 
   void onReorder(int oldIndex, int newIndex) {
     setState(() {
@@ -70,7 +58,7 @@ class _TodoScreenState extends State<TodoScreen> {
                 incompleteTasks: taskProvider.items
                     .where((t) => t.isCompleted == false)
                     .toList(),
-                checkbox: _checkbox,
+     
                 reorderFunc: onReorder),
           ),
 
@@ -83,7 +71,7 @@ class _TodoScreenState extends State<TodoScreen> {
                     completedTasks: taskProvider.items
                         .where((t) => t.isCompleted == true)
                         .toList(),
-                    checkBox: _checkbox)
+                    )
               ]),
           const SizedBox(
             height: 100,

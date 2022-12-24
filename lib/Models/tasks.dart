@@ -53,6 +53,7 @@ class Tasks extends ChangeNotifier {
 
   void toggleCompletedForTask(int index, bool bol) {
     _items[index].setIsCompleted(bol);
+    notifyListeners();
   }
 
   void swapTask(int oldIndex, int newIndex) {

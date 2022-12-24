@@ -3,15 +3,14 @@ import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Views/editTask_screen.dart';
 import 'package:todo_vimigo_app/utils.dart';
 
+import 'check_box.dart';
+
 class ReorderableTaskList extends StatelessWidget {
   final incompleteTasks;
-  final checkbox;
+
   final Function(int, int) reorderFunc;
   const ReorderableTaskList(
-      {required this.incompleteTasks,
-      required this.checkbox,
-      required this.reorderFunc,
-      super.key});
+      {required this.incompleteTasks, required this.reorderFunc, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +71,10 @@ class ReorderableTaskList extends StatelessWidget {
             },
             key: Key(incompleteTasks[index].id),
             title: Text(incompleteTasks[index].title),
-            leading: checkbox(
-                TasksController()
-                    .getIndexWithId(context, incompleteTasks[index].id),
-                false),
+            leading: TaskCheckBox(
+              index: TasksController()
+                  .getIndexWithId(context, incompleteTasks[index].id),
+            ),
             trailing: ReorderableDragStartListener(
                 index: index, child: const Icon(Icons.drag_indicator_outlined)),
           ),

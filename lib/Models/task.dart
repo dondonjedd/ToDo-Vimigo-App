@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart';
-
-class Task extends ChangeNotifier {
+class Task {
   final String id;
   final String title;
   String description;
@@ -19,7 +17,6 @@ class Task extends ChangeNotifier {
 
   void setIsCompleted(bool bol) {
     isCompleted = bol;
-    notifyListeners();
   }
 
   Task copyWith({

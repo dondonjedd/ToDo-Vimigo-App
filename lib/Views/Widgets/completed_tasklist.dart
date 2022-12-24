@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../Controllers/tasksController.dart';
+import 'check_box.dart';
 
 class CompletedTaskList extends StatelessWidget {
   final completedTasks;
-  final checkBox;
-  const CompletedTaskList(
-      {super.key, required this.completedTasks, required this.checkBox});
+
+  const CompletedTaskList({super.key, required this.completedTasks});
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,10 @@ class CompletedTaskList extends StatelessWidget {
               completedTasks[index].title,
               style: const TextStyle(decoration: TextDecoration.lineThrough),
             ),
-            leading: checkBox(
-                TasksController()
-                    .getIndexWithId(context, completedTasks[index].id),
-                true),
+            leading: TaskCheckBox(
+              index: TasksController()
+                  .getIndexWithId(context, completedTasks[index].id),
+            ),
           ),
         );
       },

@@ -4,6 +4,7 @@ import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:intl/intl.dart';
 import '../Models/task.dart';
 import '../utils.dart';
+import 'Widgets/check_box.dart';
 
 class EditTask extends StatefulWidget {
   const EditTask({super.key});
@@ -111,6 +112,10 @@ class _EditTaskState extends State<EditTask> {
                     textAlign: TextAlign.center,
                     initialValue: _taskToEdit.title,
                     decoration: InputDecoration(
+                      prefix: TaskCheckBox(
+                        index: TasksController().getIndexWithId(context,
+                            TasksController().getTasks(context)[_taskIndex].id),
+                      ),
                       label: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
