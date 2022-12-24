@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo_vimigo_app/Models/tasks.dart';
 import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
 import 'package:todo_vimigo_app/Views/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/todoScreen.dart';
+
+import '../Controllers/tasksController.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -13,6 +13,16 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  bool _init = false;
+  @override
+  void didChangeDependencies() {
+    if (!_init) {
+      TasksController().initTasks(context);
+      super.didChangeDependencies();
+    }
+    _init = true;
+  }
+
   final List<Map<String, Object>> _pages = [
     {"page": const TodoScreen(), "title": "Tasks"},
     {"page": const CalendarScreen(), "title": "Calendar"},

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:provider/provider.dart';
+import 'package:todo_vimigo_app/Models/task.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
 import 'package:todo_vimigo_app/Views/editTask_screen.dart';
 import 'package:todo_vimigo_app/Views/tabsScreen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskAdapter());
+
+  runApp(
+      ListenableProvider(create: (context) => Tasks(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -6,12 +6,16 @@ import '../Models/tasks.dart';
 
 class TasksController {
   List<Task> getTasks(BuildContext context) {
-    return Provider.of<Tasks>(context, listen: false).items.toList();
+    return Provider.of<Tasks>(context, listen: false).items;
+  }
+
+  Future<void> initTasks(BuildContext context)async {
+    return await Provider.of<Tasks>(context, listen: false).setItems();
   }
 
   List<Task> getIncompleteTasksForDay(BuildContext context, DateTime date) {
-    return Provider.of<Tasks>(context, listen: false)
-        .items
+    final List<Task> items = getTasks(context);
+    return items
         .where((task) =>
             task.date?.day == date.day &&
             task.date?.month == date.month &&
@@ -20,8 +24,9 @@ class TasksController {
         .toList();
   }
 
-  int getTaskslength(BuildContext context) {
-    return Provider.of<Tasks>(context, listen: false).items.length;
+  Future<int> getTaskslength(BuildContext context) async {
+    final List<Task> items = getTasks(context);
+    return items.length;
   }
 
   Task getTaskAtIndex(BuildContext context, int index) {

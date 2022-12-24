@@ -21,8 +21,6 @@ class _TodoScreenState extends State<TodoScreen> {
     super.initState();
   }
 
-
-
   void onReorder(int oldIndex, int newIndex) {
     setState(() {
       if (oldIndex < newIndex) {
@@ -53,14 +51,11 @@ class _TodoScreenState extends State<TodoScreen> {
           kBottomNavigationBarHeight,
       child: ListView(
         children: [
-          Consumer<Tasks>(
-            builder: (context, value, child) => ReorderableTaskList(
-                incompleteTasks: taskProvider.items
-                    .where((t) => t.isCompleted == false)
-                    .toList(),
-     
-                reorderFunc: onReorder),
-          ),
+          ReorderableTaskList(
+              incompleteTasks: taskProvider.items
+                  .where((t) => t.isCompleted == false)
+                  .toList(),
+              reorderFunc: onReorder),
 
           // const Text("Completed Tasks"),
           ExpansionTile(
@@ -68,10 +63,10 @@ class _TodoScreenState extends State<TodoScreen> {
               title: const Text("Completed Tasks"),
               children: [
                 CompletedTaskList(
-                    completedTasks: taskProvider.items
-                        .where((t) => t.isCompleted == true)
-                        .toList(),
-                    )
+                  completedTasks: taskProvider.items
+                      .where((t) => t.isCompleted == true)
+                      .toList(),
+                )
               ]),
           const SizedBox(
             height: 100,
