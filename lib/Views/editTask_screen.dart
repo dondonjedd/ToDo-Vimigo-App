@@ -19,6 +19,7 @@ class _EditTaskState extends State<EditTask> {
   var _isInit = false;
   final _dateController = TextEditingController();
   final _datePickerNode = FocusNode();
+  late int _taskIndex;
 
   @override
   void dispose() {
@@ -28,8 +29,8 @@ class _EditTaskState extends State<EditTask> {
   @override
   void didChangeDependencies() {
     if (!_isInit) {
-      final taskIndex = ModalRoute.of(context)?.settings.arguments as int;
-      _taskToEdit = TasksController().getTaskAtIndex(context, taskIndex);
+      _taskIndex = ModalRoute.of(context)?.settings.arguments as int;
+      _taskToEdit = TasksController().getTaskAtIndex(context, _taskIndex);
       _chosenDate = _taskToEdit.date;
       if (_chosenDate == null) {
         _dateController.text = "No Date Chosen";
@@ -72,7 +73,17 @@ class _EditTaskState extends State<EditTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("View/Edit Task")),
+      appBar: AppBar(
+        title: const Text("View/Edit Task"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                TasksController().removeTask(context, _taskIndex);
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(Icons.delete_forever_outlined)),
+        ],
+      ),
       body: WillPopScope(
         onWillPop: () async {
           _saveForm();
@@ -82,64 +93,68 @@ class _EditTaskState extends State<EditTask> {
           margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           child: Form(
               key: _form,
-              child: ListView(children: [
-                TextFormField(
-                  maxLength: 60,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  textAlign: TextAlign.center,
-                  initialValue: _taskToEdit.title,
-                  decoration: const InputDecoration(
-                      labelText: "Title",
-                      floatingLabelAlignment: FloatingLabelAlignment.center),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter a valid title";
-                    }
-                    return null;
-                  },
-                  onFieldSubmitted: (_) => _saveForm(),
-                  onSaved: (newValue) =>
-                      {_taskToEdit = _taskToEdit.copyWith(title: newValue)},
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                    focusNode: _datePickerNode,
-                    readOnly: true,
-                    controller: _dateController,
-                    onTap: _presentDatePicker,
+              child: ListView(
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                children: [
+                  TextFormField(
+                    maxLength: 60,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    textAlign: TextAlign.center,
+                    initialValue: _taskToEdit.title,
                     decoration: const InputDecoration(
-                      labelText: "Date",
+                        labelText: "Title",
+                        floatingLabelAlignment: FloatingLabelAlignment.center),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter a valid title";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (_) => _saveForm(),
+                    onSaved: (newValue) =>
+                        {_taskToEdit = _taskToEdit.copyWith(title: newValue)},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                      focusNode: _datePickerNode,
+                      readOnly: true,
+                      controller: _dateController,
+                      onTap: _presentDatePicker,
+                      decoration: const InputDecoration(
+                        labelText: "Date",
+                        border: InputBorder.none,
+                        // suffixIconColor: Theme.of(context).colorScheme.primary,
+                        prefixIcon: Icon(Icons.edit),
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    maxLength: 250,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    initialValue: _taskToEdit.description,
+                    decoration: const InputDecoration(
+                      labelText: "Description",
                       border: InputBorder.none,
-                      // suffixIconColor: Theme.of(context).colorScheme.primary,
-                      prefixIcon: Icon(Icons.edit),
-                    )),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  maxLength: 250,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  initialValue: _taskToEdit.description,
-                  decoration: const InputDecoration(
-                    labelText: "Description",
-                    border: InputBorder.none,
-                    floatingLabelAlignment: FloatingLabelAlignment.center,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
+                      floatingLabelAlignment: FloatingLabelAlignment.center,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
+                    minLines: 1,
+                    maxLines: 15,
+                    onFieldSubmitted: (_) => _saveForm(),
+                    onSaved: (newValue) => {
+                      _taskToEdit = _taskToEdit.copyWith(description: newValue)
+                    },
                   ),
-                  minLines: 1,
-                  maxLines: 15,
-                  onFieldSubmitted: (_) => _saveForm(),
-                  onSaved: (newValue) => {
-                    _taskToEdit = _taskToEdit.copyWith(description: newValue)
-                  },
-                ),
-              ])),
+                ],
+              )),
         ),
       ),
     );
