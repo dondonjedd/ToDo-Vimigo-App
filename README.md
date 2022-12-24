@@ -1,16 +1,18 @@
-# todo_vimigo_app
+# ToDo Vimigo App
 
-A new Flutter project.
+Vimigo assessment to assess how well are the technical skills of a potential frontend
+developer
 
-## Getting Started
+## Requirements:
 
-This project is a starting point for a Flutter application.
+1. The application include 4 components:
+    a. A interactive guide page
+    b. A calendar view ****[COMPLETED]****
+    c. reorderable list ****[COMPLETED]****
+    d. Transition of the page as when loading or no data
+2. Users are able to create / delete / edit / complete a To-do item 
+3. The To-do item able to add into calendar event ****[COMPLETED]****
+4. When user first time open the app, they should see a interactive guide to display the guidance (Optional to provide short video for guidance)
+5. All the data updated must be persisted inside the app
+6. File structure of the application should be based on the MVC model ****[COMPLETED]****
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
