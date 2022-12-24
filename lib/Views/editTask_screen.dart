@@ -72,15 +72,6 @@ class _EditTaskState extends State<EditTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: ElevatedButton(
-      //   style: ButtonStyle(
-      //       backgroundColor: MaterialStatePropertyAll(
-      //           Theme.of(context).colorScheme.primary)),
-      //   onPressed: () {
-      //     _saveForm();
-      //   },
-      //   child: const Icon(Icons.edit),
-      // ),
       appBar: AppBar(title: const Text("View/Edit Task")),
       body: WillPopScope(
         onWillPop: () async {
