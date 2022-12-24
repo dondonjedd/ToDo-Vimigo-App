@@ -15,13 +15,10 @@ class _EditTaskState extends State<EditTask> {
   DateTime? _chosenDate;
   final _form = GlobalKey<FormState>();
   var _taskToEdit = Task(id: "", title: "");
-  final _descriptionFocusNode = FocusNode();
-  final _titleFocusNode = FocusNode();
   var _isInit = false;
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     if (!_isInit) {
       final taskIndex = ModalRoute.of(context)?.settings.arguments as int;
       _taskToEdit = TasksController().getTaskAtIndex(context, taskIndex);
@@ -40,7 +37,6 @@ class _EditTaskState extends State<EditTask> {
 
     _taskToEdit = _taskToEdit.copyWith(id: _taskToEdit.id, date: _chosenDate);
     TasksController().updateTask(context, _taskToEdit.id, _taskToEdit);
-
     Navigator.of(context).pop();
   }
 
@@ -77,9 +73,7 @@ class _EditTaskState extends State<EditTask> {
                   }
                   return null;
                 },
-                autofocus: true,
                 onFieldSubmitted: (_) => _saveForm(),
-                focusNode: _titleFocusNode,
                 onSaved: (newValue) =>
                     {_taskToEdit = _taskToEdit.copyWith(title: newValue)},
               ),
@@ -104,7 +98,6 @@ class _EditTaskState extends State<EditTask> {
               ),
               TextFormField(
                 initialValue: _taskToEdit.description,
-                focusNode: _descriptionFocusNode,
                 decoration: const InputDecoration(
                     hintText: "Description",
                     hintStyle: TextStyle(fontSize: 13)),
