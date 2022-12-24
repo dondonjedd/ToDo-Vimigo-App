@@ -12,15 +12,13 @@ class EditTask extends StatefulWidget {
 }
 
 class _EditTaskState extends State<EditTask> {
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
   DateTime? _chosenDate;
   final _form = GlobalKey<FormState>();
   var _newTaskToAdd = Task(id: "", title: "");
   final _descriptionFocusNode = FocusNode();
   final _titleFocusNode = FocusNode();
   var _isInit = false;
-  var _taskToEdit;
+  late Task _taskToEdit;
 
   @override
   void didChangeDependencies() {
@@ -28,6 +26,7 @@ class _EditTaskState extends State<EditTask> {
     if (!_isInit) {
       final taskIndex = ModalRoute.of(context)?.settings.arguments as int;
       _taskToEdit = TasksController().getTaskAtIndex(context, taskIndex);
+      _chosenDate = _taskToEdit.date;
     }
     _isInit = true;
 
@@ -42,12 +41,6 @@ class _EditTaskState extends State<EditTask> {
     _newTaskToAdd = _newTaskToAdd.copyWith(
         id: DateTime.now().toString(), date: _chosenDate);
     TasksController().insertTask(context, 0, _newTaskToAdd);
-
-    showScaffold(context,
-        text: "Task Edited",
-        bgColor: Theme.of(context).colorScheme.tertiary,
-        textColor: Theme.of(context).colorScheme.onSecondary,
-        duration: const Duration(seconds: 1));
 
     Navigator.of(context).pop();
   }
@@ -76,6 +69,7 @@ class _EditTaskState extends State<EditTask> {
           child: SingleChildScrollView(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           TextFormField(
+            initialValue: _taskToEdit.title,
             validator: (value) {
               if (value!.isEmpty) {
                 return "Please enter a valid title";
@@ -90,7 +84,6 @@ class _EditTaskState extends State<EditTask> {
               },
             )),
             autofocus: true,
-            controller: _titleController,
             onFieldSubmitted: (_) => _saveForm(),
             focusNode: _titleFocusNode,
             onSaved: (newValue) =>
@@ -124,8 +117,8 @@ class _EditTaskState extends State<EditTask> {
             },
             children: [
               TextFormField(
+                initialValue: _taskToEdit.description,
                 focusNode: _descriptionFocusNode,
-                controller: _descriptionController,
                 decoration: const InputDecoration(
                     hintText: "Description",
                     hintStyle: TextStyle(fontSize: 13)),
