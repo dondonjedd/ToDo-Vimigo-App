@@ -60,4 +60,12 @@ class TasksController {
   ) {
     Provider.of<Tasks>(context, listen: false).addTask(newTask);
   }
+
+  void updateTask(
+    BuildContext context,
+    String id,
+    Task newTask,
+  ) {
+    Provider.of<Tasks>(context, listen: false).updateProduct(id, newTask);
+  }
 }

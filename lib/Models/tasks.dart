@@ -64,4 +64,12 @@ class Tasks extends ChangeNotifier {
     _items.insert(newIndex, taskToSwitchProvider);
     notifyListeners();
   }
+
+  void updateProduct(String id, Task newTask) {
+    final taskIndex = getTaskWithId(id);
+    if (taskIndex >= 0) {
+      _items[taskIndex] = newTask;
+      notifyListeners();
+    }
+  }
 }
