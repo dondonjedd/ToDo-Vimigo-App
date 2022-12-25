@@ -38,7 +38,6 @@ class Tasks extends ChangeNotifier {
   Future<void> addTask(Task taskToAdd) async {
     Box<Task> box = await Hive.openBox<Task>(_dbKey);
     await box.add(taskToAdd);
-    _items.add(taskToAdd);
     _items = box.values.toList();
     notifyListeners();
   }
@@ -46,9 +45,7 @@ class Tasks extends ChangeNotifier {
   Future<void> insertTask(int index, Task taskToAdd) async {
     Box<Task> box = await Hive.openBox<Task>(_dbKey);
     await box.add(taskToAdd);
-    _items.insert(index, taskToAdd);
     _items = box.values.toList();
-    // _db.put(_dbKey, _items);
     notifyListeners();
   }
 
@@ -78,7 +75,6 @@ class Tasks extends ChangeNotifier {
         description: _items[index].description,
         isCompleted: bol);
     await box.putAt(index, newTask);
-    _items[index].setIsCompleted(bol);
     _items = box.values.toList();
     notifyListeners();
   }
@@ -102,7 +98,6 @@ class Tasks extends ChangeNotifier {
     if (taskIndex >= 0) {
       Box<Task> box = await Hive.openBox<Task>(_dbKey);
       await box.putAt(taskIndex, newTask);
-      _items[taskIndex] = newTask;
       _items = box.values.toList();
       notifyListeners();
     }
