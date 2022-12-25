@@ -69,11 +69,11 @@ class TasksController {
     Provider.of<Tasks>(context, listen: false).addTask(newTask);
   }
 
-  void updateTask(
+  Future<Task> updateTask(
     BuildContext context,
     String id,
     Task newTask,
-  ) {
-    Provider.of<Tasks>(context, listen: false).updateTask(id, newTask);
+  ) async {
+    return await Provider.of<Tasks>(context, listen: false).updateTask(id, newTask);
   }
 }

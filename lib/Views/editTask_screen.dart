@@ -22,6 +22,7 @@ class _EditTaskState extends State<EditTask> {
   final _datePickerNode = FocusNode();
   late int _taskIndex;
   var _initValue = Task(id: "", title: "");
+  var _isLoadingEdit = false;
 
   @override
   void dispose() {
@@ -51,6 +52,10 @@ class _EditTaskState extends State<EditTask> {
     if (!(_form.currentState?.validate())!) {
       return;
     }
+
+    setState(() {
+      _isLoadingEdit = true;
+    });
     _form.currentState?.save();
 
     _taskToEdit = _taskToEdit.copyWith(
@@ -58,13 +63,15 @@ class _EditTaskState extends State<EditTask> {
         date: _chosenDate,
         isCompleted:
             TasksController().getTasks(context)[_taskIndex].isCompleted);
-    TasksController().updateTask(context, _taskToEdit.id, _taskToEdit);
-
-    Navigator.of(context).pop(_initValue.title == _taskToEdit.title &&
-            _initValue.date == _taskToEdit.date &&
-            _initValue.description == _taskToEdit.description
-        ? argumentsEditToTodo.none
-        : argumentsEditToTodo.edited);
+    TasksController()
+        .updateTask(context, _taskToEdit.id, _taskToEdit)
+        .then((_) {
+      Navigator.of(context).pop(_initValue.title == _taskToEdit.title &&
+              _initValue.date == _taskToEdit.date &&
+              _initValue.description == _taskToEdit.description
+          ? argumentsEditToTodo.none
+          : argumentsEditToTodo.edited);
+    });
   }
 
   _presentDatePicker() {
@@ -110,6 +117,13 @@ class _EditTaskState extends State<EditTask> {
               key: _form,
               child: ListView(
                 children: [
+                  _isLoadingEdit
+                      ? LinearProgressIndicator(
+                          color: Theme.of(context).colorScheme.tertiary,
+                        )
+                      : const SizedBox(
+                          height: 1,
+                        ),
                   TextFormField(
                     maxLength: 60,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,

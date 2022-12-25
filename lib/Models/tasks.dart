@@ -88,7 +88,7 @@ class Tasks extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTask(String id, Task newTask) async {
+  Future<Task> updateTask(String id, Task newTask) async {
     int taskIndex = getIndexWithId(id);
     if (taskIndex >= 0) {
       Box<Task> box = await Hive.openBox<Task>(_dbKey);
@@ -96,5 +96,6 @@ class Tasks extends ChangeNotifier {
       _items = box.values.toList();
       notifyListeners();
     }
+    return newTask;
   }
 }
