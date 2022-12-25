@@ -29,7 +29,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
-        _rangeSelectionMode = RangeSelectionMode.toggledOff;
+        // _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
 
       _selectedEvents.value = _getEventsForDay(selectedDay);
@@ -87,9 +87,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           }
         },
         onPageChanged: (focusedDay) {
-          setState(() {
-            _focusedDay = focusedDay;
-          });
+          _focusedDay = focusedDay;
         },
         availableCalendarFormats: const {
           CalendarFormat.month: 'Month',
