@@ -51,8 +51,13 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:
-            AppBar(title: Text(_pages[_selectedPageIndex]["title"] as String)),
+        appBar: AppBar(
+            title: Center(
+          child: Text(
+            _pages[_selectedPageIndex]["title"] as String,
+            textAlign: TextAlign.center,
+          ),
+        )),
         body: !_init
             ? const Center(child: CircularProgressIndicator())
             : _pages[_selectedPageIndex]["page"] as Widget,
