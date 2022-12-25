@@ -62,19 +62,14 @@ class Tasks extends ChangeNotifier {
     return [..._items][index];
   }
 
-  int getTaskWithId(String id) {
+  int getIndexWithId(String id) {
     return [..._items].indexWhere((task) => task.id == id);
   }
 
   void toggleCompletedForTask(int index, bool bol) async {
     Box<Task> box = await Hive.openBox<Task>(_dbKey);
-    Task newTask = Task(
-        id: _items[index].id,
-        title: _items[index].title,
-        date: _items[index].date,
-        description: _items[index].description,
-        isCompleted: bol);
-    await box.putAt(index, newTask);
+
+    await box.putAt(index, _items[index].copyWith(isCompleted: bol));
     _items = box.values.toList();
     notifyListeners();
   }
@@ -93,8 +88,8 @@ class Tasks extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateProduct(String id, Task newTask) async {
-    int taskIndex = getTaskWithId(id);
+  void updateTask(String id, Task newTask) async {
+    int taskIndex = getIndexWithId(id);
     if (taskIndex >= 0) {
       Box<Task> box = await Hive.openBox<Task>(_dbKey);
       await box.putAt(taskIndex, newTask);

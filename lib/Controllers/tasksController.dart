@@ -34,7 +34,7 @@ class TasksController {
   }
 
   int getIndexWithId(BuildContext context, String id) {
-    return Provider.of<Tasks>(context, listen: false).getTaskWithId(id);
+    return Provider.of<Tasks>(context, listen: false).getIndexWithId(id);
   }
 
   void insertTask(BuildContext context, int index, Task taskToAdd) {
@@ -71,6 +71,6 @@ class TasksController {
     String id,
     Task newTask,
   ) {
-    Provider.of<Tasks>(context, listen: false).updateProduct(id, newTask);
+    Provider.of<Tasks>(context, listen: false).updateTask(id, newTask);
   }
 }

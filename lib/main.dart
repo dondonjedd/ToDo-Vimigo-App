@@ -11,8 +11,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
 
-  runApp(
-      ListenableProvider(create: (context) => Tasks(), child: const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

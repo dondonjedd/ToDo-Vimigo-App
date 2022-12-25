@@ -53,7 +53,11 @@ class _EditTaskState extends State<EditTask> {
     }
     _form.currentState?.save();
 
-    _taskToEdit = _taskToEdit.copyWith(id: _taskToEdit.id, date: _chosenDate);
+    _taskToEdit = _taskToEdit.copyWith(
+        id: _taskToEdit.id,
+        date: _chosenDate,
+        isCompleted:
+            TasksController().getTasks(context)[_taskIndex].isCompleted);
     TasksController().updateTask(context, _taskToEdit.id, _taskToEdit);
 
     Navigator.of(context).pop(_initValue.title == _taskToEdit.title &&
@@ -113,8 +117,7 @@ class _EditTaskState extends State<EditTask> {
                     initialValue: _taskToEdit.title,
                     decoration: InputDecoration(
                       prefixIcon: TaskCheckBox(
-                        index: TasksController().getIndexWithId(context,
-                            TasksController().getTasks(context)[_taskIndex].id),
+                        index: _taskIndex,
                       ),
                       label: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
