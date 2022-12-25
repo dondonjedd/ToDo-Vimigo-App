@@ -52,9 +52,11 @@ class Tasks extends ChangeNotifier {
     notifyListeners();
   }
 
-  Task removeTask(int index) {
+  Future<Task> removeTask(int index) async {
+    Box<Task> box = await Hive.openBox<Task>(_dbKey);
+    await box.deleteAt(index);
     Task task = _items.removeAt(index);
-    // _db.put(_dbKey, _items);
+    _items = box.values.toList();
     notifyListeners();
     return task;
   }

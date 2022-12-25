@@ -9,7 +9,7 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).items;
   }
 
-  Future<void> initTasks(BuildContext context)async {
+  Future<void> initTasks(BuildContext context) async {
     return await Provider.of<Tasks>(context, listen: false).setItems();
   }
 
@@ -41,12 +41,12 @@ class TasksController {
     Provider.of<Tasks>(context, listen: false).insertTask(index, taskToAdd);
   }
 
-  Task removeTask(BuildContext context, int index) {
-    return Provider.of<Tasks>(context, listen: false).removeTask(index);
+  Future<Task> removeTask(BuildContext context, int index) async {
+    return await Provider.of<Tasks>(context, listen: false).removeTask(index);
   }
 
-  Task removeTaskWithId(BuildContext context, String id) {
-    return removeTask(context, getIndexWithId(context, id));
+  Future<Task> removeTaskWithId(BuildContext context, String id) async {
+    return await removeTask(context, getIndexWithId(context, id));
   }
 
   void setIsCompletedForTask(BuildContext context, int index, bool bol) {
