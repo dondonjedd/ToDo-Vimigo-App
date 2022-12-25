@@ -15,11 +15,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
   late final ValueNotifier<List<Task>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOff; // Can be toggled on/off by longpressing a date
+      .disabled; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
 
   List<Task> _getEventsForDay(DateTime date) {
     // Implementation example
@@ -31,8 +29,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
-        _rangeStart = null; // Important to clean those
-        _rangeEnd = null;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
 
@@ -75,8 +71,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
         lastDay: kLastDay,
         focusedDay: _focusedDay,
         selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-        rangeStartDay: _rangeStart,
-        rangeEndDay: _rangeEnd,
         calendarFormat: _calendarFormat,
         rangeSelectionMode: _rangeSelectionMode,
         eventLoader: _getEventsForDay,
@@ -93,10 +87,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
           }
         },
         onPageChanged: (focusedDay) {
-          _focusedDay = focusedDay;
+          setState(() {
+            _focusedDay = focusedDay;
+          });
         },
         availableCalendarFormats: const {
-          CalendarFormat.month: "Month",
+          CalendarFormat.month: 'Month',
           CalendarFormat.week: 'Week',
         },
       ),
