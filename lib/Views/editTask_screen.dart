@@ -188,15 +188,19 @@ class _EditTaskState extends State<EditTask> {
                     maxLength: 250,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     initialValue: _taskToEdit.description,
-                    decoration: const InputDecoration(
-                      labelText: "Description",
+                    decoration: InputDecoration(
+                      label: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text("Description"),
+                        ],
+                      ),
                       border: InputBorder.none,
                       floatingLabelAlignment: FloatingLabelAlignment.center,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blue,
-                        ),
-                      ),
+                      alignLabelWithHint: false,
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.primary)),
                     ),
                     minLines: 1,
                     maxLines: 15,
