@@ -10,7 +10,7 @@ class TasksController {
   }
 
   Future<void> initTasks(BuildContext context) async {
-    return await Provider.of<Tasks>(context, listen: false).setItems();
+    return await Provider.of<Tasks>(context, listen: false).initItems();
   }
 
   List<Task> getIncompleteTasksForDay(BuildContext context, DateTime date) {

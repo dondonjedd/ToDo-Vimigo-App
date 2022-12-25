@@ -29,7 +29,7 @@ class Tasks extends ChangeNotifier {
   UnmodifiableListView<Task> get items => UnmodifiableListView(_items);
   final String _dbKey = "TaskList";
 
-  Future<void> setItems() async {
+  Future<void> initItems() async {
     Box<Task> box = await Hive.openBox<Task>(_dbKey);
     _items = box.values.toList();
     notifyListeners();
@@ -69,9 +69,17 @@ class Tasks extends ChangeNotifier {
     return [..._items].indexWhere((task) => task.id == id);
   }
 
-  void toggleCompletedForTask(int index, bool bol) {
+  void toggleCompletedForTask(int index, bool bol) async {
+    Box<Task> box = await Hive.openBox<Task>(_dbKey);
+    Task newTask = Task(
+        id: _items[index].id,
+        title: _items[index].title,
+        date: _items[index].date,
+        description: _items[index].description,
+        isCompleted: bol);
+    await box.putAt(index, newTask);
     _items[index].setIsCompleted(bol);
-    // _db.put(_dbKey, _items);
+    _items = box.values.toList();
     notifyListeners();
   }
 
