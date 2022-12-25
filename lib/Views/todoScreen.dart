@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
@@ -49,30 +50,48 @@ class _TodoScreenState extends State<TodoScreen> {
           kToolbarHeight - // top AppBar height
           MediaQuery.of(context).padding.top - // top padding
           kBottomNavigationBarHeight,
-      child: ListView(
-        children: [
-          ReorderableTaskList(
-              incompleteTasks: taskProvider.items
-                  .where((t) => t.isCompleted == false)
-                  .toList(),
-              reorderFunc: onReorder),
-
-          // const Text("Completed Tasks"),
-          ExpansionTile(
-              initiallyExpanded: true,
-              title: const Text("Completed Tasks"),
+      child: TasksController().getTasks(context).isEmpty
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: FittedBox(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Add New Task To Get Started",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      Lottie.asset("assets/socialv-no-data.json"),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          : ListView(
               children: [
-                CompletedTaskList(
-                  completedTasks: taskProvider.items
-                      .where((t) => t.isCompleted == true)
-                      .toList(),
+                ReorderableTaskList(
+                    incompleteTasks: taskProvider.items
+                        .where((t) => t.isCompleted == false)
+                        .toList(),
+                    reorderFunc: onReorder),
+
+                // const Text("Completed Tasks"),
+                ExpansionTile(
+                    initiallyExpanded: true,
+                    title: const Text("Completed Tasks"),
+                    children: [
+                      CompletedTaskList(
+                        completedTasks: taskProvider.items
+                            .where((t) => t.isCompleted == true)
+                            .toList(),
+                      )
+                    ]),
+                const SizedBox(
+                  height: 100,
                 )
-              ]),
-          const SizedBox(
-            height: 100,
-          )
-        ],
-      ),
+              ],
+            ),
     );
   }
 }
