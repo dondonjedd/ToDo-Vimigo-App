@@ -87,10 +87,13 @@ class Tasks extends ChangeNotifier {
   //   _items.swap(oldIndex, newIndex);
   // }
 
-  void shiftingElements(int oldIndex, int newIndex) {
+  void shiftingElements(int oldIndex, int newIndex) async {
     final taskToSwitchProvider = _items.removeAt(oldIndex);
     _items.insert(newIndex, taskToSwitchProvider);
-    // _db.put(_dbKey, _items);
+    Box<Task> box = await Hive.openBox<Task>(_dbKey);
+    await box.clear();
+    await box.addAll(_items);
+    _items = box.values.toList();
     notifyListeners();
   }
 
