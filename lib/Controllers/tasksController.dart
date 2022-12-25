@@ -37,8 +37,11 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).getIndexWithId(id);
   }
 
-  void insertTask(BuildContext context, int index, Task taskToAdd) {
-    Provider.of<Tasks>(context, listen: false).insertTask(index, taskToAdd);
+  Future<void> insertTask(
+      BuildContext context, int index, Task taskToAdd) async {
+    await Provider.of<Tasks>(context, listen: false)
+        .insertTask(index, taskToAdd);
+    return;
   }
 
   Future<Task> removeTask(BuildContext context, int index) async {

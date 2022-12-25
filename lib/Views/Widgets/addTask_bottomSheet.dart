@@ -19,6 +19,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   var _newTaskToAdd = Task(id: "", title: "");
   final _descriptionFocusNode = FocusNode();
   final _titleFocusNode = FocusNode();
+  var _isLoadingAdding = false;
 
   @override
   void dispose() {
@@ -44,21 +45,24 @@ class _AddNewTaskState extends State<AddNewTask> {
   }
 
   void _saveForm() {
+    setState(() {
+      _isLoadingAdding = true;
+    });
+
     if (!(_form.currentState?.validate())!) {
       return;
     }
     _form.currentState?.save();
     _newTaskToAdd = _newTaskToAdd.copyWith(
         id: DateTime.now().toString(), date: _chosenDate);
-    TasksController().insertTask(context, 0, _newTaskToAdd);
-
-    showScaffold(context,
-        text: "Task Added",
-        bgColor: Theme.of(context).colorScheme.tertiary,
-        textColor: Theme.of(context).colorScheme.onSecondary,
-        duration: const Duration(seconds: 1));
-
-    Navigator.of(context).pop();
+    TasksController().insertTask(context, 0, _newTaskToAdd).then((_) {
+      showScaffold(context,
+          text: "Task Added",
+          bgColor: Theme.of(context).colorScheme.tertiary,
+          textColor: Theme.of(context).colorScheme.onSecondary,
+          duration: const Duration(seconds: 1));
+      Navigator.of(context).pop();
+    });
   }
 
   @override
@@ -73,6 +77,13 @@ class _AddNewTaskState extends State<AddNewTask> {
             key: _form,
             child: SingleChildScrollView(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
+                _isLoadingAdding
+                    ? LinearProgressIndicator(
+                        color: Theme.of(context).colorScheme.tertiary,
+                      )
+                    : const SizedBox(
+                        height: 1,
+                      ),
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
