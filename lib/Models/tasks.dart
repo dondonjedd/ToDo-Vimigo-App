@@ -97,11 +97,13 @@ class Tasks extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateProduct(String id, Task newTask) {
-    final taskIndex = getTaskWithId(id);
+  void updateProduct(String id, Task newTask) async {
+    int taskIndex = getTaskWithId(id);
     if (taskIndex >= 0) {
+      Box<Task> box = await Hive.openBox<Task>(_dbKey);
+      await box.putAt(taskIndex, newTask);
       _items[taskIndex] = newTask;
-      // _db.put(_dbKey, _items);
+      _items = box.values.toList();
       notifyListeners();
     }
   }
