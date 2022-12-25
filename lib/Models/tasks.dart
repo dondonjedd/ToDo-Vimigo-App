@@ -29,10 +29,11 @@ class Tasks extends ChangeNotifier {
   UnmodifiableListView<Task> get items => UnmodifiableListView(_items);
   final String _dbKey = "TaskList";
 
-  Future<void> initItems() async {
+  Future<List<Task>> initItems() async {
     Box<Task> box = await Hive.openBox<Task>(_dbKey);
     _items = box.values.toList();
     notifyListeners();
+    return [...items];
   }
 
   Future<void> addTask(Task taskToAdd) async {

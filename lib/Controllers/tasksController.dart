@@ -9,7 +9,7 @@ class TasksController {
     return Provider.of<Tasks>(context, listen: false).items;
   }
 
-  Future<void> initTasks(BuildContext context) async {
+  Future<List<Task>> initTasks(BuildContext context) async {
     return await Provider.of<Tasks>(context, listen: false).initItems();
   }
 

@@ -17,10 +17,13 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void didChangeDependencies() {
     if (!_init) {
-      TasksController().initTasks(context);
+      TasksController().initTasks(context).then((_) {
+        setState(() {
+          _init = true;
+        });
+      });
       super.didChangeDependencies();
     }
-    _init = true;
   }
 
   final List<Map<String, Object>> _pages = [
@@ -50,7 +53,9 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
         appBar:
             AppBar(title: Text(_pages[_selectedPageIndex]["title"] as String)),
-        body: _pages[_selectedPageIndex]["page"] as Widget,
+        body: !_init
+            ? const Center(child: CircularProgressIndicator())
+            : _pages[_selectedPageIndex]["page"] as Widget,
         bottomNavigationBar: BottomNavigationBar(
             onTap: _selectPage,
             backgroundColor: Theme.of(context).colorScheme.primary,
