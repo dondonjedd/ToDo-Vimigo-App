@@ -133,6 +133,7 @@ class _EditTaskState extends State<EditTask> {
                       prefixIcon: TaskCheckBox(
                         index: _taskIndex,
                       ),
+                      suffixIcon: const Text(""),
                       label: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
