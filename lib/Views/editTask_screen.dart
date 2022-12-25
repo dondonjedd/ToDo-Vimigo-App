@@ -148,11 +148,23 @@ class _EditTaskState extends State<EditTask> {
                       readOnly: true,
                       controller: _dateController,
                       onTap: _presentDatePicker,
-                      decoration: const InputDecoration(
-                        labelText: "Date",
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        // prefixIcon: const Icon(Icons.calendar_month),
+                        prefixIconConstraints:
+                            const BoxConstraints.tightForFinite(),
+                        label: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Date"),
+                            Icon(
+                              Icons.calendar_month,
+                              color: Theme.of(context).colorScheme.primary,
+                            )
+                          ],
+                        ),
                         border: InputBorder.none,
-                        // suffixIconColor: Theme.of(context).colorScheme.primary,
-                        prefixIcon: Icon(Icons.edit),
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
                       )),
                   const SizedBox(
                     height: 20,
