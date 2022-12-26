@@ -78,7 +78,7 @@ class ReorderableTaskList extends StatelessWidget {
               index: TasksController()
                   .getIndexWithId(context, incompleteTasks[index].id),
             ),
-            trailing: ReorderableDragStartListener(
+            trailing: ReorderableDragStartListener( key: index == 0 ?firstTaskTrailing:null,
                 index: index, child: const Icon(Icons.drag_indicator_outlined)),
           ),
         );

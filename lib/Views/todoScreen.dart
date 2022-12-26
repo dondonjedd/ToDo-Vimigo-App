@@ -21,6 +21,7 @@ class TodoScreen extends StatefulWidget {
 
 class _TodoScreenState extends State<TodoScreen> {
   late TutorialCoachMark tutorialCoachMark;
+  late TutorialCoachMark tutorialCoachMark2;
   @override
   void initState() {
     super.initState();
@@ -38,6 +39,17 @@ class _TodoScreenState extends State<TodoScreen> {
       Future.delayed(const Duration(seconds: 1),
           () => tutorialCoachMark.show(context: context));
     }
+
+    if (TasksController()
+            .getTasks(context)
+            .where((t) => t.isCompleted == false)
+            .toList()
+            .length ==
+        2) {
+      tutorialCoachMark2 = createTutorial(context, _createTargets2);
+      Future.delayed(const Duration(seconds: 1),
+          () => tutorialCoachMark2.show(context: context));
+    }
     super.didChangeDependencies();
   }
 
@@ -48,6 +60,44 @@ class _TodoScreenState extends State<TodoScreen> {
       TargetFocus(
         identify: "AddTaskBtn",
         keyTarget: firstTaskTitleAdded,
+        alignSkip: Alignment.topRight,
+        shape: ShapeLightFocus.RRect,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) {
+              return Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const <Widget>[
+                    Text(
+                      "You can choose a date to add to the calendar",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+
+
+    return targets;
+  }
+
+
+  List<TargetFocus> _createTargets2() {
+    List<TargetFocus> targets = [];
+    targets.add(
+      TargetFocus(
+        identify: "AddTaskBtn",
+        keyTarget: firstTaskTrailing,
         alignSkip: Alignment.topRight,
         shape: ShapeLightFocus.RRect,
         contents: [
