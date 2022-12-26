@@ -26,33 +26,6 @@ class _TabsScreenState extends State<TabsScreen> {
     // tutorialCoachMark.show(context: context);s
   }
 
-  void createTutorial(BuildContext ctx) {
-    tutorialCoachMark = TutorialCoachMark(
-      targets: _createTargets(),
-      colorShadow: Colors.red,
-      textSkip: "SKIP",
-      paddingFocus: 10,
-      opacityShadow: 0.8,
-      onFinish: () {
-        print("finish");
-      },
-      onClickTarget: (target) {
-        print('onClickTarget: $target');
-      },
-      onClickTargetWithTapPosition: (target, tapDetails) {
-        print("target: $target");
-        print(
-            "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
-      },
-      onClickOverlay: (target) {
-        print('onClickOverlay: $target');
-      },
-      onSkip: () {
-        print("skip");
-      },
-    );
-  }
-
   List<TargetFocus> _createTargets() {
     List<TargetFocus> targets = [];
     targets.add(
@@ -89,7 +62,7 @@ class _TabsScreenState extends State<TabsScreen> {
   void didChangeDependencies() {
     if (!_init) {
       TasksController().initTasks(context).then((_) {
-        createTutorial(context);
+        createTutorial(context, _createTargets);
         Future.delayed(Duration.zero, showTutorial);
         setState(() {
           _init = true;
