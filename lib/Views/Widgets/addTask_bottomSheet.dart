@@ -46,32 +46,6 @@ class _AddNewTaskState extends State<AddNewTask> {
 
     targets.add(
       TargetFocus(
-        identify: "keyTitleTextForm",
-        keyTarget: keyTitleTextForm,
-        alignSkip: Alignment.topRight,
-        contents: [
-          TargetContent(
-            align: ContentAlign.top,
-            builder: (context, controller) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  Text(
-                    "Titulo lorem ipsum",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
-      ),
-    );
-    targets.add(
-      TargetFocus(
         identify: "AddTaskBtn",
         keyTarget: keyNewTaskCalendarBtn,
         alignSkip: Alignment.topRight,
@@ -79,17 +53,20 @@ class _AddNewTaskState extends State<AddNewTask> {
           TargetContent(
             align: ContentAlign.top,
             builder: (context, controller) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  Text(
-                    "Titulo lorem ipsum",
-                    style: TextStyle(
-                      color: Colors.white,
+              return Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const <Widget>[
+                    Text(
+                      "You can choose a date to add to the calendar",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             },
           ),
