@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
 import 'package:todo_vimigo_app/Views/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/todoScreen.dart';
-
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import '../Controllers/tasksController.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -13,10 +13,85 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  late TutorialCoachMark tutorialCoachMark;
   bool _init = false;
+  GlobalKey keyAddTaskBtn = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void showTutorial() {
+    tutorialCoachMark.show(context: context);
+  }
+
+  void createTutorial(BuildContext ctx) {
+    tutorialCoachMark = TutorialCoachMark(
+      targets: _createTargets(),
+      colorShadow: Colors.red,
+      textSkip: "SKIP",
+      paddingFocus: 10,
+      opacityShadow: 0.8,
+      onFinish: () {
+        print("finish");
+      },
+      onClickTarget: (target) {
+        print('onClickTarget: $target');
+        if (target.keyTarget == keyAddTaskBtn) {
+          startAddTaskBottomSheet(ctx);
+        }
+      },
+      onClickTargetWithTapPosition: (target, tapDetails) {
+        print("target: $target");
+        print(
+            "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
+      },
+      onClickOverlay: (target) {
+        print('onClickOverlay: $target');
+      },
+      onSkip: () {
+        print("skip");
+      },
+    );
+  }
+
+  List<TargetFocus> _createTargets() {
+    List<TargetFocus> targets = [];
+    targets.add(
+      TargetFocus(
+        identify: "AddTaskBtn",
+        keyTarget: keyAddTaskBtn,
+        alignSkip: Alignment.topRight,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Titulo lorem ipsum",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+    return targets;
+  }
+
   @override
   void didChangeDependencies() {
     if (!_init) {
+      createTutorial(context);
+      Future.delayed(Duration.zero, showTutorial);
       TasksController().initTasks(context).then((_) {
         setState(() {
           _init = true;
@@ -26,16 +101,16 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
-  final List<Map<String, Object>> _pages = [
+  final List<Map<String, Object>> pages = [
     {"page": const TodoScreen(), "title": "Tasks"},
     {"page": const CalendarScreen(), "title": "Calendar"},
   ];
 
-  int _selectedPageIndex = 0;
+  int selectedPageIndex = 0;
 
   void _selectPage(int index) {
     setState(() {
-      _selectedPageIndex = index;
+      selectedPageIndex = index;
     });
   }
 
@@ -54,19 +129,19 @@ class _TabsScreenState extends State<TabsScreen> {
         appBar: AppBar(
             title: Center(
           child: Text(
-            _pages[_selectedPageIndex]["title"] as String,
+            pages[selectedPageIndex]["title"] as String,
             textAlign: TextAlign.center,
           ),
         )),
         body: !_init
             ? const Center(child: CircularProgressIndicator())
-            : _pages[_selectedPageIndex]["page"] as Widget,
+            : pages[selectedPageIndex]["page"] as Widget,
         bottomNavigationBar: BottomNavigationBar(
             onTap: _selectPage,
             backgroundColor: Theme.of(context).colorScheme.primary,
             unselectedItemColor: Colors.cyan,
             selectedItemColor: Colors.white,
-            currentIndex: _selectedPageIndex,
+            currentIndex: selectedPageIndex,
             type: BottomNavigationBarType.fixed,
             items: const [
               BottomNavigationBarItem(
@@ -77,8 +152,9 @@ class _TabsScreenState extends State<TabsScreen> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.calendar_month), label: "Calendar")
             ]),
-        floatingActionButton: _selectedPageIndex == 0
+        floatingActionButton: selectedPageIndex == 0
             ? FloatingActionButton(
+                key: keyAddTaskBtn,
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 onPressed: () => startAddTaskBottomSheet(context),
                 child: const Icon(
