@@ -3,6 +3,7 @@ import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_vimigo_app/utils.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({super.key});
@@ -20,12 +21,82 @@ class _AddNewTaskState extends State<AddNewTask> {
   final _descriptionFocusNode = FocusNode();
   final _titleFocusNode = FocusNode();
   var _isLoadingAdding = false;
+  late TutorialCoachMark tutorialCoachMark;
 
   @override
   void dispose() {
     _titleFocusNode.dispose();
     _descriptionFocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  initState() {
+    tutorialCoachMark = createTutorial(context, _createTargets);
+    Future.delayed(const Duration(seconds: 1), showTutorial);
+    super.initState();
+  }
+
+  void showTutorial() {
+    tutorialCoachMark.show(context: context);
+  }
+
+  List<TargetFocus> _createTargets() {
+    List<TargetFocus> targets = [];
+
+    targets.add(
+      TargetFocus(
+        identify: "keyTitleTextForm",
+        keyTarget: keyTitleTextForm,
+        alignSkip: Alignment.topRight,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Titulo lorem ipsum",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+    targets.add(
+      TargetFocus(
+        identify: "AddTaskBtn",
+        keyTarget: keyNewTaskCalendarBtn,
+        alignSkip: Alignment.topRight,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Titulo lorem ipsum",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+    return targets;
   }
 
   _presentDatePicker() {
@@ -85,6 +156,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                         height: 1,
                       ),
                 TextFormField(
+                  key: keyTitleTextForm,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Please enter a valid title";
@@ -126,6 +198,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                           : Text(
                               "Chosen Date: ${DateFormat("dd/MM/yyyy").format(_chosenDate!)}"),
                       ElevatedButton(
+                          key: keyNewTaskCalendarBtn,
                           onPressed: _presentDatePicker,
                           child: const Text(
                             "Choose a date",

@@ -4,6 +4,7 @@ import 'package:todo_vimigo_app/Views/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/todoScreen.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import '../Controllers/tasksController.dart';
+import '../utils.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -15,7 +16,6 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   late TutorialCoachMark tutorialCoachMark;
   bool _init = false;
-  GlobalKey keyAddTaskBtn = GlobalKey();
 
   @override
   void initState() {
@@ -38,9 +38,6 @@ class _TabsScreenState extends State<TabsScreen> {
       },
       onClickTarget: (target) {
         print('onClickTarget: $target');
-        if (target.keyTarget == keyAddTaskBtn) {
-          startAddTaskBottomSheet(ctx);
-        }
       },
       onClickTargetWithTapPosition: (target, tapDetails) {
         print("target: $target");
@@ -84,15 +81,16 @@ class _TabsScreenState extends State<TabsScreen> {
         ],
       ),
     );
+
     return targets;
   }
 
   @override
   void didChangeDependencies() {
     if (!_init) {
-      createTutorial(context);
-      Future.delayed(Duration.zero, showTutorial);
       TasksController().initTasks(context).then((_) {
+        createTutorial(context);
+        Future.delayed(Duration.zero, showTutorial);
         setState(() {
           _init = true;
         });
