@@ -9,7 +9,7 @@ developer
     a. A interactive guide page<br />
     b. A calendar view ****[COMPLETED]****<br />
     c. reorderable list ****[COMPLETED]****<br />
-    d. Transition of the page as when loading or no data<br />
+    d. Transition of the page as when loading or no data<br /> ****[COMPLETED]****
 2. Users are able to create / delete / edit / complete a To-do item ****[COMPLETED]****
 3. The To-do item able to add into calendar event ****[COMPLETED]****
 4. When user first time open the app, they should see a interactive guide to display the guidance (Optional to provide short video for guidance)
