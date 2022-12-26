@@ -28,30 +28,31 @@ enum argumentsEditToTodo { deleted, edited, none }
 GlobalKey keyAddTaskBtn = GlobalKey();
 GlobalKey keyTitleTextForm = GlobalKey();
 GlobalKey keyNewTaskCalendarBtn = GlobalKey();
+GlobalKey firstTaskTitleAdded = GlobalKey();
 
 TutorialCoachMark createTutorial(BuildContext ctx, targets) {
-    return TutorialCoachMark(
-      targets: targets(),
-      colorShadow: Colors.red,
-      textSkip: "SKIP",
-      paddingFocus: 10,
-      opacityShadow: 0.8,
-      onFinish: () {
-        print("finish");
-      },
-      onClickTarget: (target) {
-        print('onClickTarget: $target');
-      },
-      onClickTargetWithTapPosition: (target, tapDetails) {
-        print("target: $target");
-        print(
-            "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
-      },
-      onClickOverlay: (target) {
-        print('onClickOverlay: $target');
-      },
-      onSkip: () {
-        print("skip");
-      },
-    );
-  }
+  return TutorialCoachMark(
+    targets: targets(),
+    colorShadow: Colors.red,
+    textSkip: "SKIP",
+    paddingFocus: 10,
+    opacityShadow: 0.8,
+    onFinish: () {
+      print("finish");
+    },
+    onClickTarget: (target) {
+      print('onClickTarget: $target');
+    },
+    onClickTargetWithTapPosition: (target, tapDetails) {
+      print("target: $target");
+      print(
+          "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
+    },
+    onClickOverlay: (target) {
+      print('onClickOverlay: $target');
+    },
+    onSkip: () {
+      print("skip");
+    },
+  );
+}

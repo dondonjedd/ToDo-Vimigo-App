@@ -69,8 +69,11 @@ class ReorderableTaskList extends StatelessWidget {
                 }
               });
             },
-            key: Key(incompleteTasks[index].id),
-            title: Text(incompleteTasks[index].title),
+            key: index == 0 ? firstTaskTitleAdded :Key(incompleteTasks[index].id),
+            title: Container(
+              // key: index == 0 ? firstTaskTitleAdded : null,
+              child: Text(incompleteTasks[index].title),
+            ),
             leading: TaskCheckBox(
               index: TasksController()
                   .getIndexWithId(context, incompleteTasks[index].id),

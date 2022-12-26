@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
 import 'package:todo_vimigo_app/Views/Widgets/completed_tasklist.dart';
 import 'package:todo_vimigo_app/Views/Widgets/reorderable_list.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+
+import '../utils.dart';
 
 class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key});
@@ -14,12 +20,61 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
-  // final List<Task> _tasks = [];
-  // final List<Task> _tasks = [];
-
+  late TutorialCoachMark tutorialCoachMark;
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (TasksController()
+            .getTasks(context)
+            .where((t) => t.isCompleted == false)
+            .toList()
+            .length ==
+        1) {
+      tutorialCoachMark = createTutorial(context, _createTargets);
+      Future.delayed(const Duration(seconds: 1),
+          () => tutorialCoachMark.show(context: context));
+    }
+    super.didChangeDependencies();
+  }
+
+  List<TargetFocus> _createTargets() {
+    List<TargetFocus> targets = [];
+
+    targets.add(
+      TargetFocus(
+        identify: "AddTaskBtn",
+        keyTarget: firstTaskTitleAdded,
+        alignSkip: Alignment.topRight,
+        shape: ShapeLightFocus.RRect,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) {
+              return Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const <Widget>[
+                    Text(
+                      "You can choose a date to add to the calendar",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+    return targets;
   }
 
   void onReorder(int oldIndex, int newIndex) {

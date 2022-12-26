@@ -23,7 +23,7 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   void showTutorial() {
-    tutorialCoachMark.show(context: context);
+    // tutorialCoachMark.show(context: context);s
   }
 
   void createTutorial(BuildContext ctx) {
