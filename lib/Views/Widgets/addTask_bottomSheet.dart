@@ -59,11 +59,14 @@ class _AddNewTaskState extends State<AddNewTask> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
-                    Text(
-                      "You can choose a date to add to the calendar",
-                      style: TextStyle(
-                        color: Colors.white,
+                  children: <Widget>[
+                    FittedBox(
+                      child: Text(
+                        "• Tap this button to choose a date\n• This will show the task in Calendar View",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ),
                   ],
