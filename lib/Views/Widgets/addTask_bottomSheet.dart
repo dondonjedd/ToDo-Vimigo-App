@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
 import 'package:intl/intl.dart';
@@ -31,11 +32,19 @@ class _AddNewTaskState extends State<AddNewTask> {
   }
 
   @override
-  initState() {
-    tutorialCoachMark = createTutorial(context, _createTargets);
-    Future.delayed(const Duration(milliseconds: 1500), showTutorial);
-    super.initState();
+  void didChangeDependencies() async{
+    final prefs = await SharedPreferences.getInstance();
+    final isShown = prefs.getBool("addTaskSheet") ?? false;
+     print("add task bottom sheet: $isShown");
+    if (!isShown) {
+      tutorialCoachMark = createTutorial(context, _createTargets);
+      Future.delayed(const Duration(milliseconds: 1500), showTutorial);
+    }
+    super.didChangeDependencies();
   }
+
+
+
 
   void showTutorial() {
     tutorialCoachMark.show(context: context);

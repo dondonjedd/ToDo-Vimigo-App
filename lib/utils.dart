@@ -74,6 +74,10 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
       if (target.keyTarget == firstTaskTrailing) {
         await prefs.setBool("todoScreen2", true);
       }
+
+      if (target.keyTarget == keyNewTaskCalendarBtn) {
+        await prefs.setBool("addTaskSheet", true);
+      }
       
     },
     onClickTargetWithTapPosition: (target, tapDetails) {
