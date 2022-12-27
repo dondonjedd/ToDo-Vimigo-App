@@ -32,7 +32,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   void showTutorial() {
-    tutorialCoachMark.show(context: context);
+    // tutorialCoachMark.show(context: context);
   }
 
   List<TargetFocus> _createTargets() {

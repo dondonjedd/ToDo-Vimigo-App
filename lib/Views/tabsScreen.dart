@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
 import 'package:todo_vimigo_app/Views/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/todoScreen.dart';
@@ -19,11 +20,13 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   void initState() {
+    tutorialCoachMark = createTutorial(context, _createTargets);
+    Future.delayed(Duration.zero, showTutorial);
     super.initState();
   }
 
   void showTutorial() {
-    // tutorialCoachMark.show(context: context);s
+    tutorialCoachMark.show(context: context);
   }
 
   List<TargetFocus> _createTargets() {
@@ -40,11 +43,50 @@ class _TabsScreenState extends State<TabsScreen> {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
+                children: <Widget>[
+                  Container(
+                      child: Lottie.asset(
+                          "assets/4345-single-tap-mobile-gesture.json")),
                   Text(
-                    "Titulo lorem ipsum",
+                    "Add a new task by tapping this button",
                     style: TextStyle(
-                      color: Colors.white,
+                      fontSize: 30,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
+        identify: "AddTaskBtn",
+        keyTarget: keyBottomNavigationBar,
+        alignSkip: Alignment.topRight,
+        paddingFocus: 50,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                      child: Lottie.asset(
+                          "assets/4345-single-tap-mobile-gesture.json")),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 100),
+                    child: Text(
+                      "Switch to Calendar View by tapping this navigation bar",
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 ],
@@ -62,8 +104,6 @@ class _TabsScreenState extends State<TabsScreen> {
   void didChangeDependencies() {
     if (!_init) {
       TasksController().initTasks(context).then((_) {
-        tutorialCoachMark = createTutorial(context, _createTargets);
-        Future.delayed(Duration.zero, showTutorial);
         setState(() {
           _init = true;
         });
@@ -114,14 +154,15 @@ class _TabsScreenState extends State<TabsScreen> {
             selectedItemColor: Colors.white,
             currentIndex: selectedPageIndex,
             type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
+            items: [
+              const BottomNavigationBarItem(
                   icon: Icon(
                     Icons.list,
                   ),
                   label: "ToDos"),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.calendar_month), label: "Calendar")
+                  icon: Icon(Icons.calendar_month, key: keyBottomNavigationBar),
+                  label: "Calendar")
             ]),
         floatingActionButton: selectedPageIndex == 0
             ? FloatingActionButton(
