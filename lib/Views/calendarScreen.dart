@@ -65,6 +65,34 @@ class _CalendarScreenState extends State<CalendarScreen> {
       ),
     );
 
+    targets.add(
+      TargetFocus(
+        identify: "AddTaskBtn",
+        keyTarget: keyTaskListInCalendar,
+        shape: ShapeLightFocus.RRect,
+        alignSkip: Alignment.topRight,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Titulo lorem ipsum",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+
     return targets;
   }
 
@@ -160,6 +188,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           valueListenable: _selectedEvents,
           builder: (context, value, _) {
             return ListView.builder(
+              key: keyTaskListInCalendar,
               shrinkWrap: true,
               physics: const ScrollPhysics(),
               itemCount: value.length,

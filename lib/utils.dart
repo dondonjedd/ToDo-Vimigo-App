@@ -31,6 +31,7 @@ GlobalKey keyNewTaskCalendarBtn = GlobalKey();
 GlobalKey firstTaskTitleAdded = GlobalKey();
 GlobalKey firstTaskTrailing = GlobalKey();
 GlobalKey keyCalendar = GlobalKey();
+GlobalKey keyTaskListInCalendar = GlobalKey();
 
 TutorialCoachMark createTutorial(BuildContext ctx, targets) {
   return TutorialCoachMark(
