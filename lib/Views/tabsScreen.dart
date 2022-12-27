@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
 import 'package:todo_vimigo_app/Views/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/todoScreen.dart';
@@ -20,8 +21,6 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   void initState() {
-    tutorialCoachMark = createTutorial(context, _createTargets);
-    Future.delayed(Duration.zero, showTutorial);
     super.initState();
   }
 
@@ -65,7 +64,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
     targets.add(
       TargetFocus(
-        identify: "AddTaskBtn",
+        identify: "keyBottomNavigationBar",
         keyTarget: keyBottomNavigationBar,
         alignSkip: Alignment.topRight,
         paddingFocus: 50,
@@ -103,9 +102,17 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (!_init) {
-      TasksController().initTasks(context).then((_) {
+      TasksController().initTasks(context).then((_) async {
+        final prefs = await SharedPreferences.getInstance();
+        final isShown = prefs.getBool("tabsScreen") ?? false;
+        if (!isShown) {
+          tutorialCoachMark = createTutorial(context, _createTargets);
+          Future.delayed(Duration.zero, showTutorial);
+        }
+        print("Tabs Screen: $isShown");
+
         setState(() {
           _init = true;
         });

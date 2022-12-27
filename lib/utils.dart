@@ -1,5 +1,6 @@
 // Available dates in the calendar
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 final kToday = DateTime.now();
@@ -56,8 +57,16 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
     onFinish: () {
       print("finish");
     },
-    onClickTarget: (target) {
-      print('onClickTarget: $target');
+    onClickTarget: (target) async {
+      final prefs = await SharedPreferences.getInstance();
+
+      // if (target.keyTarget == keyAddTaskBtn) {
+      //   await prefs.setBool("keyAddTaskBtn", true);
+      // }
+      if (target.keyTarget == keyBottomNavigationBar) {
+        await prefs.setBool("tabsScreen", true);
+      }
+      
     },
     onClickTargetWithTapPosition: (target, tapDetails) {
       print("target: $target");

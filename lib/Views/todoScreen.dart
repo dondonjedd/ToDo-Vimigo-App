@@ -28,7 +28,9 @@ class _TodoScreenState extends State<TodoScreen> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
+    // final prefs = await SharedPreferences.getInstance();
+
     if (TasksController()
             .getTasks(context)
             .where((t) => t.isCompleted == false)
