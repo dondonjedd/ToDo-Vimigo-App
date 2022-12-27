@@ -66,6 +66,14 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
       if (target.keyTarget == keyBottomNavigationBar) {
         await prefs.setBool("tabsScreen", true);
       }
+
+      if (target.keyTarget == keyfirstTaskCheckBox) {
+        await prefs.setBool("todoScreen1", true);
+      }
+
+      if (target.keyTarget == firstTaskTrailing) {
+        await prefs.setBool("todoScreen2", true);
+      }
       
     },
     onClickTargetWithTapPosition: (target, tapDetails) {

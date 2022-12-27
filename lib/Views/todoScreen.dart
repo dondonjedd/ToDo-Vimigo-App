@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
 import 'package:todo_vimigo_app/Views/Widgets/completed_tasklist.dart';
@@ -30,24 +31,32 @@ class _TodoScreenState extends State<TodoScreen> {
   @override
   void didChangeDependencies() async {
     // final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
+    final isShown1 = prefs.getBool("todoScreen1") ?? false;
+    final isShown2 = prefs.getBool("todoScreen2") ?? false;
+
+    print("To Do Screen 1: $isShown1");
+    print("To Do Screen 2: $isShown2");
 
     if (TasksController()
-            .getTasks(context)
-            .where((t) => t.isCompleted == false)
-            .toList()
-            .length ==
-        1) {
+                .getTasks(context)
+                .where((t) => t.isCompleted == false)
+                .toList()
+                .length ==
+            1 &&
+        !isShown1) {
       tutorialCoachMark = createTutorial(context, _createTargets);
       Future.delayed(const Duration(seconds: 1),
           () => tutorialCoachMark.show(context: context));
     }
 
     if (TasksController()
-            .getTasks(context)
-            .where((t) => t.isCompleted == false)
-            .toList()
-            .length ==
-        2) {
+                .getTasks(context)
+                .where((t) => t.isCompleted == false)
+                .toList()
+                .length ==
+            2 &&
+        !isShown2) {
       tutorialCoachMark2 = createTutorial(context, _createTargets2);
       Future.delayed(const Duration(seconds: 1),
           () => tutorialCoachMark2.show(context: context));
