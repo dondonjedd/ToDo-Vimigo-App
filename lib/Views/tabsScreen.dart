@@ -76,7 +76,7 @@ class _TabsScreenState extends State<TabsScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Lottie.asset("assets/128459-calendar-lottie-animation.json"),
+                  Lottie.asset("assets/111844-schedule.json"),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 100),
                     child: FittedBox(
