@@ -74,8 +74,8 @@ class _TodoScreenState extends State<TodoScreen> {
                   children: <Widget>[
                     const FittedBox(
                       child: Text(
-                        "Swipe left to delete task",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        "Swipe left to right to delete task",
+                        style: TextStyle(color: Colors.blue, fontSize: 30),
                       ),
                     ),
                     Lottie.asset("assets/112299-swipe-left.json")
@@ -93,7 +93,6 @@ class _TodoScreenState extends State<TodoScreen> {
         identify: "AddTaskBtn",
         keyTarget: keyfirstTaskCheckBox,
         alignSkip: Alignment.topRight,
-        shape: ShapeLightFocus.RRect,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
@@ -106,8 +105,8 @@ class _TodoScreenState extends State<TodoScreen> {
                   children: <Widget>[
                     const FittedBox(
                       child: Text(
-                        "Tap checkbox to mark task as completed",
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        "Tap checkbox to mark as completed",
+                        style: TextStyle(color: Colors.blue, fontSize: 30),
                       ),
                     ),
                     Padding(
@@ -134,7 +133,6 @@ class _TodoScreenState extends State<TodoScreen> {
         identify: "AddTaskBtn",
         keyTarget: firstTaskTrailing,
         alignSkip: Alignment.topRight,
-        shape: ShapeLightFocus.RRect,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
@@ -144,13 +142,17 @@ class _TodoScreenState extends State<TodoScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
-                    Text(
-                      "You can choose a date to add to the calendar",
-                      style: TextStyle(
-                        color: Colors.white,
+                  children: <Widget>[
+                    const FittedBox(
+                      child: Text(
+                        "Drag handler up/down to reorder tasks",
+                        style: TextStyle(color: Colors.blue, fontSize: 30),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(100.0),
+                      child: Lottie.asset("assets/lf30_editor_lxwrh7u5.json"),
+                    )
                   ],
                 ),
               );

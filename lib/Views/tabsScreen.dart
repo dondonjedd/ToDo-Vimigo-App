@@ -44,8 +44,7 @@ class _TabsScreenState extends State<TabsScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Lottie.asset(
-                      "assets/4345-single-tap-mobile-gesture.json"),
+                  Lottie.asset("assets/4345-single-tap-mobile-gesture.json"),
                   FittedBox(
                     child: Text(
                       "Add a new task by tapping this button",
@@ -77,8 +76,7 @@ class _TabsScreenState extends State<TabsScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Lottie.asset(
-                      "assets/4345-single-tap-mobile-gesture.json"),
+                  Lottie.asset("assets/128459-calendar-lottie-animation.json"),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 100),
                     child: FittedBox(

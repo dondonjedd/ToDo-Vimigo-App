@@ -33,7 +33,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   @override
   initState() {
     tutorialCoachMark = createTutorial(context, _createTargets);
-    Future.delayed(const Duration(seconds: 1), showTutorial);
+    Future.delayed(const Duration(milliseconds: 1500), showTutorial);
     super.initState();
   }
 
