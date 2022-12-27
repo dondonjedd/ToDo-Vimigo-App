@@ -46,9 +46,9 @@ class _TodoScreenState extends State<TodoScreen> {
             .toList()
             .length ==
         2) {
-      tutorialCoachMark2 = createTutorial(context, _createTargets2);
-      Future.delayed(const Duration(seconds: 1),
-          () => tutorialCoachMark2.show(context: context));
+      // tutorialCoachMark2 = createTutorial(context, _createTargets2);
+      // Future.delayed(const Duration(seconds: 1),
+      //     () => tutorialCoachMark2.show(context: context));
     }
     super.didChangeDependencies();
   }

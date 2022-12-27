@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
@@ -32,7 +33,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   void showTutorial() {
-    // tutorialCoachMark.show(context: context);
+    tutorialCoachMark.show(context: context);
   }
 
   List<TargetFocus> _createTargets() {
@@ -41,23 +42,34 @@ class _CalendarScreenState extends State<CalendarScreen> {
       TargetFocus(
         identify: "AddTaskBtn",
         keyTarget: keyCalendar,
-        shape: ShapeLightFocus.RRect,
         alignSkip: Alignment.topRight,
+        shape: ShapeLightFocus.RRect,
         contents: [
           TargetContent(
-            align: ContentAlign.top,
+            align: ContentAlign.bottom,
             builder: (context, controller) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  Text(
-                    "Titulo lorem ipsum",
-                    style: TextStyle(
-                      color: Colors.white,
+              return Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const FittedBox(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        "Swipe up to minimize Calendar",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 30,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    Center(
+                      child: Lottie.asset("assets/lf30_editor_lxwrh7u5.json",
+                          height: 150.0),
+                    )
+                  ],
+                ),
               );
             },
           ),
@@ -69,23 +81,32 @@ class _CalendarScreenState extends State<CalendarScreen> {
       TargetFocus(
         identify: "AddTaskBtn",
         keyTarget: keyTaskListInCalendar,
-        shape: ShapeLightFocus.RRect,
         alignSkip: Alignment.topRight,
+        shape: ShapeLightFocus.RRect,
         contents: [
           TargetContent(
             align: ContentAlign.top,
             builder: (context, controller) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  Text(
-                    "Titulo lorem ipsum",
-                    style: TextStyle(
-                      color: Colors.white,
+              return Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Center(
+                      child: Lottie.asset(
+                        "assets/lf30_editor_qehuqg5k.json",
+                      ),
                     ),
-                  ),
-                ],
+                    const FittedBox(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        "List of tasks for the selected day\nwill be shown here",
+                        style: TextStyle(color: Colors.blue, fontSize: 30),
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
           ),
