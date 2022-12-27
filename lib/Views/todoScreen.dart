@@ -71,13 +71,14 @@ class _TodoScreenState extends State<TodoScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
-                    Text(
-                      "You can choose a date to add to the calendar",
-                      style: TextStyle(
-                        color: Colors.white,
+                  children: <Widget>[
+                    const FittedBox(
+                      child: Text(
+                        "Swipe left to delete task",
+                        style: TextStyle(color: Colors.white, fontSize: 30),
                       ),
                     ),
+                    Lottie.asset("assets/112299-swipe-left.json")
                   ],
                 ),
               );
@@ -87,10 +88,44 @@ class _TodoScreenState extends State<TodoScreen> {
       ),
     );
 
+    targets.add(
+      TargetFocus(
+        identify: "AddTaskBtn",
+        keyTarget: keyfirstTaskCheckBox,
+        alignSkip: Alignment.topRight,
+        shape: ShapeLightFocus.RRect,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) {
+              return Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const FittedBox(
+                      child: Text(
+                        "Tap checkbox to mark task as completed",
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(100.0),
+                      child:
+                          Lottie.asset("assets/79071-check-box-animation.json"),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
 
     return targets;
   }
-
 
   List<TargetFocus> _createTargets2() {
     List<TargetFocus> targets = [];

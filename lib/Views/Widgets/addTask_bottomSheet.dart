@@ -49,7 +49,6 @@ class _AddNewTaskState extends State<AddNewTask> {
         shape: ShapeLightFocus.RRect,
         identify: "AddTaskBtn",
         keyTarget: keyNewTaskCalendarBtn,
-        alignSkip: Alignment.topRight,
         contents: [
           TargetContent(
             align: ContentAlign.top,

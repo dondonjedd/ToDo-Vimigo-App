@@ -33,22 +33,24 @@ GlobalKey firstTaskTrailing = GlobalKey();
 GlobalKey keyCalendar = GlobalKey();
 GlobalKey keyTaskListInCalendar = GlobalKey();
 GlobalKey keyBottomNavigationBar = GlobalKey();
+GlobalKey keyfirstTaskCheckBox = GlobalKey();
 
 TutorialCoachMark createTutorial(BuildContext ctx, targets) {
   return TutorialCoachMark(
     targets: targets(),
     colorShadow: Colors.orange,
-    skipWidget: ElevatedButton(
-        onPressed: () {},
-        child: const Text(
-          "Skip",
-          style: TextStyle(
-              backgroundColor: Colors.blue,
-              color: Colors.white,
-              fontWeight: FontWeight.normal,
-              fontSize: 20),
-        )),
-    textSkip: "SKIP",
+    // alignSkip: Alignment.centerRight,
+    hideSkip: true,
+    // skipWidget: ElevatedButton(
+    //     onPressed: () {},
+    //     child: const Text(
+    //       "Skip",
+    //       style: TextStyle(
+    //           backgroundColor: Colors.blue,
+    //           color: Colors.white,
+    //           fontWeight: FontWeight.normal,
+    //           fontSize: 20),
+    //     )),
     paddingFocus: 10,
     opacityShadow: 0.8,
     onFinish: () {
