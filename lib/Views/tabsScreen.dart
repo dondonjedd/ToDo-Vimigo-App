@@ -47,6 +47,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   Lottie.asset("assets/4345-single-tap-mobile-gesture.json"),
                   FittedBox(
                     child: Text(
+                      textAlign: TextAlign.left,
                       "Add a new task by tapping this button",
                       style: TextStyle(
                         fontSize: 30,
@@ -81,6 +82,7 @@ class _TabsScreenState extends State<TabsScreen> {
                     padding: const EdgeInsets.only(bottom: 100),
                     child: FittedBox(
                       child: Text(
+                        textAlign: TextAlign.center,
                         "Switch to Calendar View\nby tapping this navigation bar",
                         style: TextStyle(
                           fontSize: 30,

@@ -46,9 +46,9 @@ class _TodoScreenState extends State<TodoScreen> {
             .toList()
             .length ==
         2) {
-      // tutorialCoachMark2 = createTutorial(context, _createTargets2);
-      // Future.delayed(const Duration(seconds: 1),
-      //     () => tutorialCoachMark2.show(context: context));
+      tutorialCoachMark2 = createTutorial(context, _createTargets2);
+      Future.delayed(const Duration(seconds: 1),
+          () => tutorialCoachMark2.show(context: context));
     }
     super.didChangeDependencies();
   }
@@ -74,6 +74,7 @@ class _TodoScreenState extends State<TodoScreen> {
                   children: <Widget>[
                     const FittedBox(
                       child: Text(
+                        textAlign: TextAlign.center,
                         "Swipe left to right to delete task",
                         style: TextStyle(color: Colors.blue, fontSize: 30),
                       ),
@@ -105,6 +106,7 @@ class _TodoScreenState extends State<TodoScreen> {
                   children: <Widget>[
                     const FittedBox(
                       child: Text(
+                        textAlign: TextAlign.center,
                         "Tap checkbox to mark as completed",
                         style: TextStyle(color: Colors.blue, fontSize: 30),
                       ),
@@ -145,6 +147,7 @@ class _TodoScreenState extends State<TodoScreen> {
                   children: <Widget>[
                     const FittedBox(
                       child: Text(
+                        textAlign: TextAlign.center,
                         "Drag handler up/down to reorder tasks",
                         style: TextStyle(color: Colors.blue, fontSize: 30),
                       ),

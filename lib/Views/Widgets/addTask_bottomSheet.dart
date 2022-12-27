@@ -61,6 +61,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                   children: <Widget>[
                     FittedBox(
                       child: Text(
+                        textAlign: TextAlign.left,
                         "• Tap this button to choose a date\n• This will show the task in Calendar View",
                         style: TextStyle(
                           fontSize: 30,
