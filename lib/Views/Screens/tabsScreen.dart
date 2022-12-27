@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
 import 'package:todo_vimigo_app/Views/Screens/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/Screens/todoScreen.dart';
+import 'package:todo_vimigo_app/Views/Widgets/main_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import '../../Controllers/tasksController.dart';
 import '../../utils.dart';
@@ -146,6 +147,7 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: const MainDrawer(),
         appBar: AppBar(
             title: Center(
           child: Text(
