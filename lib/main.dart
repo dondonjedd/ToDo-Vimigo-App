@@ -4,8 +4,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
-import 'package:todo_vimigo_app/Views/editTask_screen.dart';
-import 'package:todo_vimigo_app/Views/tabsScreen.dart';
+import 'package:todo_vimigo_app/Views/Screens/editTask_screen.dart';
+import 'package:todo_vimigo_app/Views/Screens/tabsScreen.dart';
 
 void main() async {
   await Hive.initFlutter();

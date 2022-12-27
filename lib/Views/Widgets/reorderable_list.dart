@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
-import 'package:todo_vimigo_app/Views/editTask_screen.dart';
+import 'package:todo_vimigo_app/Views/Screens/editTask_screen.dart';
 import 'package:todo_vimigo_app/utils.dart';
 
 import 'check_box.dart';

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
-import 'package:todo_vimigo_app/Views/calendarScreen.dart';
-import 'package:todo_vimigo_app/Views/todoScreen.dart';
+import 'package:todo_vimigo_app/Views/Screens/calendarScreen.dart';
+import 'package:todo_vimigo_app/Views/Screens/todoScreen.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
-import '../Controllers/tasksController.dart';
-import '../utils.dart';
+import '../../Controllers/tasksController.dart';
+import '../../utils.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});

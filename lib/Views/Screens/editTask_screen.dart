@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:intl/intl.dart';
-import '../Models/task.dart';
-import '../utils.dart';
-import 'Widgets/check_box.dart';
+import '../../Models/task.dart';
+import '../../utils.dart';
+import '../Widgets/check_box.dart';
+
 
 class EditTask extends StatefulWidget {
   const EditTask({super.key});
