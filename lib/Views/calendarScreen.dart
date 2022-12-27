@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
@@ -21,15 +22,24 @@ class _CalendarScreenState extends State<CalendarScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   late TutorialCoachMark tutorialCoachMark;
+  @override
+  void didChangeDependencies() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isShown = prefs.getBool("calendarScreen") ?? false;
+    print("Calendar screen $isShown");
+    if (!isShown) {
+      tutorialCoachMark = createTutorial(context, _createTargets);
+      Future.delayed(Duration.zero, showTutorial);
+    }
+
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
-    tutorialCoachMark = createTutorial(context, _createTargets);
-    Future.delayed(Duration.zero, showTutorial);
-    super.initState();
-
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    super.initState();
   }
 
   void showTutorial() {

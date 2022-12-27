@@ -78,6 +78,9 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
       if (target.keyTarget == keyNewTaskCalendarBtn) {
         await prefs.setBool("addTaskSheet", true);
       }
+      if (target.keyTarget == keyTaskListInCalendar) {
+        await prefs.setBool("calendarScreen", true);
+      }
       
     },
     onClickTargetWithTapPosition: (target, tapDetails) {
