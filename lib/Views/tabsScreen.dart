@@ -62,7 +62,7 @@ class _TabsScreenState extends State<TabsScreen> {
   void didChangeDependencies() {
     if (!_init) {
       TasksController().initTasks(context).then((_) {
-        createTutorial(context, _createTargets);
+        tutorialCoachMark = createTutorial(context, _createTargets);
         Future.delayed(Duration.zero, showTutorial);
         setState(() {
           _init = true;
