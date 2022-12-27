@@ -149,11 +149,9 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
         drawer: const MainDrawer(),
         appBar: AppBar(
-            title: Center(
-          child: Text(
-            pages[selectedPageIndex]["title"] as String,
-            textAlign: TextAlign.center,
-          ),
+            title: Text(
+          pages[selectedPageIndex]["title"] as String,
+          textAlign: TextAlign.center,
         )),
         body: !_init
             ? const Center(child: CircularProgressIndicator())
