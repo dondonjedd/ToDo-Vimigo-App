@@ -44,14 +44,15 @@ class _TabsScreenState extends State<TabsScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                      child: Lottie.asset(
-                          "assets/4345-single-tap-mobile-gesture.json")),
-                  Text(
-                    "Add a new task by tapping this button",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Theme.of(context).colorScheme.primary,
+                  Lottie.asset(
+                      "assets/4345-single-tap-mobile-gesture.json"),
+                  FittedBox(
+                    child: Text(
+                      "Add a new task by tapping this button",
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 ],
@@ -76,16 +77,17 @@ class _TabsScreenState extends State<TabsScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                      child: Lottie.asset(
-                          "assets/4345-single-tap-mobile-gesture.json")),
+                  Lottie.asset(
+                      "assets/4345-single-tap-mobile-gesture.json"),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 100),
-                    child: Text(
-                      "Switch to Calendar View by tapping this navigation bar",
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Theme.of(context).colorScheme.primary,
+                    child: FittedBox(
+                      child: Text(
+                        "Switch to Calendar View\nby tapping this navigation bar",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ),
                   ),
