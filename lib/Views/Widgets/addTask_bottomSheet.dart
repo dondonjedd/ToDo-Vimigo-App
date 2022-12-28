@@ -35,7 +35,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   void didChangeDependencies() async{
     final prefs = await SharedPreferences.getInstance();
     final isShown = prefs.getBool("addTaskSheet") ?? false;
-     print("add task bottom sheet: $isShown");
+    //  print("add task bottom sheet: $isShown");
     if (!isShown) {
       tutorialCoachMark = createTutorial(context, _createTargets);
       Future.delayed(const Duration(milliseconds: 1500), showTutorial);

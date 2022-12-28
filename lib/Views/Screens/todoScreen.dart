@@ -36,8 +36,8 @@ class _TodoScreenState extends State<TodoScreen> {
     final isShown2 = prefs.getBool("todoScreen2") ?? false;
     final isShownTabsScreen = prefs.getBool("tabsScreen") ?? false;
 
-    print("To Do Screen 1: $isShown1");
-    print("To Do Screen 2: $isShown2");
+    // print("To Do Screen 1: $isShown1");
+    // print("To Do Screen 2: $isShown2");
 
     if (TasksController()
                 .getTasks(context)

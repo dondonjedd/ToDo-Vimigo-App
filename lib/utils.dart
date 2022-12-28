@@ -60,9 +60,6 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
     onClickTarget: (target) async {
       final prefs = await SharedPreferences.getInstance();
 
-      // if (target.keyTarget == keyAddTaskBtn) {
-      //   await prefs.setBool("keyAddTaskBtn", true);
-      // }
       if (target.keyTarget == keyBottomNavigationBar) {
         await prefs.setBool("tabsScreen", true);
       }
@@ -84,15 +81,15 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
       
     },
     onClickTargetWithTapPosition: (target, tapDetails) {
-      print("target: $target");
-      print(
-          "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
+      // print("target: $target");
+      // print(
+      //     "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
     },
     onClickOverlay: (target) {
-      print('onClickOverlay: $target');
+      // print('onClickOverlay: $target');
     },
     onSkip: () {
-      print("skip");
+      // print("skip");
     },
   );
 }

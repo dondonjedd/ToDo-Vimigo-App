@@ -112,7 +112,7 @@ class _TabsScreenState extends State<TabsScreen> {
           tutorialCoachMark = createTutorial(context, _createTargets);
           Future.delayed(const Duration(seconds: 1), showTutorial);
         }
-        print("Tabs Screen: $isShown");
+        // print("Tabs Screen: $isShown");
 
         setState(() {
           _init = true;

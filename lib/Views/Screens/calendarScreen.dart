@@ -26,7 +26,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   void didChangeDependencies() async {
     final prefs = await SharedPreferences.getInstance();
     final isShown = prefs.getBool("calendarScreen") ?? false;
-    print("Calendar screen $isShown");
+    // print("Calendar screen $isShown");
     if (!isShown) {
       tutorialCoachMark = createTutorial(context, _createTargets);
       Future.delayed(Duration.zero, showTutorial);
