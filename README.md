@@ -28,7 +28,7 @@ https://drive.google.com/file/d/18_V73Z3uHxnGF8cAWYQv146D-JQJyCDV/view?usp=shari
 4. Create dark theme<br />
 5. Create an about page to introduce application<br />
 6. Change task colours according to it's status<br />
-	- Red if project is not done and has passed<br />
-	- black for undone projects in the future<br />
-	- green for done projects<br />
+	- Red if task is incomplete and has passed deadline<br />
+	- Black for incomplete projects in the future<br />
+	- Green for completed projects<br />
 5. Develop a better UI<br />
