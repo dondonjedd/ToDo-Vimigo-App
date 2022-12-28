@@ -16,3 +16,6 @@ developer
 5. All the data updated must be persisted inside the app ****[COMPLETED]****
 6. File structure of the application should be based on the MVC model ****[COMPLETED]****
 
+## Requirements:
+Google link to download APK:
+https://drive.google.com/file/d/18_V73Z3uHxnGF8cAWYQv146D-JQJyCDV/view?usp=sharing
