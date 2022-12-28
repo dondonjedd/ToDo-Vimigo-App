@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
 import 'package:todo_vimigo_app/Views/Screens/editTask_screen.dart';
+import 'package:todo_vimigo_app/Views/Screens/settings_screen.dart';
 import 'package:todo_vimigo_app/Views/Screens/tabsScreen.dart';
 
 void main() async {
@@ -16,7 +17,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         routes: {
           "/": (ctx) => const TabsScreen(),
           EditTask.routeName: (ctx) => const EditTask(),
+          SettingsScreen.routeName: (ctx) => const SettingsScreen(),
         },
         onUnknownRoute: (settings) {
           return MaterialPageRoute(builder: (ctx) => const TabsScreen());

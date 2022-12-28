@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_vimigo_app/Views/Screens/settings_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -45,9 +46,10 @@ class MainDrawer extends StatelessWidget {
           buildListTile("To Dos", const Icon(Icons.list), () {
             Navigator.of(context).pushReplacementNamed("/");
           }),
-          // buildListTile("Filter", const Icon(Icons.filter), () {
-          //   Navigator.of(context).pushReplacementNamed(FilterPage.routeName);
-          // }),
+          buildListTile("Settings", const Icon(Icons.settings), () {
+            Navigator.of(context)
+                .pushReplacementNamed(SettingsScreen.routeName);
+          }),
         ],
       ),
     );
