@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:provider/provider.dart';
@@ -9,9 +10,12 @@ import 'package:todo_vimigo_app/Views/Screens/settings_screen.dart';
 import 'package:todo_vimigo_app/Views/Screens/tabsScreen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
-
   runApp(const MyApp());
 }
 
