@@ -32,14 +32,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void didChangeDependencies() async {
     final prefs = await SharedPreferences.getInstance();
+    bool tabsScreen = prefs.getBool("tabsScreen") ?? false;
+    bool todoScreen1 = prefs.getBool("todoScreen1") ?? false;
+    bool todoScreen2 = prefs.getBool("todoScreen2") ?? false;
+    bool addTaskSheet = prefs.getBool("addTaskSheet") ?? false;
+    bool calendarScreen = prefs.getBool("calendarScreen") ?? false;
+
     setState(() {
-      _tutorialDone = (prefs.getBool("tabsScreen") &&
-              prefs.getBool("tabsScreen") &&
-              prefs.getBool("todoScreen1") &&
-              prefs.getBool("todoScreen2") &&
-              prefs.getBool("addTaskSheet") &&
-              prefs.getBool("calendarScreen")) ??
-          false;
+      _tutorialDone = (tabsScreen &&
+          todoScreen1 &&
+          todoScreen2 &&
+          addTaskSheet &&
+          calendarScreen);
       _init = true;
     });
   }
