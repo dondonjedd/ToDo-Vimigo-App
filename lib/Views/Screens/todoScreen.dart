@@ -34,6 +34,7 @@ class _TodoScreenState extends State<TodoScreen> {
     final prefs = await SharedPreferences.getInstance();
     final isShown1 = prefs.getBool("todoScreen1") ?? false;
     final isShown2 = prefs.getBool("todoScreen2") ?? false;
+    final isShownTabsScreen = prefs.getBool("tabsScreen") ?? false;
 
     print("To Do Screen 1: $isShown1");
     print("To Do Screen 2: $isShown2");
@@ -44,7 +45,8 @@ class _TodoScreenState extends State<TodoScreen> {
                 .toList()
                 .length ==
             1 &&
-        !isShown1) {
+        !isShown1 &&
+        isShownTabsScreen) {
       tutorialCoachMark = createTutorial(context, _createTargets);
       Future.delayed(const Duration(seconds: 1),
           () => tutorialCoachMark.show(context: context));
@@ -56,7 +58,8 @@ class _TodoScreenState extends State<TodoScreen> {
                 .toList()
                 .length ==
             2 &&
-        !isShown2) {
+        !isShown2 &&
+        isShownTabsScreen) {
       tutorialCoachMark2 = createTutorial(context, _createTargets2);
       Future.delayed(const Duration(seconds: 1),
           () => tutorialCoachMark2.show(context: context));
