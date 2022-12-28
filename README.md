@@ -17,5 +17,5 @@ developer
 6. File structure of the application should be based on the MVC model ****[COMPLETED]****
 
 ## Requirements:
-Google link to download APK:
+Google link to download APK:<br />
 https://drive.google.com/file/d/18_V73Z3uHxnGF8cAWYQv146D-JQJyCDV/view?usp=sharing
