@@ -69,17 +69,19 @@ class ReorderableTaskList extends StatelessWidget {
                 }
               });
             },
-            key: index == 0 ? firstTaskTitleAdded :Key(incompleteTasks[index].id),
+            key: index == 0 ? firstTaskTitleAdded : null,
             title: Container(
-              // key: index == 0 ? firstTaskTitleAdded : null,
               child: Text(incompleteTasks[index].title),
             ),
             leading: TaskCheckBox(
+              key: index == 0 ? keyfirstTaskCheckBox : null,
               index: TasksController()
                   .getIndexWithId(context, incompleteTasks[index].id),
             ),
-            trailing: ReorderableDragStartListener( key: index == 0 ?firstTaskTrailing:null,
-                index: index, child: const Icon(Icons.drag_indicator_outlined)),
+            trailing: ReorderableDragStartListener(
+                key: index == 0 ? firstTaskTrailing : null,
+                index: index,
+                child: const Icon(Icons.drag_indicator_outlined)),
           ),
         );
       },

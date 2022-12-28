@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../Controllers/tasksController.dart';
 import '../../Models/tasks.dart';
-import '../../utils.dart';
 
 class TaskCheckBox extends StatelessWidget {
   final int index;
@@ -13,7 +12,6 @@ class TaskCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskProvider = Provider.of<Tasks>(context, listen: true);
     return Checkbox(
-      key:index==0?keyfirstTaskCheckBox:null ,
       checkColor: Colors.white,
       fillColor:
           MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
