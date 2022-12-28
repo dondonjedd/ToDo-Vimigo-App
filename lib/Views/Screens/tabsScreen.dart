@@ -110,7 +110,7 @@ class _TabsScreenState extends State<TabsScreen> {
         final isShown = prefs.getBool("tabsScreen") ?? false;
         if (!isShown) {
           tutorialCoachMark = createTutorial(context, _createTargets);
-          Future.delayed(Duration.zero, showTutorial);
+          Future.delayed(const Duration(seconds: 1), showTutorial);
         }
         print("Tabs Screen: $isShown");
 
