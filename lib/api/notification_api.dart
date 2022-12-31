@@ -30,19 +30,20 @@ class NotificationApi {
   }
 
   static Future _notificationDetails() async {
-    const styleInfo = BigTextStyleInformation("Task Reminder");
     return const NotificationDetails(
         android: AndroidNotificationDetails(
       'channel id',
       'channel name',
       channelDescription: 'channel description',
-      styleInformation: styleInfo,
       importance: Importance.max,
     ));
   }
 
   Future showNotification(
-          {required int id, String? title, String? body, String? payload}) async =>
+          {required int id,
+          String? title,
+          String? body,
+          String? payload}) async =>
       _notifications.show(id, title, body, await _notificationDetails(),
           payload: payload);
 

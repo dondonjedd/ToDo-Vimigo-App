@@ -1,7 +1,11 @@
 // Available dates in the calendar
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+
+import 'api/notification_api.dart';
 
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
@@ -35,6 +39,27 @@ GlobalKey keyCalendar = GlobalKey();
 GlobalKey keyTaskListInCalendar = GlobalKey();
 GlobalKey keyBottomNavigationBar = GlobalKey();
 GlobalKey keyfirstTaskCheckBox = GlobalKey();
+
+late NotificationApi notifApi;
+
+// Set<int> setOfNotifIntId = {};
+// int maxSet = 50;
+
+// int getNewIntId() {
+//   int initialLength = setOfNotifIntId.length;
+//   while (initialLength == setOfNotifIntId.length) {
+//     setOfNotifIntId.add(Random().nextInt(maxSet));
+//   }
+//   return setOfNotifIntId.last;
+// }
+
+// void removeIntFromNotifSet(int x) {
+//   setOfNotifIntId.remove(x);
+// }
+
+getUniqueNotifIdFromDateStr(String date) {
+  return (DateTime.parse(date)).millisecondsSinceEpoch.remainder(100000);
+}
 
 TutorialCoachMark createTutorial(BuildContext ctx, targets) {
   return TutorialCoachMark(
@@ -78,7 +103,6 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
       if (target.keyTarget == keyTaskListInCalendar) {
         await prefs.setBool("calendarScreen", true);
       }
-      
     },
     onClickTargetWithTapPosition: (target, tapDetails) {
       // print("target: $target");

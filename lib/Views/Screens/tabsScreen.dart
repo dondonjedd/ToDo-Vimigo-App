@@ -20,7 +20,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   late TutorialCoachMark tutorialCoachMark;
   bool _init = false;
-  late NotificationApi notifApi;
+
 
   @override
   void initState() {
@@ -190,13 +190,13 @@ class _TabsScreenState extends State<TabsScreen> {
                 key: keyAddTaskBtn,
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 onPressed: () {
-                  notifApi.showScheduledNotification(
-                      id: 0,
-                      title: "test",
-                      body: "test",
-                      payload: "test",
-                      scheduledDate:
-                          DateTime.now().add(const Duration(seconds: 5)));
+                  // notifApi.showScheduledNotification(
+                  //     id: 0,
+                  //     title: "test",
+                  //     body: "test",
+                  //     payload: "test",
+                  //     scheduledDate:
+                  //         DateTime.now().add(const Duration(seconds: 5)));
                   startAddTaskBottomSheet(context);
                 },
                 child: const Icon(

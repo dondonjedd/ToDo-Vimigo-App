@@ -66,6 +66,25 @@ class _EditTaskState extends State<EditTask> {
     });
     _form.currentState?.save();
 
+    if (_chosenDate != null && _time != null) {
+      var reminder = DateTime(
+        _chosenDate!.year,
+        _chosenDate!.month,
+        _chosenDate!.day,
+        _time!.hour,
+        _time!.minute,
+      );
+
+      print("id : ${getUniqueNotifIdFromDateStr(_taskToEdit.id)}");
+      notifApi.showScheduledNotification(
+          // id: (DateTime.parse(_taskToEdit.id)).millisecondsSinceEpoch,
+          id: getUniqueNotifIdFromDateStr(_taskToEdit.id),
+          title: _taskToEdit.title,
+          body: _taskToEdit.description,
+          payload: _taskToEdit.id,
+          scheduledDate: reminder);
+    }
+
     _taskToEdit = _taskToEdit.copyWith(
         id: _taskToEdit.id,
         date: _chosenDate,
