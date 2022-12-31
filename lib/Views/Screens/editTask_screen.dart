@@ -223,7 +223,10 @@ class _EditTaskState extends State<EditTask> {
                       onTap: () => Navigator.of(context).push(
                             showPicker(
                               context: context,
-                              value: _time != null ? _time! : TimeOfDay.now(),
+                              value: _time != null
+                                  ? _time!
+                                  : TimeOfDay.now().replacing(
+                                      minute: TimeOfDay.now().minute + 1),
                               onChange: onTimeChanged,
                             ),
                           ),
