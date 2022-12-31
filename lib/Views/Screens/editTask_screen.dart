@@ -225,8 +225,14 @@ class _EditTaskState extends State<EditTask> {
                               context: context,
                               value: _time != null
                                   ? _time!
-                                  : TimeOfDay.now().replacing(
-                                      minute: TimeOfDay.now().minute + 1),
+                                  : _chosenDate != null
+                                      ? TimeOfDay.fromDateTime(_chosenDate!)
+                                          .replacing(
+                                              hour: TimeOfDay.now().hour,
+                                              minute:
+                                                  TimeOfDay.now().minute + 1)
+                                      : TimeOfDay.now().replacing(
+                                          minute: TimeOfDay.now().minute + 1),
                               onChange: onTimeChanged,
                             ),
                           ),

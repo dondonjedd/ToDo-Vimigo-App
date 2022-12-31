@@ -4,10 +4,16 @@ import 'package:rxdart/rxdart.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
+import '../utils.dart';
+
 class NotificationApi {
   NotificationApi();
-  static final _notifications = FlutterLocalNotificationsPlugin();
+  final _notifications = FlutterLocalNotificationsPlugin();
   final BehaviorSubject<String?> onNotifications = BehaviorSubject<String?>();
+
+  Future<void> removeNotif(int id) async {
+    await _notifications.cancel(id);
+  }
 
   Future<void> init({bool initScheduled = true}) async {
     if (initScheduled) {

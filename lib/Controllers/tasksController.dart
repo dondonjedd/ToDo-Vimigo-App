@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../Models/task.dart';
 import '../Models/tasks.dart';
 
@@ -74,6 +73,7 @@ class TasksController {
     String id,
     Task newTask,
   ) async {
-    return await Provider.of<Tasks>(context, listen: false).updateTask(id, newTask);
+    return await Provider.of<Tasks>(context, listen: false)
+        .updateTask(id, newTask);
   }
 }
