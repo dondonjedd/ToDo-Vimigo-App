@@ -5,6 +5,7 @@ import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
 import 'package:todo_vimigo_app/Views/Screens/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/Screens/todoScreen.dart';
 import 'package:todo_vimigo_app/Views/Widgets/main_drawer.dart';
+import 'package:todo_vimigo_app/api/notification_api.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import '../../Controllers/tasksController.dart';
 import '../../utils.dart';
@@ -19,10 +20,21 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   late TutorialCoachMark tutorialCoachMark;
   bool _init = false;
+  late NotificationApi notifApi;
 
   @override
   void initState() {
     super.initState();
+    notifApi = NotificationApi();
+    notifApi.init();
+    listenNotifications();
+  }
+
+  void listenNotifications() =>
+      notifApi.onNotifications.stream.listen(onClickedNotification);
+
+  onClickedNotification(String? payload) {
+    print(payload);
   }
 
   void showTutorial() {
@@ -177,7 +189,11 @@ class _TabsScreenState extends State<TabsScreen> {
             ? FloatingActionButton(
                 key: keyAddTaskBtn,
                 backgroundColor: Theme.of(context).colorScheme.primary,
-                onPressed: () => startAddTaskBottomSheet(context),
+                onPressed: () {
+                  notifApi.showNotification(
+                      title: "test", body: "test", payload: "test");
+                  startAddTaskBottomSheet(context);
+                },
                 child: const Icon(
                   Icons.add,
                 ),

@@ -44,6 +44,7 @@ dependencies:
   tutorial_coach_mark: ^1.2.4
   shared_preferences: ^0.5.5
   flutter_local_notifications: ^13.0.0
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
