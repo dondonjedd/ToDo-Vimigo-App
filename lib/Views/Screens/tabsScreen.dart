@@ -190,8 +190,12 @@ class _TabsScreenState extends State<TabsScreen> {
                 key: keyAddTaskBtn,
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 onPressed: () {
-                  notifApi.showNotification(
-                      title: "test", body: "test", payload: "test");
+                  notifApi.showScheduledNotification(
+                      title: "test",
+                      body: "test",
+                      payload: "test",
+                      scheduledDate:
+                          DateTime.now().add(const Duration(seconds: 5)));
                   startAddTaskBottomSheet(context);
                 },
                 child: const Icon(
