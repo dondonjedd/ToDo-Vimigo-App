@@ -42,12 +42,12 @@ class NotificationApi {
   }
 
   Future showNotification(
-          {int id = 0, String? title, String? body, String? payload}) async =>
+          {required int id, String? title, String? body, String? payload}) async =>
       _notifications.show(id, title, body, await _notificationDetails(),
           payload: payload);
 
   Future showScheduledNotification(
-          {int id = 0,
+          {required int id,
           String? title,
           String? body,
           String? payload,

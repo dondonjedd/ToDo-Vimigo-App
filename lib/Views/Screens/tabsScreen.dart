@@ -191,6 +191,7 @@ class _TabsScreenState extends State<TabsScreen> {
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 onPressed: () {
                   notifApi.showScheduledNotification(
+                      id: 0,
                       title: "test",
                       body: "test",
                       payload: "test",
