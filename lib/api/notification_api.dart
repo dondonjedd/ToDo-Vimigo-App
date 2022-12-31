@@ -28,7 +28,7 @@ class NotificationApi {
         onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
   }
 
-  void onDidReceiveNotificationResponse(payload) async {
-    onNotifications.add(payload as String);
+  void onDidReceiveNotificationResponse(details) async {
+    onNotifications.add(details.payload);
   }
 }
