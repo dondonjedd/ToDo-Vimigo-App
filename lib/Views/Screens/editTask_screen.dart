@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import '../../Models/task.dart';
 import '../../utils.dart';
 import '../Widgets/check_box.dart';
-
+import 'package:day_night_time_picker/day_night_time_picker.dart';
 
 class EditTask extends StatefulWidget {
   const EditTask({super.key});
@@ -20,6 +20,8 @@ class _EditTaskState extends State<EditTask> {
   var _taskToEdit = Task(id: "", title: "");
   var _isInit = false;
   final _dateController = TextEditingController();
+  final _timeController = TextEditingController();
+  TimeOfDay? _time;
   final _datePickerNode = FocusNode();
   late int _taskIndex;
   var _initValue = Task(id: "", title: "");
@@ -42,6 +44,11 @@ class _EditTaskState extends State<EditTask> {
         _dateController.text = "No Date Chosen";
       } else {
         _dateController.text = DateFormat("dd/MM/yyyy").format(_chosenDate!);
+      }
+      if (_time == null) {
+        _timeController.text = "No Reminder Set";
+      } else {
+        _timeController.text = "${_time!.hour}:${_time!.minute}";
       }
     }
     _isInit = true;
@@ -89,6 +96,15 @@ class _EditTaskState extends State<EditTask> {
         _chosenDate = value;
         _dateController.text = DateFormat("dd/MM/yyyy").format(_chosenDate!);
       });
+    });
+  }
+
+  void onTimeChanged(TimeOfDay newTime) {
+    setState(() {
+      _time = newTime;
+      // print("${_time.hour}:${_time.minute}");
+      _timeController.text =
+          "${_time!.hour}:${_time!.minute.toString().padLeft(2, "0")}";
     });
   }
 
@@ -175,6 +191,34 @@ class _EditTaskState extends State<EditTask> {
                             const Text("Date"),
                             Icon(
                               Icons.calendar_month,
+                              color: Theme.of(context).colorScheme.primary,
+                            )
+                          ],
+                        ),
+                        border: InputBorder.none,
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                      )),
+                  TextFormField(
+                      readOnly: true,
+                      controller: _timeController,
+                      onTap: () => Navigator.of(context).push(
+                            showPicker(
+                              context: context,
+                              value: _time != null ? _time! : TimeOfDay.now(),
+                              onChange: onTimeChanged,
+                            ),
+                          ),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        // prefixIcon: const Icon(Icons.calendar_month),
+                        prefixIconConstraints:
+                            const BoxConstraints.tightForFinite(),
+                        label: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Reminder"),
+                            Icon(
+                              Icons.timelapse,
                               color: Theme.of(context).colorScheme.primary,
                             )
                           ],
