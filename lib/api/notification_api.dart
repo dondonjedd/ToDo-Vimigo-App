@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:rxdart/rxdart.dart';
@@ -35,13 +37,13 @@ class NotificationApi {
   }
 
   static Future _notificationDetails() async {
-    return const NotificationDetails(
-        android: AndroidNotificationDetails(
-      'channel id',
-      'channel name',
-      channelDescription: 'channel description',
-      importance: Importance.max,
-    ));
+    return NotificationDetails(
+        android: AndroidNotificationDetails('channel id 1', 'channel name',
+            channelDescription: 'channel description',
+            importance: Importance.max,
+            enableVibration: true,
+            sound: const RawResourceAndroidNotificationSound("alarm"),
+            additionalFlags: Int32List.fromList(<int>[4])));
   }
 
   Future showNotification(
