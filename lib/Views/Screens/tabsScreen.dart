@@ -21,7 +21,6 @@ class _TabsScreenState extends State<TabsScreen> {
   late TutorialCoachMark tutorialCoachMark;
   bool _init = false;
 
-
   @override
   void initState() {
     super.initState();
@@ -34,7 +33,17 @@ class _TabsScreenState extends State<TabsScreen> {
       notifApi.onNotifications.stream.listen(onClickedNotification);
 
   onClickedNotification(String? payload) {
-    print(payload);
+    if (payload == null) {
+      return;
+    }
+
+    TasksController().updateTask(
+        context,
+        payload,
+        TasksController()
+            .getTaskAtIndex(
+                context, TasksController().getIndexWithId(context, payload))
+            .copyWith(reminderDateTime: null));
   }
 
   void showTutorial() {
@@ -190,13 +199,6 @@ class _TabsScreenState extends State<TabsScreen> {
                 key: keyAddTaskBtn,
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 onPressed: () {
-                  // notifApi.showScheduledNotification(
-                  //     id: 0,
-                  //     title: "test",
-                  //     body: "test",
-                  //     payload: "test",
-                  //     scheduledDate:
-                  //         DateTime.now().add(const Duration(seconds: 5)));
                   startAddTaskBottomSheet(context);
                 },
                 child: const Icon(
