@@ -233,9 +233,8 @@ class _EditTaskState extends State<EditTask> {
                     clearDueDate: _clearDueDate,
                   ),
                   ReminderDateTimePicker(
-                    chosenDate: _chosenReminderDateTime,
-                    chosenTime: _chosenReminderDateTime,
-                    timeController: _reminderDateTimeController,
+                    chosenReminderDateTime: _chosenReminderDateTime,
+                    reminderDateTimeController: _reminderDateTimeController,
                     presentDateTimePicker: _presentDateTimePicker,
                     clearReminder: _clearReminderDateTime,
                   ),
