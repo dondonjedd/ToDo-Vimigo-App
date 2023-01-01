@@ -55,7 +55,9 @@ class _EditTaskState extends State<EditTask> {
       }
       if (_chosenReminderDateTime == null) {
         _reminderDateTimeController.text = "No Reminder Set";
-      } else {
+      } else if(_chosenReminderDateTime!.isBefore(DateTime.now())){
+        _reminderDateTimeController.text = "Reminder has passed";
+      }else{
         _reminderDateTimeController.text =
             showReminderDateTime(_chosenReminderDateTime!);
       }
