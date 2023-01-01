@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_vimigo_app/Views/Widgets/duedate_picker.dart';
+import 'package:todo_vimigo_app/Views/Widgets/reminder_datetime_picker.dart';
 import '../../Models/task.dart';
 import '../../utils.dart';
 import '../Widgets/check_box.dart';
-import 'package:day_night_time_picker/day_night_time_picker.dart';
 
 class EditTask extends StatefulWidget {
   const EditTask({super.key});
@@ -22,14 +23,12 @@ class _EditTaskState extends State<EditTask> {
   final _dateController = TextEditingController();
   final _timeController = TextEditingController();
   TimeOfDay? _time;
-  final _datePickerNode = FocusNode();
   late int _taskIndex;
   var _initValue = Task(id: "", title: "");
   var _isLoadingEdit = false;
 
   @override
   void dispose() {
-    _datePickerNode.dispose();
     super.dispose();
   }
 
@@ -194,66 +193,14 @@ class _EditTaskState extends State<EditTask> {
                   const SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                      focusNode: _datePickerNode,
-                      readOnly: true,
-                      controller: _dateController,
-                      onTap: _presentDatePicker,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        // prefixIcon: const Icon(Icons.calendar_month),
-                        prefixIconConstraints:
-                            const BoxConstraints.tightForFinite(),
-                        label: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Date"),
-                            Icon(
-                              Icons.calendar_month,
-                              color: Theme.of(context).colorScheme.primary,
-                            )
-                          ],
-                        ),
-                        border: InputBorder.none,
-                        floatingLabelAlignment: FloatingLabelAlignment.center,
-                      )),
-                  TextFormField(
-                      readOnly: true,
-                      controller: _timeController,
-                      onTap: () => Navigator.of(context).push(
-                            showPicker(
-                              context: context,
-                              value: _time != null
-                                  ? _time!
-                                  : _chosenDate != null
-                                      ? TimeOfDay.fromDateTime(_chosenDate!)
-                                          .replacing(
-                                              hour: TimeOfDay.now().hour,
-                                              minute:
-                                                  TimeOfDay.now().minute + 1)
-                                      : TimeOfDay.now().replacing(
-                                          minute: TimeOfDay.now().minute + 1),
-                              onChange: onTimeChanged,
-                            ),
-                          ),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        // prefixIcon: const Icon(Icons.calendar_month),
-                        prefixIconConstraints:
-                            const BoxConstraints.tightForFinite(),
-                        label: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Reminder"),
-                            Icon(
-                              Icons.timelapse,
-                              color: Theme.of(context).colorScheme.primary,
-                            )
-                          ],
-                        ),
-                        border: InputBorder.none,
-                        floatingLabelAlignment: FloatingLabelAlignment.center,
-                      )),
+                  DueDatePicker(
+                      presentDatePicker: _presentDatePicker,
+                      dateController: _dateController),
+                  ReminderDateTimePicker(
+                      onTimeChanged: onTimeChanged,
+                      chosenDate: _chosenDate,
+                      chosenTime: _time,
+                      timeController: _timeController),
                   const SizedBox(
                     height: 20,
                   ),
