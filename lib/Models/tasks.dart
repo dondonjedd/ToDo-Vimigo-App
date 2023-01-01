@@ -3,6 +3,9 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
+import 'package:todo_vimigo_app/api/notification_api.dart';
+
+import '../utils.dart';
 
 class Tasks extends ChangeNotifier {
   // final List<Task> _items = [
@@ -51,6 +54,9 @@ class Tasks extends ChangeNotifier {
   }
 
   Future<Task> removeTask(int index) async {
+    await notifApi
+        .removeNotif(getUniqueNotifIdFromDateStr(_items[index].id));
+
     Box<Task> box = await Hive.openBox<Task>(_dbKey);
     await box.deleteAt(index);
     Task task = _items.removeAt(index);

@@ -5,9 +5,11 @@ import 'package:todo_vimigo_app/Views/Widgets/addTask_bottomSheet.dart';
 import 'package:todo_vimigo_app/Views/Screens/calendarScreen.dart';
 import 'package:todo_vimigo_app/Views/Screens/todoScreen.dart';
 import 'package:todo_vimigo_app/Views/Widgets/main_drawer.dart';
+import 'package:todo_vimigo_app/api/notification_api.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import '../../Controllers/tasksController.dart';
 import '../../utils.dart';
+import 'editTask_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -23,6 +25,64 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (!_init) {
+      TasksController().initTasks(context).then((_) async {
+        final prefs = await SharedPreferences.getInstance();
+        final isShown = prefs.getBool("tabsScreen") ?? false;
+        if (!isShown) {
+          tutorialCoachMark = createTutorial(context, _createTargets);
+          Future.delayed(const Duration(seconds: 1), showTutorial);
+        }
+        // print("Tabs Screen: $isShown");
+        notifApi = NotificationApi(context);
+        notifApi.init();
+        listenNotifications();
+        setState(() {
+          _init = true;
+        });
+      });
+      super.didChangeDependencies();
+    }
+  }
+
+  void listenNotifications() =>
+      notifApi.onNotifications.stream.listen(onClickedNotification);
+
+  onClickedNotification(String? payload) async {
+    await TasksController().updateTask(
+        context,
+        payload!,
+        TasksController()
+            .getTaskAtIndex(
+                context, TasksController().getIndexWithId(context, payload))
+            .copyWith(reminderDateTime: null));
+
+    Navigator.of(context)
+        .pushNamed(EditTask.routeName,
+            arguments: TasksController().getIndexWithId(context, payload))
+        .then((value) {
+      switch (value) {
+        case argumentsEditToTodo.deleted:
+          showScaffold(context,
+              text: "Task Deleted",
+              bgColor: Theme.of(context).colorScheme.error,
+              textColor: Theme.of(context).colorScheme.onError,
+              duration: const Duration(milliseconds: 1000));
+          break;
+        case argumentsEditToTodo.edited:
+          showScaffold(context,
+              text: "Task Edited",
+              bgColor: Theme.of(context).colorScheme.tertiary,
+              textColor: Theme.of(context).colorScheme.onTertiary,
+              duration: const Duration(milliseconds: 1000));
+          break;
+        default:
+      }
+    });
   }
 
   void showTutorial() {
@@ -102,26 +162,6 @@ class _TabsScreenState extends State<TabsScreen> {
     return targets;
   }
 
-  @override
-  void didChangeDependencies() async {
-    if (!_init) {
-      TasksController().initTasks(context).then((_) async {
-        final prefs = await SharedPreferences.getInstance();
-        final isShown = prefs.getBool("tabsScreen") ?? false;
-        if (!isShown) {
-          tutorialCoachMark = createTutorial(context, _createTargets);
-          Future.delayed(const Duration(seconds: 1), showTutorial);
-        }
-        // print("Tabs Screen: $isShown");
-
-        setState(() {
-          _init = true;
-        });
-      });
-      super.didChangeDependencies();
-    }
-  }
-
   final List<Map<String, Object>> pages = [
     {"page": const TodoScreen(), "title": "Tasks"},
     {"page": const CalendarScreen(), "title": "Calendar"},
@@ -177,7 +217,9 @@ class _TabsScreenState extends State<TabsScreen> {
             ? FloatingActionButton(
                 key: keyAddTaskBtn,
                 backgroundColor: Theme.of(context).colorScheme.primary,
-                onPressed: () => startAddTaskBottomSheet(context),
+                onPressed: () {
+                  startAddTaskBottomSheet(context);
+                },
                 child: const Icon(
                   Icons.add,
                 ),

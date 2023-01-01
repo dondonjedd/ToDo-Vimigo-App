@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_vimigo_app/Views/Widgets/duedate_picker.dart';
+import 'package:todo_vimigo_app/Views/Widgets/reminder_datetime_picker.dart';
+import 'package:todo_vimigo_app/api/notification_api.dart';
 import '../../Models/task.dart';
 import '../../utils.dart';
 import '../Widgets/check_box.dart';
-
 
 class EditTask extends StatefulWidget {
   const EditTask({super.key});
@@ -15,20 +18,26 @@ class EditTask extends StatefulWidget {
 }
 
 class _EditTaskState extends State<EditTask> {
+  //Due Date Variable
   DateTime? _chosenDate;
+  final _dateController = TextEditingController();
+
+  //Reminder Date Time Variable
+  DateTime? _chosenReminderDateTime;
+  final _reminderDateTimeController = TextEditingController();
+
   final _form = GlobalKey<FormState>();
   var _taskToEdit = Task(id: "", title: "");
   var _isInit = false;
-  final _dateController = TextEditingController();
-  final _datePickerNode = FocusNode();
   late int _taskIndex;
   var _initValue = Task(id: "", title: "");
   var _isLoadingEdit = false;
 
   @override
   void dispose() {
-    _datePickerNode.dispose();
     super.dispose();
+    _dateController.dispose();
+    _reminderDateTimeController.dispose();
   }
 
   @override
@@ -38,10 +47,19 @@ class _EditTaskState extends State<EditTask> {
       _initValue = TasksController().getTaskAtIndex(context, _taskIndex);
       _taskToEdit = TasksController().getTaskAtIndex(context, _taskIndex);
       _chosenDate = _taskToEdit.date;
+      _chosenReminderDateTime = _taskToEdit.reminderDateTime;
       if (_chosenDate == null) {
         _dateController.text = "No Date Chosen";
       } else {
         _dateController.text = DateFormat("dd/MM/yyyy").format(_chosenDate!);
+      }
+      if (_chosenReminderDateTime == null) {
+        _reminderDateTimeController.text = "No Reminder Set";
+      } else if (_chosenReminderDateTime!.isBefore(DateTime.now())) {
+        _reminderDateTimeController.text = "Reminder has passed";
+      } else {
+        _reminderDateTimeController.text =
+            showReminderDateTime(_chosenReminderDateTime!);
       }
     }
     _isInit = true;
@@ -59,9 +77,22 @@ class _EditTaskState extends State<EditTask> {
     });
     _form.currentState?.save();
 
+    if (_chosenReminderDateTime != null &&
+        _chosenReminderDateTime!.isAfter(DateTime.now())) {
+      print(
+          "Notif added with id : ${getUniqueNotifIdFromDateStr(_taskToEdit.id)}");
+      notifApi.showScheduledNotification(
+          // id: (DateTime.parse(_taskToEdit.id)).millisecondsSinceEpoch,
+          id: getUniqueNotifIdFromDateStr(_taskToEdit.id),
+          title: _taskToEdit.title,
+          body: _taskToEdit.description,
+          payload: _taskToEdit.id,
+          scheduledDate: _chosenReminderDateTime!);
+    }
+
     _taskToEdit = _taskToEdit.copyWith(
-        id: _taskToEdit.id,
         date: _chosenDate,
+        reminderDateTime: _chosenReminderDateTime,
         isCompleted:
             TasksController().getTasks(context)[_taskIndex].isCompleted);
     TasksController()
@@ -75,6 +106,7 @@ class _EditTaskState extends State<EditTask> {
     });
   }
 
+  //Due Date methods
   _presentDatePicker() {
     showDatePicker(
             context: context,
@@ -89,6 +121,43 @@ class _EditTaskState extends State<EditTask> {
         _chosenDate = value;
         _dateController.text = DateFormat("dd/MM/yyyy").format(_chosenDate!);
       });
+    });
+  }
+
+  void _clearDueDate() {
+    setState(() {
+      _chosenDate = null;
+      _dateController.text = "No Date Chosen";
+    });
+  }
+
+  //reminder methods
+  _presentDateTimePicker() {
+    DatePicker.showDateTimePicker(context, currentTime: _chosenDate)
+        .then((value) {
+      print(value);
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        _chosenReminderDateTime =
+            // DateTime.now().add(const Duration(seconds: 10));
+        _chosenReminderDateTime = value;
+        _reminderDateTimeController.text =
+            showReminderDateTime(_chosenReminderDateTime!);
+      });
+    });
+  }
+
+  String showReminderDateTime(DateTime date) {
+    return "${DateFormat("dd/MM/yyyy").format(date)} at ${date.hour.toString().padLeft(2, "0")}:${date.minute.toString().padLeft(2, "0")}";
+  }
+
+  void _clearReminderDateTime() {
+    setState(() {
+      _chosenReminderDateTime = null;
+      _reminderDateTimeController.text = "No Reminder Set";
+      notifApi.removeNotif(getUniqueNotifIdFromDateStr(_taskToEdit.id));
     });
   }
 
@@ -159,29 +228,17 @@ class _EditTaskState extends State<EditTask> {
                   const SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                      focusNode: _datePickerNode,
-                      readOnly: true,
-                      controller: _dateController,
-                      onTap: _presentDatePicker,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        // prefixIcon: const Icon(Icons.calendar_month),
-                        prefixIconConstraints:
-                            const BoxConstraints.tightForFinite(),
-                        label: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Date"),
-                            Icon(
-                              Icons.calendar_month,
-                              color: Theme.of(context).colorScheme.primary,
-                            )
-                          ],
-                        ),
-                        border: InputBorder.none,
-                        floatingLabelAlignment: FloatingLabelAlignment.center,
-                      )),
+                  DueDatePicker(
+                    presentDatePicker: _presentDatePicker,
+                    dateController: _dateController,
+                    clearDueDate: _clearDueDate,
+                  ),
+                  ReminderDateTimePicker(
+                    chosenReminderDateTime: _chosenReminderDateTime,
+                    reminderDateTimeController: _reminderDateTimeController,
+                    presentDateTimePicker: _presentDateTimePicker,
+                    clearReminder: _clearReminderDateTime,
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

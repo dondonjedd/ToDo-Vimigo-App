@@ -12,6 +12,8 @@ class Task {
   @HiveField(3)
   DateTime? date;
   @HiveField(4)
+  DateTime? reminderDateTime;
+  @HiveField(5)
   bool isCompleted;
 
   Task(
@@ -19,6 +21,7 @@ class Task {
       required this.title,
       this.description = "",
       this.date,
+      this.reminderDateTime,
       this.isCompleted = false});
 
   @override
@@ -33,13 +36,15 @@ class Task {
     String? title,
     String? description,
     DateTime? date,
+    DateTime? reminderDateTime,
     bool? isCompleted,
   }) {
     return Task(
         id: id ?? this.id,
         title: title ?? this.title,
         description: description ?? this.description,
-        date: date ?? this.date,
+        date: date,
+        reminderDateTime: reminderDateTime,
         isCompleted: isCompleted ?? this.isCompleted);
   }
 }
