@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class DueDatePicker extends StatelessWidget {
   final presentDatePicker;
   final dateController;
+  final clearDueDate;
   const DueDatePicker(
       {super.key,
       required this.presentDatePicker,
-      required this.dateController});
+      required this.dateController,
+      required this.clearDueDate});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +18,14 @@ class DueDatePicker extends StatelessWidget {
         onTap: presentDatePicker,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
-          // prefixIcon: const Icon(Icons.calendar_month),
-          prefixIconConstraints: const BoxConstraints.tightForFinite(),
+          suffixIcon: IconButton(
+              onPressed: clearDueDate, icon: const Icon(Icons.clear)),
+          // suffixIconConstraints: const BoxConstraints.tightForFinite(),
+          prefixIcon: const Text(""),
           label: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Date"),
+              const Text("Due Date"),
               Icon(
                 Icons.calendar_month,
                 color: Theme.of(context).colorScheme.primary,
