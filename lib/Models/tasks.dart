@@ -54,7 +54,6 @@ class Tasks extends ChangeNotifier {
   }
 
   Future<Task> removeTask(int index) async {
-    print("Removing : ${getUniqueNotifIdFromDateStr(_items[index].id)}");
     await NotificationApi()
         .removeNotif(getUniqueNotifIdFromDateStr(_items[index].id));
 

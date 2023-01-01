@@ -5,12 +5,14 @@ class ReminderDateTimePicker extends StatelessWidget {
   final chosenTime;
   final timeController;
   final presentDateTimePicker;
+  final clearReminder;
   const ReminderDateTimePicker(
       {super.key,
       required this.chosenDate,
       required this.chosenTime,
       required this.timeController,
-      required this.presentDateTimePicker});
+      required this.presentDateTimePicker,
+      required this.clearReminder});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,11 @@ class ReminderDateTimePicker extends StatelessWidget {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 // prefixIcon: const Icon(Icons.calendar_month),
-                prefixIconConstraints: const BoxConstraints.tightForFinite(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: clearReminder,
+                ),
+                prefixIcon: const Text(""),
                 label: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -39,42 +45,6 @@ class ReminderDateTimePicker extends StatelessWidget {
                 floatingLabelAlignment: FloatingLabelAlignment.center,
               )),
         ),
-        // Expanded(
-        //   child: TextFormField(
-        //       readOnly: true,
-        //       controller: timeController,
-        //       onTap: () => Navigator.of(context).push(
-        //             showPicker(
-        //               context: context,
-        //               value: chosenTime != null
-        //                   ? chosenTime!
-        //                   : chosenDate != null
-        //                       ? TimeOfDay.fromDateTime(chosenDate!).replacing(
-        //                           hour: TimeOfDay.now().hour,
-        //                           minute: TimeOfDay.now().minute + 1)
-        //                       : TimeOfDay.now().replacing(
-        //                           minute: TimeOfDay.now().minute + 1),
-        //               onChange: onTimeChanged,
-        //             ),
-        //           ),
-        //       textAlign: TextAlign.center,
-        //       decoration: InputDecoration(
-        //         // prefixIcon: const Icon(Icons.calendar_month),
-        //         prefixIconConstraints: const BoxConstraints.tightForFinite(),
-        //         label: Row(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           children: [
-        //             const Text("Reminder Time"),
-        //             Icon(
-        //               Icons.timelapse,
-        //               color: Theme.of(context).colorScheme.primary,
-        //             )
-        //           ],
-        //         ),
-        //         border: InputBorder.none,
-        //         floatingLabelAlignment: FloatingLabelAlignment.center,
-        //       )),
-        // ),
       ],
     );
   }

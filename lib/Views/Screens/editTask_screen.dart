@@ -5,6 +5,7 @@ import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_vimigo_app/Views/Widgets/duedate_picker.dart';
 import 'package:todo_vimigo_app/Views/Widgets/reminder_datetime_picker.dart';
+import 'package:todo_vimigo_app/api/notification_api.dart';
 import '../../Models/task.dart';
 import '../../utils.dart';
 import '../Widgets/check_box.dart';
@@ -150,7 +151,9 @@ class _EditTaskState extends State<EditTask> {
   void _clearReminderDateTime() {
     setState(() {
       _chosenReminderDateTime = null;
-      _dateController.text = "No Reminder Set";
+      _reminderDateTimeController.text = "No Reminder Set";
+      NotificationApi()
+          .removeNotif(getUniqueNotifIdFromDateStr(_taskToEdit.id));
     });
   }
 
@@ -227,10 +230,12 @@ class _EditTaskState extends State<EditTask> {
                     clearDueDate: _clearDueDate,
                   ),
                   ReminderDateTimePicker(
-                      chosenDate: _chosenReminderDateTime,
-                      chosenTime: _chosenReminderDateTime,
-                      timeController: _reminderDateTimeController,
-                      presentDateTimePicker: _presentDateTimePicker),
+                    chosenDate: _chosenReminderDateTime,
+                    chosenTime: _chosenReminderDateTime,
+                    timeController: _reminderDateTimeController,
+                    presentDateTimePicker: _presentDateTimePicker,
+                    clearReminder: _clearReminderDateTime,
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
