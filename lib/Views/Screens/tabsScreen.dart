@@ -37,7 +37,7 @@ class _TabsScreenState extends State<TabsScreen> {
           Future.delayed(const Duration(seconds: 1), showTutorial);
         }
         // print("Tabs Screen: $isShown");
-        notifApi = NotificationApi();
+        notifApi = NotificationApi(context);
         notifApi.init();
         listenNotifications();
         setState(() {
@@ -51,19 +51,7 @@ class _TabsScreenState extends State<TabsScreen> {
   void listenNotifications() =>
       notifApi.onNotifications.stream.listen(onClickedNotification);
 
-  onClickedNotification(String? payload) {
-    if (payload == null) {
-      return;
-    }
-
-    TasksController().updateTask(
-        context,
-        payload,
-        TasksController()
-            .getTaskAtIndex(
-                context, TasksController().getIndexWithId(context, payload))
-            .copyWith(reminderDateTime: null));
-  }
+  onClickedNotification(String? payload) {}
 
   void showTutorial() {
     tutorialCoachMark.show(context: context);

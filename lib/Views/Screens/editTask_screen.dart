@@ -140,7 +140,9 @@ class _EditTaskState extends State<EditTask> {
         return;
       }
       setState(() {
-        _chosenReminderDateTime = value;
+        _chosenReminderDateTime =
+            DateTime.now().add(const Duration(seconds: 10));
+        // _chosenReminderDateTime = value;
         _reminderDateTimeController.text =
             showReminderDateTime(_chosenReminderDateTime!);
       });
@@ -155,8 +157,7 @@ class _EditTaskState extends State<EditTask> {
     setState(() {
       _chosenReminderDateTime = null;
       _reminderDateTimeController.text = "No Reminder Set";
-      notifApi
-          .removeNotif(getUniqueNotifIdFromDateStr(_taskToEdit.id));
+      notifApi.removeNotif(getUniqueNotifIdFromDateStr(_taskToEdit.id));
     });
   }
 

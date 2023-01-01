@@ -6,8 +6,11 @@ import 'package:rxdart/rxdart.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
+import '../Controllers/tasksController.dart';
+
 class NotificationApi {
-  NotificationApi();
+  final context;
+  NotificationApi(this.context);
   final _notifications = FlutterLocalNotificationsPlugin();
   final BehaviorSubject<String?> onNotifications = BehaviorSubject<String?>();
 
@@ -32,8 +35,9 @@ class NotificationApi {
       onNotifications.add(details.notificationResponse?.payload);
     }
 
-    await _notifications.initialize(settings,
-        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,);
+    await _notifications.initialize(settings, 
+        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+        );
   }
 
   static Future _notificationDetails() async {
@@ -45,8 +49,6 @@ class NotificationApi {
             sound: const RawResourceAndroidNotificationSound("alarm"),
             additionalFlags: Int32List.fromList(<int>[4])));
   }
-
- 
 
   Future showScheduledNotification(
           {required int id,
@@ -66,6 +68,21 @@ class NotificationApi {
               UILocalNotificationDateInterpretation.absoluteTime);
 
   void onDidReceiveNotificationResponse(details) async {
+    final id = details.payload;
+    print("received notif with id : $id");
+    if (id == null) {
+      return;
+    }
+
+    TasksController().updateTask(
+        context,
+        id,
+        TasksController()
+            .getTaskAtIndex(
+                context, TasksController().getIndexWithId(context, id))
+            .copyWith(reminderDateTime: null));
     onNotifications.add(details.payload);
   }
+
+
 }
