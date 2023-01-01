@@ -55,9 +55,9 @@ class _EditTaskState extends State<EditTask> {
       }
       if (_chosenReminderDateTime == null) {
         _reminderDateTimeController.text = "No Reminder Set";
-      } else if(_chosenReminderDateTime!.isBefore(DateTime.now())){
+      } else if (_chosenReminderDateTime!.isBefore(DateTime.now())) {
         _reminderDateTimeController.text = "Reminder has passed";
-      }else{
+      } else {
         _reminderDateTimeController.text =
             showReminderDateTime(_chosenReminderDateTime!);
       }
@@ -77,7 +77,8 @@ class _EditTaskState extends State<EditTask> {
     });
     _form.currentState?.save();
 
-    if (_chosenReminderDateTime != null) {
+    if (_chosenReminderDateTime != null &&
+        _chosenReminderDateTime!.isAfter(DateTime.now())) {
       print(
           "Notif added with id : ${getUniqueNotifIdFromDateStr(_taskToEdit.id)}");
       notifApi.showScheduledNotification(
