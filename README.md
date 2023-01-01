@@ -3,14 +3,6 @@
 Vimigo assessment to assess how well are the technical skills of a potential frontend
 developer
 
-# **Newer version available in develop branch** (developed after deadline)
-
-1. New Features: <br />
-   a. Possibility to set a reminder on a task <br />
-      - push notification with custom sound will show up <br />
-      - user will be prompted to the corresponding task screen after tapping notification <br />
-      - push notification appears even though app is closed<br />
-
 ## Requirements:
 
 1. The application include 4 components:<br />
