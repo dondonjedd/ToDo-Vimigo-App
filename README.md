@@ -25,10 +25,10 @@ developer
 
 ## APK:
 Google link to download APK:<br />
-1. original APK for Application developed before deadline <br />
+1. original APK for Application developed **before deadline** <br />
     - https://drive.google.com/file/d/18_V73Z3uHxnGF8cAWYQv146D-JQJyCDV/view?usp=sharing <br />
 
-2. APK for Application developed after deadline
+2. APK for Application developed **after deadline**
     - https://drive.google.com/file/d/1FV6ujU3pptyA4tDmyWUhzNR_3kA51Nb8/view?usp=sharing <br />
 
 
