@@ -141,8 +141,8 @@ class _EditTaskState extends State<EditTask> {
       }
       setState(() {
         _chosenReminderDateTime =
-            DateTime.now().add(const Duration(seconds: 10));
-        // _chosenReminderDateTime = value;
+            // DateTime.now().add(const Duration(seconds: 10));
+        _chosenReminderDateTime = value;
         _reminderDateTimeController.text =
             showReminderDateTime(_chosenReminderDateTime!);
       });
