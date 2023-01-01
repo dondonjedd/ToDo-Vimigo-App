@@ -1,4 +1,4 @@
-# ToDo Vimigo App
+# ToDo Vimigo App 
 
 Vimigo assessment to assess how well are the technical skills of a potential frontend
 developer
@@ -16,3 +16,27 @@ developer
 5. All the data updated must be persisted inside the app ****[COMPLETED]****
 6. File structure of the application should be based on the MVC model ****[COMPLETED]****
 
+## **Additional features ** (developed after deadline)
+
+1. New Features: <br />
+   a. Possibility to set a reminder on a task <br />
+      - push notification with custom sound will show up <br />
+      - user will be prompted to the corresponding task screen after tapping notification <br />
+      - push notification appears even though app is closed<br />
+
+## APK:
+Google link to download APK:<br />
+https://drive.google.com/file/d/1FV6ujU3pptyA4tDmyWUhzNR_3kA51Nb8/view?usp=sharing
+
+
+## Future developments:
+1. Add splash screen<br />
+2. Add a welcome page for new users<br />
+3. Add a reminder notification option for a task<br />
+4. Create dark theme<br />
+5. Create an about page to introduce application<br />
+6. Change task colours according to it's status<br />
+	- Red if task is incomplete and has passed deadline<br />
+	- Black for incomplete projects in the future<br />
+	- Green for completed projects<br />
+5. Develop a better UI<br />
