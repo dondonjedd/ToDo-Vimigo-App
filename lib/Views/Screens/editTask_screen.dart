@@ -155,7 +155,7 @@ class _EditTaskState extends State<EditTask> {
     setState(() {
       _chosenReminderDateTime = null;
       _reminderDateTimeController.text = "No Reminder Set";
-      NotificationApi()
+      notifApi
           .removeNotif(getUniqueNotifIdFromDateStr(_taskToEdit.id));
     });
   }

@@ -24,9 +24,28 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     super.initState();
-    notifApi = NotificationApi();
-    notifApi.init();
-    listenNotifications();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (!_init) {
+      TasksController().initTasks(context).then((_) async {
+        final prefs = await SharedPreferences.getInstance();
+        final isShown = prefs.getBool("tabsScreen") ?? false;
+        if (!isShown) {
+          tutorialCoachMark = createTutorial(context, _createTargets);
+          Future.delayed(const Duration(seconds: 1), showTutorial);
+        }
+        // print("Tabs Screen: $isShown");
+        notifApi = NotificationApi();
+        notifApi.init();
+        listenNotifications();
+        setState(() {
+          _init = true;
+        });
+      });
+      super.didChangeDependencies();
+    }
   }
 
   void listenNotifications() =>
@@ -121,26 +140,6 @@ class _TabsScreenState extends State<TabsScreen> {
     );
 
     return targets;
-  }
-
-  @override
-  void didChangeDependencies() async {
-    if (!_init) {
-      TasksController().initTasks(context).then((_) async {
-        final prefs = await SharedPreferences.getInstance();
-        final isShown = prefs.getBool("tabsScreen") ?? false;
-        if (!isShown) {
-          tutorialCoachMark = createTutorial(context, _createTargets);
-          Future.delayed(const Duration(seconds: 1), showTutorial);
-        }
-        // print("Tabs Screen: $isShown");
-
-        setState(() {
-          _init = true;
-        });
-      });
-      super.didChangeDependencies();
-    }
   }
 
   final List<Map<String, Object>> pages = [

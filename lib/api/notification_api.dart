@@ -33,7 +33,7 @@ class NotificationApi {
     }
 
     await _notifications.initialize(settings,
-        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
+        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,);
   }
 
   static Future _notificationDetails() async {
@@ -46,13 +46,7 @@ class NotificationApi {
             additionalFlags: Int32List.fromList(<int>[4])));
   }
 
-  Future showNotification(
-          {required int id,
-          String? title,
-          String? body,
-          String? payload}) async =>
-      _notifications.show(id, title, body, await _notificationDetails(),
-          payload: payload);
+ 
 
   Future showScheduledNotification(
           {required int id,

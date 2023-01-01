@@ -54,7 +54,7 @@ class Tasks extends ChangeNotifier {
   }
 
   Future<Task> removeTask(int index) async {
-    await NotificationApi()
+    await notifApi
         .removeNotif(getUniqueNotifIdFromDateStr(_items[index].id));
 
     Box<Task> box = await Hive.openBox<Task>(_dbKey);
