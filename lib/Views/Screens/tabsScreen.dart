@@ -52,10 +52,18 @@ class _TabsScreenState extends State<TabsScreen> {
   void listenNotifications() =>
       notifApi.onNotifications.stream.listen(onClickedNotification);
 
-  onClickedNotification(String? payload) {
+  onClickedNotification(String? payload) async {
+    await TasksController().updateTask(
+        context,
+        payload!,
+        TasksController()
+            .getTaskAtIndex(
+                context, TasksController().getIndexWithId(context, payload))
+            .copyWith(reminderDateTime: null));
+
     Navigator.of(context)
         .pushNamed(EditTask.routeName,
-            arguments: TasksController().getIndexWithId(context, payload!))
+            arguments: TasksController().getIndexWithId(context, payload))
         .then((value) {
       switch (value) {
         case argumentsEditToTodo.deleted:

@@ -6,8 +6,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
-import '../Controllers/tasksController.dart';
-
 class NotificationApi {
   final context;
   NotificationApi(this.context);
@@ -35,9 +33,10 @@ class NotificationApi {
       onNotifications.add(details.notificationResponse?.payload);
     }
 
-    await _notifications.initialize(settings, 
-        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-        );
+    await _notifications.initialize(
+      settings,
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+    );
   }
 
   static Future _notificationDetails() async {
@@ -73,16 +72,6 @@ class NotificationApi {
     if (id == null) {
       return;
     }
-
-    TasksController().updateTask(
-        context,
-        id,
-        TasksController()
-            .getTaskAtIndex(
-                context, TasksController().getIndexWithId(context, id))
-            .copyWith(reminderDateTime: null));
-    onNotifications.add(details.payload);
+    onNotifications.add(id);
   }
-
-
 }
