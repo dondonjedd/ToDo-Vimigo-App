@@ -16,7 +16,7 @@ developer
 5. All the data updated must be persisted inside the app ****[COMPLETED]****
 6. File structure of the application should be based on the MVC model ****[COMPLETED]****
 
-## **Additional features ** (developed after deadline)
+## Additional features: (developed after deadline)
 
 1. Possibility to set a reminder on a task <br />
     a. push notification with custom sound will show up <br />
@@ -35,7 +35,7 @@ Google link to download APK:<br />
 ## Future developments:
 1. Add splash screen<br />
 2. Add a welcome page for new users<br />
-3. Add a reminder notification option for a task<br />
+3. Add a reminder notification option for a task<br /> ****[COMPLETED]****
 4. Create dark theme<br />
 5. Create an about page to introduce application<br />
 6. Change task colours according to it's status<br />
