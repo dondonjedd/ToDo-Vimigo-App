@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_vimigo_app/Views/Screens/tabsScreen.dart';
+import 'package:todo_vimigo_app/utils.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -11,8 +14,17 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  void _onIntroEnd(context) {
-    Navigator.of(context).pushNamed("/");
+  void _onStartTuto(context) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("showHome", true);
+    Navigator.of(context).popAndPushNamed(TabsScreen.routeName);
+  }
+
+  void _onSkipTuto(context) async {
+    resetTutorial(true);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("showHome", true);
+    Navigator.of(context).popAndPushNamed(TabsScreen.routeName);
   }
 
   Widget _buildImage(String assetName, [double width = 350]) {
@@ -61,13 +73,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       skipOrBackFlex: 0,
       dotsFlex: 0,
       showSkipButton: false,
-      onDone: () => _onIntroEnd(context),
+      onDone: () {},
       back: const Icon(Icons.arrow_back),
       skip: const Text('Skip',
           style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600)),
       next: const Icon(Icons.arrow_forward),
-      done: const Text('Start Tutorial',
-          style: TextStyle(fontWeight: FontWeight.w600)),
+      done: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            onPressed: () => _onSkipTuto(context),
+            child: const Text('Skip Tutorial',
+                style: TextStyle(fontWeight: FontWeight.w600)),
+          ),
+          ElevatedButton(
+            onPressed: () => _onStartTuto(context),
+            child: const Text('Start Tutorial',
+                style: TextStyle(fontWeight: FontWeight.w600)),
+          ),
+        ],
+      ),
       isProgress: false,
     ));
   }

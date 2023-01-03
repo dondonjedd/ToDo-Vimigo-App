@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_vimigo_app/Models/task.dart';
 import 'package:todo_vimigo_app/Models/tasks.dart';
 import 'package:todo_vimigo_app/Views/Screens/editTask_screen.dart';
@@ -17,12 +18,16 @@ void main() async {
 
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
-  runApp(const MyApp());
+  final prefs = await SharedPreferences.getInstance();
+  final showHome = prefs.getBool("showHome") ?? false;
+  runApp(MyApp(
+    showHome: showHome,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  final bool showHome = true;
+  final bool showHome;
+  const MyApp({super.key, required this.showHome});
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +43,15 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           "/": (ctx) =>
-              showHome ? const OnBoardingScreen() : const TabsScreen(),
+              showHome ? const TabsScreen() : const OnBoardingScreen(),
+          TabsScreen.routeName: (ctx) => const TabsScreen(),
           EditTask.routeName: (ctx) => const EditTask(),
           SettingsScreen.routeName: (ctx) => const SettingsScreen(),
         },
         onUnknownRoute: (settings) {
           return MaterialPageRoute(
               builder: (ctx) =>
-                  showHome ? const OnBoardingScreen() : const TabsScreen());
+                  showHome ? const TabsScreen() : const OnBoardingScreen());
         },
       ),
     );

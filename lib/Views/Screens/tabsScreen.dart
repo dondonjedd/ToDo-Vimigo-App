@@ -13,6 +13,7 @@ import 'editTask_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
+  static const routeName = "/tabs-screen";
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();

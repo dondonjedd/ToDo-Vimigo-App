@@ -1,5 +1,4 @@
 // Available dates in the calendar
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,21 +41,6 @@ GlobalKey keyfirstTaskCheckBox = GlobalKey();
 
 late NotificationApi notifApi;
 
-// Set<int> setOfNotifIntId = {};
-// int maxSet = 50;
-
-// int getNewIntId() {
-//   int initialLength = setOfNotifIntId.length;
-//   while (initialLength == setOfNotifIntId.length) {
-//     setOfNotifIntId.add(Random().nextInt(maxSet));
-//   }
-//   return setOfNotifIntId.last;
-// }
-
-// void removeIntFromNotifSet(int x) {
-//   setOfNotifIntId.remove(x);
-// }
-
 getUniqueNotifIdFromDateStr(String date) {
   return (DateTime.parse(date)).millisecondsSinceEpoch.remainder(100000);
 }
@@ -65,18 +49,7 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
   return TutorialCoachMark(
     targets: targets(),
     colorShadow: Colors.orange,
-    // alignSkip: Alignment.centerRight,
     hideSkip: true,
-    // skipWidget: ElevatedButton(
-    //     onPressed: () {},
-    //     child: const Text(
-    //       "Skip",
-    //       style: TextStyle(
-    //           backgroundColor: Colors.blue,
-    //           color: Colors.white,
-    //           fontWeight: FontWeight.normal,
-    //           fontSize: 20),
-    //     )),
     paddingFocus: 10,
     opacityShadow: 0.8,
     onFinish: () {
@@ -116,4 +89,13 @@ TutorialCoachMark createTutorial(BuildContext ctx, targets) {
       // print("skip");
     },
   );
+}
+
+resetTutorial(bool bol) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool("tabsScreen", bol);
+  await prefs.setBool("todoScreen1", bol);
+  await prefs.setBool("todoScreen2", bol);
+  await prefs.setBool("addTaskSheet", bol);
+  await prefs.setBool("calendarScreen", bol);
 }
