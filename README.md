@@ -22,6 +22,7 @@ developer
     a. push notification with custom sound will show up <br />
     b. user will be prompted to the corresponding task screen after tapping notification <br />
     c. push notification appears even though app is closed<br />
+2. Added Vimigo Splash screen <br />
 
 ## APK:
 Google link to download APK:<br />
@@ -33,7 +34,7 @@ Google link to download APK:<br />
 
 
 ## Future developments:
-1. Add splash screen<br />
+1. Add splash screen<br /> ****[COMPLETED]****
 2. Add a welcome page for new users<br />
 3. Add a reminder notification option for a task<br /> ****[COMPLETED]****
 4. Create dark theme<br />
