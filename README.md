@@ -34,9 +34,9 @@ Google link to download APK:<br />
 
 
 ## Future developments:
-1. Add splash screen<br /> ****[COMPLETED]****
-2. Add a welcome page for new users<br />
-3. Add a reminder notification option for a task<br /> ****[COMPLETED]****
+1. Add splash screen ****[COMPLETED]****<br /> 
+2. Add a welcome page for new users ****[COMPLETED]****<br /> 
+3. Add a reminder notification option for a task ****[COMPLETED]****<br />
 4. Create dark theme<br />
 5. Create an about page to introduce application<br />
 6. Change task colours according to it's status<br />
