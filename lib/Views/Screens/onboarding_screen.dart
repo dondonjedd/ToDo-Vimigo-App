@@ -24,14 +24,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     const bodyStyle = TextStyle(fontSize: 19.0);
 
     const pageDecoration = PageDecoration(
-        titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-        bodyTextStyle: bodyStyle,
-        bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0),
-        pageColor: Colors.white,
-        imagePadding: EdgeInsets.only(top: 20),
-        imageFlex: 2,
-        bodyFlex: 3,
-        footerPadding: EdgeInsets.only(top: 150));
+      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
+      bodyTextStyle: bodyStyle,
+      bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0),
+      pageColor: Colors.white,
+      imagePadding: EdgeInsets.only(top: 20),
+      imageFlex: 2,
+      bodyFlex: 3,
+      footerPadding: EdgeInsets.only(top: 150),
+    );
 
     return Scaffold(
         body: IntroductionScreen(
@@ -57,12 +58,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
         ),
       ],
+      skipOrBackFlex: 0,
+      dotsFlex: 0,
+      showSkipButton: false,
       onDone: () => _onIntroEnd(context),
       back: const Icon(Icons.arrow_back),
-      skip: const Text('Skip', style: TextStyle(fontWeight: FontWeight.w600)),
+      skip: const Text('Skip',
+          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600)),
       next: const Icon(Icons.arrow_forward),
       done: const Text('Start Tutorial',
           style: TextStyle(fontWeight: FontWeight.w600)),
+      isProgress: false,
     ));
   }
 }
