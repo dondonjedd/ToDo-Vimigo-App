@@ -30,7 +30,7 @@ Google link to download APK:<br />
     - https://drive.google.com/file/d/18_V73Z3uHxnGF8cAWYQv146D-JQJyCDV/view?usp=sharing <br />
 
 2. APK for Application developed **after deadline**
-    - https://drive.google.com/file/d/1FV6ujU3pptyA4tDmyWUhzNR_3kA51Nb8/view?usp=sharing <br />
+    - https://drive.google.com/file/d/1lE5DLsBPaVqq6sasqa6h3zoqpXO1aR0c/view?usp=sharing <br />
 
 
 ## Future developments:
