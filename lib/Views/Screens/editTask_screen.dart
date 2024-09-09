@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:todo_vimigo_app/Controllers/tasksController.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_vimigo_app/Views/Widgets/duedate_picker.dart';
@@ -58,8 +58,7 @@ class _EditTaskState extends State<EditTask> {
       } else if (_chosenReminderDateTime!.isBefore(DateTime.now())) {
         _reminderDateTimeController.text = "Reminder has passed";
       } else {
-        _reminderDateTimeController.text =
-            showReminderDateTime(_chosenReminderDateTime!);
+        _reminderDateTimeController.text = showReminderDateTime(_chosenReminderDateTime!);
       }
     }
     _isInit = true;
@@ -77,10 +76,8 @@ class _EditTaskState extends State<EditTask> {
     });
     _form.currentState?.save();
 
-    if (_chosenReminderDateTime != null &&
-        _chosenReminderDateTime!.isAfter(DateTime.now())) {
-      print(
-          "Notif added with id : ${getUniqueNotifIdFromDateStr(_taskToEdit.id)}");
+    if (_chosenReminderDateTime != null && _chosenReminderDateTime!.isAfter(DateTime.now())) {
+      print("Notif added with id : ${getUniqueNotifIdFromDateStr(_taskToEdit.id)}");
       notifApi.showScheduledNotification(
           // id: (DateTime.parse(_taskToEdit.id)).millisecondsSinceEpoch,
           id: getUniqueNotifIdFromDateStr(_taskToEdit.id),
@@ -91,29 +88,18 @@ class _EditTaskState extends State<EditTask> {
     }
 
     _taskToEdit = _taskToEdit.copyWith(
-        date: _chosenDate,
-        reminderDateTime: _chosenReminderDateTime,
-        isCompleted:
-            TasksController().getTasks(context)[_taskIndex].isCompleted);
-    TasksController()
-        .updateTask(context, _taskToEdit.id, _taskToEdit)
-        .then((_) {
-      Navigator.of(context).pop(_initValue.title == _taskToEdit.title &&
-              _initValue.date == _taskToEdit.date &&
-              _initValue.description == _taskToEdit.description
-          ? argumentsEditToTodo.none
-          : argumentsEditToTodo.edited);
+        date: _chosenDate, reminderDateTime: _chosenReminderDateTime, isCompleted: TasksController().getTasks(context)[_taskIndex].isCompleted);
+    TasksController().updateTask(context, _taskToEdit.id, _taskToEdit).then((_) {
+      Navigator.of(context).pop(
+          _initValue.title == _taskToEdit.title && _initValue.date == _taskToEdit.date && _initValue.description == _taskToEdit.description
+              ? argumentsEditToTodo.none
+              : argumentsEditToTodo.edited);
     });
   }
 
   //Due Date methods
   _presentDatePicker() {
-    showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: kFirstDay,
-            lastDate: kLastDay)
-        .then((value) {
+    showDatePicker(context: context, initialDate: DateTime.now(), firstDate: kFirstDay, lastDate: kLastDay).then((value) {
       if (value == null) {
         return;
       }
@@ -133,8 +119,7 @@ class _EditTaskState extends State<EditTask> {
 
   //reminder methods
   _presentDateTimePicker() {
-    DatePicker.showDateTimePicker(context, currentTime: _chosenDate)
-        .then((value) {
+    DatePicker.showDateTimePicker(context, currentTime: _chosenDate).then((value) {
       print(value);
       if (value == null) {
         return;
@@ -142,9 +127,8 @@ class _EditTaskState extends State<EditTask> {
       setState(() {
         _chosenReminderDateTime =
             // DateTime.now().add(const Duration(seconds: 10));
-        _chosenReminderDateTime = value;
-        _reminderDateTimeController.text =
-            showReminderDateTime(_chosenReminderDateTime!);
+            _chosenReminderDateTime = value;
+        _reminderDateTimeController.text = showReminderDateTime(_chosenReminderDateTime!);
       });
     });
   }
@@ -204,16 +188,13 @@ class _EditTaskState extends State<EditTask> {
                         index: _taskIndex,
                       ),
                       suffixIcon: const Text(""),
-                      label: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Title"),
-                            Text(
-                              "*",
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.error),
-                            )
-                          ]),
+                      label: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        const Text("Title"),
+                        Text(
+                          "*",
+                          style: TextStyle(color: Theme.of(context).colorScheme.error),
+                        )
+                      ]),
                       floatingLabelAlignment: FloatingLabelAlignment.center,
                     ),
                     validator: (value) {
@@ -222,8 +203,7 @@ class _EditTaskState extends State<EditTask> {
                       }
                       return null;
                     },
-                    onSaved: (newValue) =>
-                        {_taskToEdit = _taskToEdit.copyWith(title: newValue)},
+                    onSaved: (newValue) => {_taskToEdit = _taskToEdit.copyWith(title: newValue)},
                   ),
                   const SizedBox(
                     height: 20,
@@ -247,24 +227,20 @@ class _EditTaskState extends State<EditTask> {
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     initialValue: _taskToEdit.description,
                     decoration: InputDecoration(
-                      label: Row(
+                      label: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text("Description"),
                         ],
                       ),
                       border: InputBorder.none,
                       floatingLabelAlignment: FloatingLabelAlignment.center,
                       alignLabelWithHint: false,
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.primary)),
+                      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)),
                     ),
                     minLines: 1,
                     maxLines: 15,
-                    onSaved: (newValue) => {
-                      _taskToEdit = _taskToEdit.copyWith(description: newValue)
-                    },
+                    onSaved: (newValue) => {_taskToEdit = _taskToEdit.copyWith(description: newValue)},
                   ),
                 ],
               )),

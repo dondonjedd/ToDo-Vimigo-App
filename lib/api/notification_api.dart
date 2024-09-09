@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -20,7 +20,7 @@ class NotificationApi {
   Future<void> init({bool initScheduled = true}) async {
     if (initScheduled) {
       tz.initializeTimeZones();
-      final locationName = await FlutterNativeTimezone.getLocalTimezone();
+      final locationName = await FlutterTimezone.getLocalTimezone();
       tz.setLocalLocation(tz.getLocation(locationName));
     }
 
@@ -49,22 +49,9 @@ class NotificationApi {
             additionalFlags: Int32List.fromList(<int>[4])));
   }
 
-  Future showScheduledNotification(
-          {required int id,
-          String? title,
-          String? body,
-          String? payload,
-          required DateTime scheduledDate}) async =>
-      _notifications.zonedSchedule(
-          id,
-          title,
-          body,
-          tz.TZDateTime.from(scheduledDate, tz.local),
-          await _notificationDetails(),
-          payload: payload,
-          androidAllowWhileIdle: true,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime);
+  Future showScheduledNotification({required int id, String? title, String? body, String? payload, required DateTime scheduledDate}) async =>
+      _notifications.zonedSchedule(id, title, body, tz.TZDateTime.from(scheduledDate, tz.local), await _notificationDetails(),
+          payload: payload, androidAllowWhileIdle: true, uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
 
   void onDidReceiveNotificationResponse(details) async {
     final id = details.payload;

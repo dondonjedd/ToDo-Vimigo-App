@@ -13,8 +13,6 @@ class TaskCheckBox extends StatelessWidget {
     final taskProvider = Provider.of<Tasks>(context, listen: true);
     return Checkbox(
       checkColor: Colors.white,
-      fillColor:
-          MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
       value: taskProvider.getItemAtIndex(index).isCompleted,
       onChanged: (bool? value) {
         TasksController().setIsCompletedForTask(context, index, value!);

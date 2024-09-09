@@ -11,8 +11,7 @@ import 'package:todo_vimigo_app/Views/Screens/tabsScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
@@ -29,10 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: Theme.of(context).colorScheme.copyWith(
-              primary: Colors.blue,
-              secondary: Colors.lightBlue[50],
-              tertiary: Colors.green),
+          colorScheme: Theme.of(context).colorScheme.copyWith(primary: Colors.blue, secondary: Colors.lightBlue[50], tertiary: Colors.green),
         ),
         routes: {
           "/": (ctx) => const TabsScreen(),
